@@ -1,5 +1,6 @@
-package com.ssang.gtd.user;
+package com.ssang.gtd.things;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,12 +10,10 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+public class CollectionDto {
     int id;
-    String password;
-    String nickname;
-    String notes;
-    String membership;
+    String content;
     Date createdDate;
     Date updatedTime;
     String status;

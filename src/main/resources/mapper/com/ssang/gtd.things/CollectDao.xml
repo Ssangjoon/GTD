@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssang.gtd.things.CollectDao">
+
+    <select id="list" resultType="CollectDto">
+        SELECT * FROM note;
+    </select>
+
+    <insert id="write" resultType="INT">
+
+    </insert>
+
+</mapper>
