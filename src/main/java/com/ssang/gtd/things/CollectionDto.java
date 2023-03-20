@@ -12,9 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CollectionDto {
-    int id;
+    int c_no;
     String content;
+    boolean is_material;
     Date createdDate;
     Date updatedTime;
-    String status;
 }

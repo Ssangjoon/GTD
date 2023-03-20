@@ -1,11 +1,11 @@
 package com.ssang.gtd.things;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.tags.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -20,13 +20,24 @@ public class CollectController {
         this.collectService = collectService;
     }
 
-    @GetMapping("/test")
-    public String hello(String name){
-        return collectService.test();
-    }
-
     @GetMapping("/collection")
-    public List<CollectionDto> collections(){
+    public List<CollectionDto> getList(){
         return collectService.list();
+    }
+    @GetMapping("/collection/{id}")
+    public CollectionDto get(@PathVariable("id") int id){
+        return collectService.get(id);
+    }
+    @PostMapping("/collection")
+    public int post(@RequestBody CollectionDto dto){
+        return collectService.post(dto.content);
+    }
+    @PutMapping("/collection")
+    public int update(@RequestBody CollectionDto dto){
+        return collectService.put(dto);
+    }
+    @DeleteMapping("/collection/{id}")
+    public int delete(@PathVariable("id") int id){
+        return collectService.delete(id);
     }
 }

@@ -4,13 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssang.gtd.things.CollectDao">
+    <!-- 테이블의 컬럼과 객체필드를 연결한다. -->
+    <!--<resultMap type="CollecDto" id="CollectMap">
+        <id column="c_no" property="c_no" />
+        <result column="content" property="content" />
+        <result column="is_material" property="is_material" />
+        <result column="created_dt" property="created_dt" />
+        <result column="updated_dt" property="updated_dt" />
+    </resultMap>-->
 
-    <select id="list" resultType="CollectDto">
-        SELECT * FROM note;
+
+    <select id="list" resultType="String">
+        SELECT * FROM collection;
     </select>
-
-    <insert id="write" resultType="INT">
-
+    <select id="get" parameterType="int" resultType="com.ssang.gtd.things.CollectionDto">
+        SELECT * FROM collection where c_no=#{id};
+    </select>
+    <insert id="post" parameterType="String">
+        insert into collection(content) values(#{content});
     </insert>
-
+    <update id="put" parameterType="com.ssang.gtd.things.CollectionDto">
+        update collection set content=#{content} where c_no=${c_no};
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from collection where c_no=#{id};
+    </delete>
 </mapper>
