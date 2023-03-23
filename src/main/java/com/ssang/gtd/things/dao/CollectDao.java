@@ -1,5 +1,6 @@
-package com.ssang.gtd.things;
+package com.ssang.gtd.things.dao;
 
+import com.ssang.gtd.things.dto.CollectionDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public interface CollectDao {
         List<CollectionDto> list();
         CollectionDto get(int id);
-        int post(String content);
+        int post(CollectionDto dto);
         int put(CollectionDto dto);
         int delete(int id);
 }
