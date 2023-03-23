@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssang.gtd.things.dao.CollectDao">
+<mapper namespace="com.ssang.gtd.things.dao.MatCollectDao">
     <!-- 테이블의 컬럼과 객체필드를 연결한다. -->
     <!--<resultMap type="CollecDto" id="CollectMap">
         <id column="c_no" property="c_no" />
@@ -20,8 +20,8 @@
     <select id="get" parameterType="int" resultType="com.ssang.gtd.things.dto.CollectionDto">
         SELECT * FROM collection where c_no=#{id};
     </select>
-    <insert id="post" parameterType="com.ssang.gtd.things.dto.CollectionDto">
-        insert into collection(content,u_no) values(#{content},#{uNo});
+    <insert id="post" parameterType="com.ssang.gtd.things.dto.MatColDto">
+        insert into mat_collection(c_no,goal,content,g_dt) values(#{cNo},#{goal},#{content},#{gDt, jdbcType=DATE});
     </insert>
     <update id="put" parameterType="com.ssang.gtd.things.dto.CollectionDto">
         update collection
