@@ -208,3 +208,8 @@ package-lock.json
 
 ##application.properties
 application.properties
+
+## test
+utils/
+config/
+interceptor/
