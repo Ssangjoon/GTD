@@ -7,9 +7,11 @@ import com.ssang.gtd.things.dto.CollectionDto;
 import com.ssang.gtd.things.dto.MatColDto;
 import com.ssang.gtd.things.service.CollectService;
 import com.ssang.gtd.things.service.MatCollectService;
+import com.ssang.gtd.utils.file.FileDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -48,12 +50,17 @@ public class CollectController {
     }
 
     @PostMapping("/material")
-    public int post(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
+    public int post(@RequestBody ObjectNode saveObj, List<MultipartFile> files) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         CollectionDto cDto = mapper.treeToValue(saveObj.get("col"),CollectionDto.class);
         MatColDto mDto = mapper.treeToValue(saveObj.get("matCol"),MatColDto.class);
-        return matCollectService.post(cDto,mDto);
+        try {
+            return matCollectService.post(cDto,mDto,files);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
    /* @PostMapping("/material")
     public int post(@RequestBody MatColDto dto){
         return matCollectService.post(dto);

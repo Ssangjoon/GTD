@@ -21,7 +21,7 @@
         SELECT * FROM collection where c_no=#{id};
     </select>
     <insert id="post" parameterType="com.ssang.gtd.things.dto.CollectionDto">
-        insert into collection(content,u_no) values(#{content},#{uNo});
+        insert into collection(content,u_no,c_dt) values(#{content},#{uNo},current_timestamp);
     </insert>
     <update id="put" parameterType="com.ssang.gtd.things.dto.CollectionDto">
         update collection

@@ -20,14 +20,35 @@
     <select id="get" parameterType="int" resultType="com.ssang.gtd.things.dto.CollectionDto">
         SELECT * FROM collection where c_no=#{id};
     </select>
-    <insert id="post" parameterType="com.ssang.gtd.things.dto.MatColDto">
+    <insert id="post" parameterType="com.ssang.gtd.things.dto.MatColDto" useGeneratedKeys="true" keyColumn="mc_no">
         insert into mat_collection(c_no,goal,content,g_dt) values(#{cNo},#{goal},#{content},#{gDt, jdbcType=DATE});
     </insert>
-    <update id="put" parameterType="com.ssang.gtd.things.dto.CollectionDto">
-        update collection
+    <insert id="saveFile" parameterType="hashmap">
+        insert into photo(
+        board_type,
+        file_num,
+        file_name,
+        saved_file_name,
+        mc_no,
+        file_size
+        ) values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.board_type},
+            nextval('seq_file_num'),
+            #{item.file_name},
+            #{item.saved_file_name},
+            #{item.board_id},
+            #{item.file_size}
+            )
+        </foreach>
+    </insert>
+    <update id="put" parameterType="com.ssang.gtd.things.dto.MatColDto">
+        update mat_collection
         <set>
-            <if test="type != null">type = #{type},</if>
+            <if test="goal != null">goal = #{goal},</if>
             <if test="content != null">content=#{content},</if>
+            <if test="gDt != null">g_dt=#{gDt},</if>
         </set>
         where c_no=${cNo};
     </update>

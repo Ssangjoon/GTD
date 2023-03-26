@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface MatCollectDao {
@@ -15,4 +16,5 @@ public interface MatCollectDao {
     int post(MatColDto mdto);
     int put(MatColDto dto);
     int delete(int id);
+    int saveFile(List<Map<String, Object>> params);
 }
