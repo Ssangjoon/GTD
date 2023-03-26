@@ -1,7 +1,10 @@
 package com.ssang.gtd.user.controller;
 
+import com.ssang.gtd.things.controller.CollectController;
 import com.ssang.gtd.user.service.MemberService;
 import com.ssang.gtd.user.dto.MemberDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class LoginController {
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private final MemberService memberService;
 
@@ -19,6 +22,7 @@ public class LoginController {
 
     @GetMapping("/member")
     public List<MemberDto> getList(){
+        logger.trace("trace");
         return memberService.list();
     }
     @GetMapping("/member/{id}")

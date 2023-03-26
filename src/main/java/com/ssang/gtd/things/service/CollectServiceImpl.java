@@ -2,15 +2,15 @@ package com.ssang.gtd.things.service;
 
 import com.ssang.gtd.things.dao.CollectDao;
 import com.ssang.gtd.things.dto.CollectionDto;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CollectServiceImpl implements CollectService {
-    private static final Logger logger = LogManager.getLogger(CollectServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CollectServiceImpl.class);
     private final CollectDao collectDao;
 
     public CollectServiceImpl(CollectDao collectDao) { this.collectDao = collectDao; }

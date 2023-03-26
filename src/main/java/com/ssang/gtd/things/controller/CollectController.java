@@ -7,9 +7,8 @@ import com.ssang.gtd.things.dto.CollectionDto;
 import com.ssang.gtd.things.dto.MatColDto;
 import com.ssang.gtd.things.service.CollectService;
 import com.ssang.gtd.things.service.MatCollectService;
-import com.ssang.gtd.utils.file.FileDto;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +17,7 @@ import java.util.Map;
 
 @RestController
 public class CollectController {
-    private static final Logger logger = LogManager.getLogger(CollectController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CollectController.class);
 
     private final CollectService collectService;
     private final MatCollectService matCollectService;
@@ -54,11 +53,12 @@ public class CollectController {
         ObjectMapper mapper = new ObjectMapper();
         CollectionDto cDto = mapper.treeToValue(saveObj.get("col"),CollectionDto.class);
         MatColDto mDto = mapper.treeToValue(saveObj.get("matCol"),MatColDto.class);
-        try {
+        /*try {
             return matCollectService.post(cDto,mDto,files);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
+        return 0;
     }
 
    /* @PostMapping("/material")

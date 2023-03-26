@@ -2,8 +2,8 @@ package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dto.MemberDto;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService{
 
-    private static final Logger logger = LogManager.getLogger(MemberServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
     private final MemberDao memberDao;
 
     public MemberServiceImpl(MemberDao memberDao) {

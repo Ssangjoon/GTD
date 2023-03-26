@@ -211,5 +211,5 @@ application.properties
 
 ## test
 utils/
-config/
+config/MvcConfiguration.class
 interceptor/

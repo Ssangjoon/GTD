@@ -6,8 +6,8 @@ import com.ssang.gtd.things.dto.CollectionDto;
 import com.ssang.gtd.things.dto.MatColDto;
 import com.ssang.gtd.utils.file.FileDto;
 import com.ssang.gtd.utils.file.FileServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Service
 public class MatCollectServiceImpl implements MatCollectService {
-    private static final Logger logger = LogManager.getLogger(MatCollectServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MatCollectServiceImpl.class);
     private final MatCollectDao matCollectDao;
     private final CollectDao collectDao;
     private final FileServiceImpl fileService;
