@@ -210,6 +210,8 @@ package-lock.json
 application.properties
 
 ## test
-utils/
+utils/common/
+utils/page/
+utils/VO/
 config/MvcConfiguration.class
 interceptor/

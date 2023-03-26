@@ -39,9 +39,10 @@ public class MatCollectServiceImpl implements MatCollectService {
     public int post(CollectionDto cDto, MatColDto mDto, List<MultipartFile> files) throws Exception {
         collectDao.put(cDto);
         matCollectDao.post(mDto);
+        System.out.println(mDto.getMcNo());
         if(files != null && !files.isEmpty()){
             logger.trace("파일 업로드");
-            List<Map<String, Object>> params = fileService.fileUpload("Gallery", files, mDto.getMcNo());
+            List<Map<String, Object>> params = fileService.fileUpload("material", files, mDto.getMcNo());
             matCollectDao.saveFile(params);
         }
         return 1;

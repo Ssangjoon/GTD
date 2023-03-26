@@ -20,13 +20,12 @@
     <select id="get" parameterType="int" resultType="com.ssang.gtd.things.dto.CollectionDto">
         SELECT * FROM collection where c_no=#{id};
     </select>
-    <insert id="post" parameterType="com.ssang.gtd.things.dto.MatColDto" useGeneratedKeys="true" keyColumn="mc_no">
+    <insert id="post" parameterType="com.ssang.gtd.things.dto.MatColDto" useGeneratedKeys="true" keyColumn="mc_no" keyProperty="mcNo">
         insert into mat_collection(c_no,goal,content,g_dt) values(#{cNo},#{goal},#{content},#{gDt, jdbcType=DATE});
     </insert>
     <insert id="saveFile" parameterType="hashmap">
         insert into photo(
         board_type,
-        file_num,
         file_name,
         saved_file_name,
         mc_no,
@@ -35,7 +34,6 @@
         <foreach collection="list" item="item" separator=",">
             (
             #{item.board_type},
-            nextval('seq_file_num'),
             #{item.file_name},
             #{item.saved_file_name},
             #{item.board_id},

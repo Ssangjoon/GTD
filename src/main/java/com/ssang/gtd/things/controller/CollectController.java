@@ -49,16 +49,12 @@ public class CollectController {
     }
 
     @PostMapping("/material")
-    public int post(@RequestBody ObjectNode saveObj, List<MultipartFile> files) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        CollectionDto cDto = mapper.treeToValue(saveObj.get("col"),CollectionDto.class);
-        MatColDto mDto = mapper.treeToValue(saveObj.get("matCol"),MatColDto.class);
-        /*try {
+    public int post(@RequestPart(value = "cDto") CollectionDto cDto,@RequestPart(value = "mDto") MatColDto mDto, List<MultipartFile> files) throws JsonProcessingException {
+        try {
             return matCollectService.post(cDto,mDto,files);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }*/
-        return 0;
+        }
     }
 
    /* @PostMapping("/material")
