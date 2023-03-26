@@ -14,7 +14,7 @@
     </resultMap>-->
 
 
-    <select id="list" resultType="String">
+    <select id="list" resultType="com.ssang.gtd.user.dto.MemberDto">
         SELECT * FROM user;
     </select>
     <select id="get" parameterType="int" resultType="com.ssang.gtd.user.dto.MemberDto">

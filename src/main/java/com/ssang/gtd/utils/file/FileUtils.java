@@ -1,4 +1,4 @@
-package com.ssang.gtd.utils;
+package com.ssang.gtd.utils.file;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

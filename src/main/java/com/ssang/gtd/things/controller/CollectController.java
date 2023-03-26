@@ -49,7 +49,6 @@ public class CollectController {
 
     @PostMapping("/material")
     public int post(@RequestBody ObjectNode saveObj) throws JsonProcessingException {
-        // Map으로 받아서 사용하는게 편할듯 하지만 일단 dto에 담는걸 유지해보자.
         ObjectMapper mapper = new ObjectMapper();
         CollectionDto cDto = mapper.treeToValue(saveObj.get("col"),CollectionDto.class);
         MatColDto mDto = mapper.treeToValue(saveObj.get("matCol"),MatColDto.class);

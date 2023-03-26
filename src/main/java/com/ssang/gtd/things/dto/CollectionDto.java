@@ -19,4 +19,6 @@ public class CollectionDto {
     Date cDt;
     Date uDt;
     String test;
+
+    MatColDto mcDto;
 }

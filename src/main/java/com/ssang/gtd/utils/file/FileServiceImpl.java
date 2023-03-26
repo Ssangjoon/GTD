@@ -1,4 +1,4 @@
-package com.ssang.gtd.utils;
+package com.ssang.gtd.utils.file;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -210,6 +210,9 @@ package-lock.json
 application.properties
 
 ## test
-utils/
+utils/common
+utils/file
+utils/page
+utils/vo
 config/
 interceptor/
