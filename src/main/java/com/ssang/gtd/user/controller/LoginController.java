@@ -22,7 +22,6 @@ public class LoginController {
 
     @GetMapping("/member")
     public List<MemberDto> getList(){
-        logger.trace("trace");
         return memberService.list();
     }
     @GetMapping("/member/{id}")

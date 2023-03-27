@@ -210,8 +210,8 @@ package-lock.json
 application.properties
 
 ## test
-utils/common/
-utils/page/
-utils/VO/
-config/MvcConfiguration.class
-interceptor/
+common/
+page/
+VO/
+Authinterceptor.java
+AdminAuthinterceptor.java

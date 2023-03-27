@@ -20,6 +20,7 @@ import java.util.Map;
 public class MatCollectServiceImpl implements MatCollectService {
     private static final Logger logger = LoggerFactory.getLogger(MatCollectServiceImpl.class);
     private final MatCollectDao matCollectDao;
+
     private final CollectDao collectDao;
     private final FileServiceImpl fileService;
 
@@ -35,7 +36,7 @@ public class MatCollectServiceImpl implements MatCollectService {
     public MatColDto get(int id) { return matCollectDao.get(id); }
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor=Exception.class)
     public int post(CollectionDto cDto, MatColDto mDto, List<MultipartFile> files) throws Exception {
         collectDao.put(cDto);
         matCollectDao.post(mDto);
