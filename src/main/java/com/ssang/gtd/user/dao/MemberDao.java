@@ -9,6 +9,7 @@ import java.util.List;
 public interface MemberDao {
     List<MemberDto> list();
     MemberDto get(int id);
+    MemberDto getByIdAndPassword(MemberDto dto);
     int post(MemberDto dto);
     int put(MemberDto dto);
     int delete(int id);

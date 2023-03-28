@@ -13,16 +13,16 @@ import java.io.IOException;
 
 @Component
 public class HttpInterceptor implements HandlerInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(HttpInterceptor.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception{
         String reqUri = request.getRequestURI().trim();
-        String payload = extractPayload(request);
+        //String payload = extractPayload(request);
         if(logger.isDebugEnabled() && !reqUri.startsWith("/admin")){
             logger.debug("#### preHandle : request URI : {}",reqUri);
-            if(payload != null && !payload.isEmpty()) {
-                logger.debug("#### preHandle : payload : {}",payload);
-            }
+            //if(payload != null && !payload.isEmpty()) {
+                //logger.debug("#### preHandle : payload : {}",payload);
+            //}
         }
         if(reqUri.startsWith("/error")){
             //에러는 무시

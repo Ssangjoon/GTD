@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService{
 
-    private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MemberDao memberDao;
 
     public MemberServiceImpl(MemberDao memberDao) {
@@ -41,5 +41,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int delete(int id) {
         return memberDao.delete(id);
+    }
+
+    @Override
+    public MemberDto login(MemberDto dto) {
+        return memberDao.getByIdAndPassword(dto);
     }
 }

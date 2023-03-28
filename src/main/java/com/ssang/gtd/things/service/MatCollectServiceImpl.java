@@ -18,9 +18,8 @@ import java.util.Map;
 
 @Service
 public class MatCollectServiceImpl implements MatCollectService {
-    private static final Logger logger = LoggerFactory.getLogger(MatCollectServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MatCollectDao matCollectDao;
-
     private final CollectDao collectDao;
     private final FileServiceImpl fileService;
 

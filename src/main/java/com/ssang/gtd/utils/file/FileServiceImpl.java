@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service
 public class FileServiceImpl implements FileService{
-    private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String FILEPATH = "C:\\upload\\"; // 파일이 저장될 위치
 

@@ -10,4 +10,6 @@ public interface MemberService {
     int post(MemberDto dto);
     int put(MemberDto dto);
     int delete(int id);
+
+    MemberDto login(MemberDto dto);
 }

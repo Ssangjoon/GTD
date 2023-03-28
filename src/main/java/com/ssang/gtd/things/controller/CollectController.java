@@ -17,7 +17,8 @@ import java.util.Map;
 
 @RestController
 public class CollectController {
-    private static final Logger logger = LoggerFactory.getLogger(CollectController.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
 
     private final CollectService collectService;
     private final MatCollectService matCollectService;

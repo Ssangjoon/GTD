@@ -18,8 +18,9 @@
         SELECT * FROM collection;
     </select>
     <select id="get" parameterType="int" resultType="com.ssang.gtd.things.dto.CollectionDto">
-        SELECT * FROM collection where c_no=#{id};
+        SELECT * FROM user where c_no=#{id};
     </select>
+
     <insert id="post" parameterType="com.ssang.gtd.things.dto.MatColDto" useGeneratedKeys="true" keyColumn="mc_no" keyProperty="mcNo">
         insert into mat_collection(c_no,goal,content,g_dt) values(#{cNo},#{goal},#{content},#{gDt, jdbcType=DATE});
     </insert>

@@ -213,5 +213,4 @@ application.properties
 common/
 page/
 VO/
-Authinterceptor.java
 AdminAuthinterceptor.java

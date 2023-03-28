@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class CollectServiceImpl implements CollectService {
-    private static final Logger logger = LoggerFactory.getLogger(CollectServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final CollectDao collectDao;
 
     public CollectServiceImpl(CollectDao collectDao) { this.collectDao = collectDao; }
