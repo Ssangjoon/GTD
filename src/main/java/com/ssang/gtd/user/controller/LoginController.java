@@ -1,19 +1,24 @@
 package com.ssang.gtd.user.controller;
 
+import com.ssang.gtd.utils.crypto.SHACrypto;
 import com.ssang.gtd.user.service.MemberService;
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.utils.anno.Login;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+
+import static com.ssang.gtd.utils.crypto.RSACrypto.*;
+import static java.net.URLDecoder.decode;
+import static java.net.URLEncoder.encode;
 
 @RestController
 public class LoginController {
@@ -21,38 +26,21 @@ public class LoginController {
     @Autowired
     private final MemberService memberService;
 
-    public LoginController(MemberService memberService) {
+    public LoginController(MemberService memberService, SHACrypto crypto) {
         this.memberService = memberService;
     }
 
-    @GetMapping("/member")
-    public List<MemberDto> getList(){
-        return memberService.list();
-    }
-    @GetMapping("/member/{id}")
-    public MemberDto get(@PathVariable("id") int id){
-        return memberService.get(id);
-    }
-    @PostMapping("/member")
-    public int post(@RequestBody MemberDto dto){
-        return memberService.post(dto);
-    }
-    @PutMapping("/member")
-    public int update(@RequestBody MemberDto dto){
-        return memberService.put(dto);
-    }
-    @DeleteMapping("/member/{id}")
-    public int delete(@PathVariable("id") int id){
-        return memberService.delete(id);
-    }
+
     @PostMapping("login")
     public int login(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return 0;
         }
 
+        dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
         MemberDto loginMember = memberService.login(dto);
         logger.info(loginMember.getId());
+        logger.info(loginMember.getPassword());
 
 
         if (loginMember == null) {
@@ -67,16 +55,8 @@ public class LoginController {
 
         return 1;
     }
-    @GetMapping("/logout")
-    public int logout(HttpServletResponse response, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        return 1;
-    }
     @GetMapping("/getSession")
-    public MemberDto test (
+    public MemberDto getSession (
             @Login MemberDto loginMember, HttpServletRequest request) {
 
         if (loginMember == null) {
@@ -85,4 +65,32 @@ public class LoginController {
         logger.info(loginMember.getId());
         return loginMember;
     }
+    @GetMapping("/logout")
+    public int logout(HttpServletResponse response, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return 1;
+    }
+    @GetMapping("/test")
+    public int test(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
+        HashMap<String, String> rsaKeyPair = createKeypairAsString();
+        String publicKey = rsaKeyPair.get("publicKey");
+        String privateKey = rsaKeyPair.get("privateKey");
+        System.out.println("만들어진 공개키:" + publicKey);
+        System.out.println("만들어진 개인키:" + privateKey);
+
+        String plainText = "플레인 텍스트";
+        System.out.println("평문: " + plainText);
+
+        String encryptedText = encrypt(plainText, publicKey);
+        System.out.println("암호화: " + encryptedText);
+
+        String decryptedText = decrypt(encryptedText, privateKey);
+        System.out.println("복호화: " + decryptedText);
+        return 1;
+    }
+
+
 }

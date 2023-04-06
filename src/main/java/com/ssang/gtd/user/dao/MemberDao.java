@@ -12,5 +12,5 @@ public interface MemberDao {
     MemberDto getByIdAndPassword(MemberDto dto);
     int post(MemberDto dto);
     int put(MemberDto dto);
-    int delete(int id);
+    int delete(MemberDto dto);
 }
