@@ -1,7 +1,6 @@
 package com.ssang.gtd.config;
 
 import com.ssang.gtd.interceptor.Authinterceptor;
-import com.ssang.gtd.interceptor.HttpInterceptor;
 import com.ssang.gtd.resolver.LoginMemberArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -21,10 +20,6 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new Authinterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/login");
-        registry
-                .addInterceptor(new HttpInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns("");
+                .excludePathPatterns("/css/**", "/*.ico", "/error");
     }
 }

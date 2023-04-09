@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +37,8 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return 0;
         }
-
         dto.setPassword(shaCrypto.encryptToHex(dto.getPassword(),"SHA-256"));
+
         MemberDto loginMember = memberService.login(dto);
         logger.info(loginMember.getId());
         logger.info(loginMember.getPassword());

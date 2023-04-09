@@ -18,4 +18,6 @@ public class MemberDto {
     String name;
     String status;
     String email;
+    String publicKey;
+    String privateKey;
 }

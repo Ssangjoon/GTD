@@ -1,8 +1,6 @@
 package com.ssang.gtd.things.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ssang.gtd.things.dto.CollectionDto;
 import com.ssang.gtd.things.dto.MatColDto;
 import com.ssang.gtd.things.service.CollectService;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class CollectController {
@@ -29,9 +26,7 @@ public class CollectController {
     }
 
     @GetMapping("/collection")
-    public List<CollectionDto> getList(){
-        return collectService.list();
-    }
+    public List<CollectionDto> getList(){ return collectService.list();}
     @GetMapping("/collection/{id}")
     public CollectionDto get(@PathVariable("id") int id){
         return collectService.get(id);
