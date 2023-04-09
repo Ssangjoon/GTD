@@ -34,14 +34,6 @@ public class RSACrypto {
             PublicKey publicKey = keyPair.getPublic();
             PrivateKey privateKey = keyPair.getPrivate();
 
-            logger.info("publicKey.getAlgorithm  => "+publicKey.getAlgorithm());
-            logger.info("publicKey.getFormat => "+publicKey.getFormat()); // 공개키 표준
-            logger.info("publicKey.toString => "+publicKey.toString());
-            logger.info("_+_+_+_+_+_+_+_+_+_+__+_+_+_");
-            logger.info("privateKey.getAlgorithm  => "+privateKey.getAlgorithm());
-            logger.info("privateKey.getFormat => "+privateKey.getFormat());
-            logger.info("privateKey.toString => "+privateKey.toString());
-
             String stringPublicKey = Base64.getEncoder().encodeToString(publicKey.getEncoded()); // Base64 인코딩
             String stringPrivateKey = Base64.getEncoder().encodeToString(privateKey.getEncoded()); // Base64 인코딩
 
