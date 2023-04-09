@@ -1,5 +1,6 @@
 package com.ssang.gtd.user.controller;
 
+import com.ssang.gtd.utils.crypto.RSACrypto;
 import com.ssang.gtd.utils.crypto.SHACrypto;
 import com.ssang.gtd.user.service.MemberService;
 import com.ssang.gtd.user.dto.MemberDto;
@@ -16,18 +17,19 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
-import static com.ssang.gtd.utils.crypto.RSACrypto.*;
-import static java.net.URLDecoder.decode;
-import static java.net.URLEncoder.encode;
 
 @RestController
 public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private final MemberService memberService;
 
-    public LoginController(MemberService memberService, SHACrypto crypto) {
+    private final MemberService memberService;
+    private final RSACrypto rsaCrypto;
+    private final SHACrypto shaCrypto;
+
+    public LoginController(MemberService memberService, SHACrypto crypto, RSACrypto rsaCrypto, SHACrypto shaCrypto) {
         this.memberService = memberService;
+        this.rsaCrypto = rsaCrypto;
+        this.shaCrypto = shaCrypto;
     }
 
 
@@ -37,11 +39,10 @@ public class LoginController {
             return 0;
         }
 
-        dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
+        dto.setPassword(shaCrypto.encryptToHex(dto.getPassword(),"SHA-256"));
         MemberDto loginMember = memberService.login(dto);
         logger.info(loginMember.getId());
         logger.info(loginMember.getPassword());
-
 
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -75,20 +76,20 @@ public class LoginController {
     }
     @GetMapping("/test")
     public int test(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
-        HashMap<String, String> rsaKeyPair = createKeypairAsString();
+        HashMap<String, String> rsaKeyPair = rsaCrypto.createKeypairAsString();
         String publicKey = rsaKeyPair.get("publicKey");
         String privateKey = rsaKeyPair.get("privateKey");
-        System.out.println("만들어진 공개키:" + publicKey);
-        System.out.println("만들어진 개인키:" + privateKey);
+        logger.info("만들어진 공개키:" + publicKey);
+        logger.info("만들어진 개인키:" + privateKey);
 
         String plainText = "플레인 텍스트";
-        System.out.println("평문: " + plainText);
+        logger.info("평문: " + plainText);
 
-        String encryptedText = encrypt(plainText, publicKey);
-        System.out.println("암호화: " + encryptedText);
+        String encryptedText = rsaCrypto.encrypt(plainText, publicKey);
+        logger.info("암호화: " + encryptedText);
 
-        String decryptedText = decrypt(encryptedText, privateKey);
-        System.out.println("복호화: " + decryptedText);
+        String decryptedText = rsaCrypto.decrypt(encryptedText, privateKey);
+        logger.info("복호화: " + decryptedText);
         return 1;
     }
 

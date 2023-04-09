@@ -39,7 +39,7 @@ public class SHACrypto {
      * @param plainText
      * @return
      */
-    public static String encryptToBase64(String plainText, String Algorithms) {
+    public String encryptToBase64(String plainText, String Algorithms) {
         MessageDigest md = null;
 
         try {

@@ -1,41 +1,49 @@
 package com.ssang.gtd.utils.crypto;
-import com.ssang.gtd.user.controller.LoginController;
-import com.zaxxer.hikari.pool.HikariProxyCallableStatement;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
-import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.HashMap;
 
-import static java.net.URLDecoder.decode;
-import static java.net.URLEncoder.encode;
 
+@Component
 public class RSACrypto {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /*
+    /**
      * 공개키와 개인키 한 쌍 생성
+     * @param
+     * @return
+     * 사용법
      */
-    public static HashMap<String, String> createKeypairAsString() {
+    public HashMap<String, String> createKeypairAsString() {
         HashMap<String, String> stringKeypair = new HashMap<>();
 
         try {
             SecureRandom secureRandom = new SecureRandom();
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048, secureRandom);
-            KeyPair keyPair = keyPairGenerator.genKeyPair();
+            KeyPair keyPair = keyPairGenerator.genKeyPair(); // 키 생성
 
             PublicKey publicKey = keyPair.getPublic();
             PrivateKey privateKey = keyPair.getPrivate();
 
-            String stringPublicKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
-            String stringPrivateKey = Base64.getEncoder().encodeToString(privateKey.getEncoded());
+            logger.info("publicKey.getAlgorithm  => "+publicKey.getAlgorithm());
+            logger.info("publicKey.getFormat => "+publicKey.getFormat()); // 공개키 표준
+            logger.info("publicKey.toString => "+publicKey.toString());
+            logger.info("_+_+_+_+_+_+_+_+_+_+__+_+_+_");
+            logger.info("privateKey.getAlgorithm  => "+privateKey.getAlgorithm());
+            logger.info("privateKey.getFormat => "+privateKey.getFormat());
+            logger.info("privateKey.toString => "+privateKey.toString());
+
+            String stringPublicKey = Base64.getEncoder().encodeToString(publicKey.getEncoded()); // Base64 인코딩
+            String stringPrivateKey = Base64.getEncoder().encodeToString(privateKey.getEncoded()); // Base64 인코딩
 
             stringKeypair.put("publicKey", stringPublicKey);
             stringKeypair.put("privateKey", stringPrivateKey);
@@ -46,17 +54,23 @@ public class RSACrypto {
         return stringKeypair;
     }
 
-    /*
+    /**
      * 암호화 : 공개키로 진행
+     * @param
+     * @return
+     *
      */
-    public static String encrypt(String plainText, String stringPublicKey) {
+    public String encrypt(String plainText, String stringPublicKey) {
         String encryptedText = null;
 
         try {
             // 평문으로 전달받은 공개키를 사용하기 위해 공개키 객체 생성
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            // byte형태로 공개키를 디코딩한다.
             byte[] bytePublicKey = Base64.getDecoder().decode(stringPublicKey.getBytes());
+            // X509EncodedKeySpec 스펙을 사용하여 공개키를 ...
             X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(bytePublicKey);
+            // keyFactory 공개키 생성?
             PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
 
             // 만들어진 공개키 객체로 암호화 설정
@@ -72,12 +86,16 @@ public class RSACrypto {
         return encryptedText;
     }
 
-    /*
+    /**
      * 복호화 : 개인키로 진행
+     * @param
+     * @return
+     *
      */
-    public static String decrypt(String encryptedText, String stringPrivateKey) {
+    public String decrypt(String encryptedText, String stringPrivateKey) {
         String decryptedText = null;
 
+        byte[] decryptedBytes = new byte[0];
         try {
 
             // 평문으로 전달받은 공개키를 사용하기 위해 공개키 객체 생성
@@ -91,9 +109,7 @@ public class RSACrypto {
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
             // 암호문을 평문화하는 과정
-            byte[] encryptedBytes =  Base64.getDecoder().decode(encryptedText.getBytes());
-            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-            decryptedText = Base64.getEncoder().encodeToString(decryptedBytes);
+            decryptedText = new String(cipher.doFinal(Base64.getDecoder().decode(encryptedText.getBytes())));
         } catch (Exception e) {
             e.printStackTrace();
         }
