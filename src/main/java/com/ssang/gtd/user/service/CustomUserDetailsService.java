@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("loadUserByUsername 실행됨");
+        logger.info("CustomUserDetailsService => loadUserByUsername 실행됨");
         Optional<MemberDto> optionalMemberDto = memberDao.getById(username);
         MemberDto member = optionalMemberDto.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
         member.setRole("USER");

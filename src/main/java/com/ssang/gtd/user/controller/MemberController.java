@@ -19,31 +19,32 @@ public class MemberController {
     }
 
     @PostMapping("/joinUp")
-    public int member(@RequestBody MemberDto dto) throws Exception {
+    public int joinUp(@RequestBody MemberDto dto) throws Exception {
+        logger.info("MemberController => joinUp실행");
         return memberService.post(dto);
     }
 
     @PutMapping("/member")
     public int update(@RequestBody MemberDto dto){
-        logger.info("member udate 호출됨");
+        logger.info("MemberController => update실행");
         dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
         return memberService.put(dto);
     }
     @DeleteMapping("/member/")
     public int delete(@RequestBody MemberDto dto){
-        logger.info("member delete 호출됨");
+        logger.info("MemberController => delete실행");
         dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
         return memberService.delete(dto);
     }
     @GetMapping("/member")
     public List<MemberDto> getList(){
-        logger.info("member List 호출됨");
+        logger.info("MemberController => getList 실행");
         return memberService.list();
     }
 
     @GetMapping("/member/{id}")
     public MemberDto get(@PathVariable("id") int id){
-        logger.info("member get 호출됨");
+        logger.info("MemberController => get 실행");
         return memberService.get(id);
     }
 }
