@@ -24,13 +24,15 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private final long tokenValidityInMilliseconds;
     private final Key key;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey,@Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.tokenValidityInMilliseconds = tokenValidityInMilliseconds;
     }
-    // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
+    /** 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드*/
     public TokenInfoVO generateToken(Authentication authentication) {
         log.info("JwtTokenProvider - generateToken");
         // 권한 가져오기
@@ -39,8 +41,8 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
+        /*Access Token 생성*/
+        Date accessTokenExpiresIn = new Date(now + this.tokenValidityInMilliseconds);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -48,9 +50,9 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        // Refresh Token 생성
+        /* Refresh Token 생성*/
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
+                .setExpiration(new Date(now + this.tokenValidityInMilliseconds))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -60,23 +62,23 @@ public class JwtTokenProvider {
                 .refreshToken(refreshToken)
                 .build();
     }
-    // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
+    /** JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드*/
     public Authentication getAuthentication(String accessToken) {
         log.info("JwtTokenProvider - getAuthentication");
-        // 토큰 복호화
+        /* 토큰 복호화*/
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("auth") == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
-        // 클레임에서 권한 정보 가져오기
+        /* 클레임에서 권한 정보 가져오기*/
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("auth").toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        // UserDetails 객체를 만들어서 Authentication 리턴
+        /* UserDetails 객체를 만들어서 Authentication 리턴*/
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }

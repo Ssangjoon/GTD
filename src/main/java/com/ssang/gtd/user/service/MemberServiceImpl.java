@@ -1,11 +1,15 @@
 package com.ssang.gtd.user.service;
 
+import com.ssang.gtd.filter.JwtAuthenticationFilter;
 import com.ssang.gtd.jwt.JwtTokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.utils.TokenInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -69,7 +73,7 @@ public class MemberServiceImpl implements MemberService{
         return memberDao.getByIdAndPassword(dto);
     }
     @Override
-    public TokenInfoVO login(MemberDto dto) {
+    public ResponseEntity<TokenInfoVO> login(MemberDto dto) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getId(), dto.getPassword());
@@ -78,8 +82,13 @@ public class MemberServiceImpl implements MemberService{
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfoVO tokenInfo = jwtTokenProvider.generateToken(authentication);
-        return tokenInfo;
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + tokenInfo);
+        return new ResponseEntity<>(tokenInfo, httpHeaders, HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.utils.TokenInfoVO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface MemberService {
     int delete(MemberDto dto);
 
     MemberDto sessionLogin(MemberDto dto);
-    TokenInfoVO login(MemberDto dto);
+    ResponseEntity<TokenInfoVO> login(MemberDto dto);
 }
