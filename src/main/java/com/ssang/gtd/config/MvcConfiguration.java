@@ -11,6 +11,7 @@ import java.util.List;
 
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberArgumentResolver());
@@ -20,6 +21,6 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new Authinterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error");
+                .excludePathPatterns("/css/**", "/*.ico", "/error", "/login", "/joinUp","/test");
     }
 }

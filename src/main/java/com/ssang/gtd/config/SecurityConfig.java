@@ -5,6 +5,9 @@ import com.ssang.gtd.jwt.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity //웹보안 활성화를위한 annotation
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -29,17 +32,24 @@ public class SecurityConfig {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests()// 요청에 의한 보안검사 시작
-                .requestMatchers(HttpMethod.POST,"/member").permitAll()
-                .requestMatchers("/login").permitAll()
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST,"/joinUp").permitAll()
+                .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                .requestMatchers("/test").permitAll()
                 .anyRequest().hasRole("USER")
+                //.anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(provider);
+    }
 }

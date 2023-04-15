@@ -23,6 +23,9 @@
     <select id="getByIdAndPassword" parameterType="com.ssang.gtd.user.dto.MemberDto" resultType="com.ssang.gtd.user.dto.MemberDto">
         SELECT * FROM user where id=#{id} and password=#{password};
     </select>
+    <select id="getById" parameterType="com.ssang.gtd.user.dto.MemberDto" resultType="com.ssang.gtd.user.dto.MemberDto">
+        SELECT * FROM user where id=#{id};
+    </select>
     <insert id="post" parameterType="com.ssang.gtd.user.dto.MemberDto">
         insert into user(u_no,id,name,password,email,public_key,private_key) values(#{uNo},#{id},#{name},#{password},#{email},#{publicKey},#{privateKey});
     </insert>

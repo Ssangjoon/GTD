@@ -1,14 +1,10 @@
 package com.ssang.gtd.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Date;
+import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
@@ -18,6 +14,8 @@ public class MemberDto {
     String name;
     String status;
     String email;
+    String role;
     String publicKey;
     String privateKey;
+
 }

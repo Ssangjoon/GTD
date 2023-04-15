@@ -1,10 +1,10 @@
 package com.ssang.gtd.user.controller;
 
-import com.ssang.gtd.utils.crypto.RSACrypto;
-import com.ssang.gtd.utils.crypto.SHACrypto;
-import com.ssang.gtd.user.service.MemberService;
 import com.ssang.gtd.user.dto.MemberDto;
+import com.ssang.gtd.user.service.MemberService;
+import com.ssang.gtd.utils.VO.TokenInfoVO;
 import com.ssang.gtd.utils.anno.Login;
+import com.ssang.gtd.utils.crypto.SHACrypto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -13,33 +13,41 @@ import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-
 
 @RestController
 public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final MemberService memberService;
-    private final RSACrypto rsaCrypto;
-    private final SHACrypto shaCrypto;
 
-    public LoginController(MemberService memberService, SHACrypto crypto, RSACrypto rsaCrypto, SHACrypto shaCrypto) {
+    public LoginController(MemberService memberService) {
         this.memberService = memberService;
-        this.rsaCrypto = rsaCrypto;
-        this.shaCrypto = shaCrypto;
     }
 
 
     @PostMapping("login")
-    public int login(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
+    public TokenInfoVO login(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
+        //if (bindingResult.hasErrors()) {
+        //    return 0;
+        //}
+        //dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
+        TokenInfoVO tokenInfoVO = memberService.login(dto);
+        return tokenInfoVO;
+    }
+    @PostMapping("/test")
+    public String test(HttpServletRequest request){
+        return "success";
+    }
+    @PostMapping("sessionLogin")
+    public int sessionLogin(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
+        System.out.println("로깅 확인중");
+        logger.info(dto.toString());
         if (bindingResult.hasErrors()) {
             return 0;
         }
-        dto.setPassword(shaCrypto.encryptToHex(dto.getPassword(),"SHA-256"));
+        dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
 
-        MemberDto loginMember = memberService.login(dto);
+        MemberDto loginMember = memberService.sessionLogin(dto);
         logger.info(loginMember.getId());
         logger.info(loginMember.getPassword());
 
@@ -73,24 +81,4 @@ public class LoginController {
         }
         return 1;
     }
-    @GetMapping("/test")
-    public int test(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
-        HashMap<String, String> rsaKeyPair = rsaCrypto.createKeypairAsString();
-        String publicKey = rsaKeyPair.get("publicKey");
-        String privateKey = rsaKeyPair.get("privateKey");
-        logger.info("만들어진 공개키:" + publicKey);
-        logger.info("만들어진 개인키:" + privateKey);
-
-        String plainText = "플레인 텍스트";
-        logger.info("평문: " + plainText);
-
-        String encryptedText = rsaCrypto.encrypt(plainText, publicKey);
-        logger.info("암호화: " + encryptedText);
-
-        String decryptedText = rsaCrypto.decrypt(encryptedText, privateKey);
-        logger.info("복호화: " + decryptedText);
-        return 1;
-    }
-
-
 }

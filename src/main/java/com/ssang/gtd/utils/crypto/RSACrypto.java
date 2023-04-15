@@ -22,7 +22,7 @@ public class RSACrypto {
      * @return
      * 사용법
      */
-    public HashMap<String, String> createKeypairAsString() {
+    public static HashMap<String, String> createKeypairAsString() {
         HashMap<String, String> stringKeypair = new HashMap<>();
 
         try {
@@ -50,9 +50,9 @@ public class RSACrypto {
      * 암호화 : 공개키로 진행
      * @param
      * @return
-     *
+     * RSACrypto.encrypt(plainText, publicKey);
      */
-    public String encrypt(String plainText, String stringPublicKey) {
+    public static String encrypt(String plainText, String stringPublicKey) {
         String encryptedText = null;
 
         try {
@@ -82,9 +82,9 @@ public class RSACrypto {
      * 복호화 : 개인키로 진행
      * @param
      * @return
-     *
+     * RSACrypto.decrypt(encryptedText, privateKey);
      */
-    public String decrypt(String encryptedText, String stringPrivateKey) {
+    public static String decrypt(String encryptedText, String stringPrivateKey) {
         String decryptedText = null;
 
         byte[] decryptedBytes = new byte[0];
