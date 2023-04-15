@@ -9,11 +9,9 @@ import java.util.List;
 public interface MemberService {
     List<MemberDto> list();
     MemberDto get(int id);
-    int sessionPost(MemberDto dto);
     int post(MemberDto dto) throws Exception;
     int put(MemberDto dto);
     int delete(MemberDto dto);
 
-    MemberDto sessionLogin(MemberDto dto);
     ResponseEntity<TokenInfoVO> login(MemberDto dto);
 }

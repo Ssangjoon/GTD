@@ -45,10 +45,6 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int sessionPost(MemberDto dto) {
-        return memberDao.post(dto);
-    }
-    @Override
     public int post(MemberDto dto) throws Exception {
         if(memberDao.getById(dto.getId()).isPresent()){
             throw new Exception("이미 존재하는 ID");
@@ -68,10 +64,6 @@ public class MemberServiceImpl implements MemberService{
         return memberDao.delete(dto);
     }
 
-    @Override
-    public MemberDto sessionLogin(MemberDto dto) {
-        return memberDao.getByIdAndPassword(dto);
-    }
     @Override
     public ResponseEntity<TokenInfoVO> login(MemberDto dto) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
