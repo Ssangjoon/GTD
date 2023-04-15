@@ -1,7 +1,7 @@
 package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.user.dto.MemberDto;
-import com.ssang.gtd.utils.VO.TokenInfoVO;
+import com.ssang.gtd.utils.TokenInfoVO;
 
 import java.util.List;
 

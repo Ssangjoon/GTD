@@ -3,7 +3,7 @@ package com.ssang.gtd.user.service;
 import com.ssang.gtd.jwt.JwtTokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dto.MemberDto;
-import com.ssang.gtd.utils.VO.TokenInfoVO;
+import com.ssang.gtd.utils.TokenInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

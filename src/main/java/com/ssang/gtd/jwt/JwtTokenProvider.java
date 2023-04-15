@@ -1,6 +1,6 @@
 package com.ssang.gtd.jwt;
 
-import com.ssang.gtd.utils.VO.TokenInfoVO;
+import com.ssang.gtd.utils.TokenInfoVO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

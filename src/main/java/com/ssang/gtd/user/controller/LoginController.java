@@ -2,7 +2,7 @@ package com.ssang.gtd.user.controller;
 
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.user.service.MemberService;
-import com.ssang.gtd.utils.VO.TokenInfoVO;
+import com.ssang.gtd.utils.TokenInfoVO;
 import com.ssang.gtd.utils.anno.Login;
 import com.ssang.gtd.utils.crypto.SHACrypto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,19 +24,18 @@ public class LoginController {
         this.memberService = memberService;
     }
 
+    @PostMapping("/test")
+    public String test(HttpServletRequest request){
+        return "success";
+    }
 
     @PostMapping("login")
     public TokenInfoVO login(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
         //if (bindingResult.hasErrors()) {
         //    return 0;
         //}
-        //dto.setPassword(SHACrypto.encryptToHex(dto.getPassword(),"SHA-256"));
         TokenInfoVO tokenInfoVO = memberService.login(dto);
         return tokenInfoVO;
-    }
-    @PostMapping("/test")
-    public String test(HttpServletRequest request){
-        return "success";
     }
     @PostMapping("sessionLogin")
     public int sessionLogin(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
