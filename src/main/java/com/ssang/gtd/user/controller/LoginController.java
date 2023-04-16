@@ -33,7 +33,6 @@ public class LoginController {
 
     @PostMapping("login")
     public ResponseEntity<TokenInfoVO> login(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {
-        logger.info("LoginController => login 실행");
         //if (bindingResult.hasErrors()) {
         //    return 0;
         //}
@@ -42,7 +41,6 @@ public class LoginController {
     }
     @GetMapping("/logout")
     public int logout(HttpServletResponse response, HttpServletRequest request) {
-        logger.info("LoginController => logout 실행");
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
