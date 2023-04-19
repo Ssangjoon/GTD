@@ -40,7 +40,7 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        /*Access Token 생성*/
+        // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + this.tokenValidityInMilliseconds);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
@@ -49,7 +49,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        /* Refresh Token 생성*/
+        // Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(now + this.tokenValidityInMilliseconds))
                 .signWith(key, SignatureAlgorithm.HS256)

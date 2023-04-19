@@ -1,5 +1,7 @@
 package com.ssang.gtd.user.controller;
 
+import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.user.service.MemberService;
 import com.ssang.gtd.utils.crypto.SHACrypto;
@@ -19,7 +21,7 @@ public class MemberController {
     }
 
     @PostMapping("/joinUp")
-    public int joinUp(@RequestBody MemberDto dto) throws Exception {
+    public Member joinUp(@RequestBody MemberCreateRequest dto) throws Exception {
         return memberService.post(dto);
     }
 

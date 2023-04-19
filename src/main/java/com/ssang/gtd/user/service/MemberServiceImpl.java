@@ -3,8 +3,13 @@ package com.ssang.gtd.user.service;
 import com.ssang.gtd.filter.JwtAuthenticationFilter;
 import com.ssang.gtd.jwt.JwtTokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
+import com.ssang.gtd.user.dao.MemberRepository;
+import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.utils.TokenInfoVO;
+import com.ssang.gtd.utils.cons.UserRoleEnum;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -26,13 +32,8 @@ public class MemberServiceImpl implements MemberService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;
 
-    public MemberServiceImpl(MemberDao memberDao, AuthenticationManagerBuilder authenticationManagerBuilder, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
-        this.memberDao = memberDao;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     @Override
     public List<MemberDto> list() {
@@ -44,14 +45,13 @@ public class MemberServiceImpl implements MemberService{
         return memberDao.get(id);
     }
 
-    @Override
-    public int post(MemberDto dto) throws Exception {
-        if(memberDao.getById(dto.getId()).isPresent()){
+    public Member post(MemberCreateRequest dto)throws Exception {
+        if(memberRepository.findById(dto.getId()).isPresent()){
             throw new Exception("이미 존재하는 ID");
         }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        dto.setRole("USER");
-        return memberDao.post(dto);
+        dto.setRole(UserRoleEnum.USER);
+        return memberRepository.save(dto.toEntity());
     }
 
     @Override

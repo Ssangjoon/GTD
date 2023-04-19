@@ -1,5 +1,6 @@
 package com.ssang.gtd.user.dto;
 
+import com.ssang.gtd.utils.cons.UserRoleEnum;
 import lombok.*;
 
 @Getter
@@ -14,8 +15,7 @@ public class MemberDto {
     String name;
     String status;
     String email;
-    String role;
-    String publicKey;
-    String privateKey;
+    UserRoleEnum role;
 
+    /*https://testGTD.com*/
 }

@@ -26,10 +26,6 @@ public class LoginController {
         this.memberService = memberService;
     }
 
-    @PostMapping("/test")
-    public String test(HttpServletRequest request){
-        return "success";
-    }
 
     @PostMapping("login")
     public ResponseEntity<TokenInfoVO> login(@RequestBody MemberDto dto, BindingResult bindingResult, HttpServletResponse response, HttpServletRequest request) {

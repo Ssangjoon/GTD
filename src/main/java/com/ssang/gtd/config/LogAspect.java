@@ -14,15 +14,6 @@ public class LogAspect {
 
     @Before("execution(* com.ssang.gtd..*(..))")
     public void beforeMethodExecution(JoinPoint joinPoint) {
-        String methodName = joinPoint.getSignature().getName();
-        String className = joinPoint.getTarget().getClass().getSimpleName();
-        logger.info("{} => {} 실행", className,methodName);
+        logger.info("[{}] => [{} 실행]", joinPoint.getTarget().getClass().getSimpleName(), joinPoint.getSignature().getName());
     }
-    //@Before("execution(* com.ssang.gtd..*(..))")
-    /*public Object logging(ProceedingJoinPoint pjp) throws Throwable {
-        logger.info("{} => {} 실행됨", pjp.getSignature().getDeclaringTypeName(),pjp.getSignature().getName());
-        Object result = pjp.proceed();
-        logger.info("{} => {} 종료됨", pjp.getSignature().getDeclaringTypeName(),pjp.getSignature().getName());
-        return result;
-    }*/
 }
