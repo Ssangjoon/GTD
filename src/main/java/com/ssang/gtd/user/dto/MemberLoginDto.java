@@ -9,32 +9,29 @@ import lombok.Setter;
 
 import java.time.OffsetDateTime;
 
-public class MemberCreateDto {
+public class MemberLoginDto {
 
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class MemberCreateRequest{
+    public static class MemberLoginRequest{
         private String id;
-        private String name;
         private String password;
-        private String email;
         private UserRoleEnum role;
 
         public Member toEntity(){
             return Member.builder()
                     .id(id)
-                    .name(name)
                     .password(password)
                     .role(role)
-                    .email(email).build();
+                    .build();
         }
     }
 
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class MemberCreateResponse {
+    public static class MemberLoginResponse {
         private MemberCreateData data;
     }
 
@@ -44,12 +41,10 @@ public class MemberCreateDto {
     public static class MemberCreateData {
         private String id;
         private String name;
-        private String password;
-        private UserRoleEnum role;
         private OffsetDateTime createdAt;
 
         public static MemberCreateData create(Member member) {
-            return new MemberCreateData(member.getId(), member.getName(), member.getPassword(), member.getRole(), member.getCreatedAt());
+            return new MemberCreateData(member.getId(), member.getName(), member.getCreatedAt());
         }
     }
 }
