@@ -35,8 +35,8 @@ public class MemberController {
         Member member = memberService.put(dto);
         return new MemberUpdateResponse(MemberUpdateData.update(member));
     }
-    @DeleteMapping("/member//{id}")
-    public void delete(@RequestParam Long id){
+    @DeleteMapping("/member/{id}")
+    public void delete(@PathVariable Long id){
         memberService.delete(id);
     }
     @GetMapping("/member")
