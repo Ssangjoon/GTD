@@ -5,6 +5,7 @@ import com.ssang.gtd.things.dao.MatCollectDao;
 import com.ssang.gtd.things.dto.CollectionDto;
 import com.ssang.gtd.things.dto.MatColDto;
 import com.ssang.gtd.utils.file.FileServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class MatCollectServiceImpl implements MatCollectService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MatCollectDao matCollectDao;
     private final CollectDao collectDao;
     private final FileServiceImpl fileService;
 
-    public MatCollectServiceImpl(MatCollectDao matCollectDao, CollectDao collectDao, FileServiceImpl fileService) {
-        this.matCollectDao = matCollectDao;
-        this.collectDao = collectDao;
-        this.fileService = fileService;
-    }
 
     @Override
     public List<MatColDto> list() { return matCollectDao.list(); }

@@ -3,10 +3,7 @@ package com.ssang.gtd.things.domain;
 import com.ssang.gtd.BaseEntity;
 import com.ssang.gtd.user.domain.Member;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 @DynamicInsert
@@ -14,19 +11,23 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MatCol extends BaseEntity {
+public class Collect extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(length = 255)
-    String goal;
-    @Column(length = 50, nullable = false)
     String content;
+    @Column(length = 50, nullable = false)
+    String type;
     @ManyToOne
     @JoinColumn(name="userId")
     Member member;
 
-    @OneToOne
-    @JoinColumn(name = "collectId")
-    private Collect collect;
+    @Builder
+    public Collect(Long id, String content, String type, Member member) {
+        this.id = id;
+        this.content = content;
+        this.type = type;
+        this.member = member;
+    }
 }

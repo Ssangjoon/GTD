@@ -18,7 +18,6 @@ public class CollectServiceImpl implements CollectService {
     public List<CollectionDto> list() { return collectDao.list(); }
     @Override
     public CollectionDto get(int id) { return collectDao.get(id); }
-
     @Override
     public int post(CollectionDto dto) {
         return collectDao.post(dto);

@@ -5,6 +5,7 @@ import com.ssang.gtd.user.service.MemberService;
 import com.ssang.gtd.utils.TokenInfoVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@RequiredArgsConstructor
 public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final MemberService memberService;
-
-    public LoginController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
 
     @PostMapping("/test")
     public String test(HttpServletRequest request) {

@@ -8,6 +8,7 @@ import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateData;
 import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateRequest;
 import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateResponse;
 import com.ssang.gtd.user.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 public class MemberController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MemberService memberService;
-
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
 
     @PostMapping("/joinUp")
     public MemberCreateResponse joinUp(@RequestBody MemberCreateRequest dto) throws Exception {
