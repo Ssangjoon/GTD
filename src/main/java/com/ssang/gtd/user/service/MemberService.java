@@ -9,13 +9,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberService {
-    List<MemberDto> list();
-    MemberDto get(int id);
+    List<Member> list();
+    Optional<Member> get(Long id);
     Member post(MemberCreateRequest dto) throws Exception;
     Member put(MemberUpdateRequest dto) throws Exception;
-    int delete(MemberDto dto);
+    void delete(Long id);
     void logout(HttpServletRequest request);
     ResponseEntity<TokenInfoVO> login(MemberDto dto);
 }

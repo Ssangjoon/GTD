@@ -26,7 +26,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+;
 
 @Service
 @RequiredArgsConstructor
@@ -42,18 +45,18 @@ public class MemberServiceImpl implements MemberService{
 
 
     @Override
-    public List<MemberDto> list() {
-        return memberDao.list();
+    public List<Member> list() {
+        return memberRepository.findAll();
     }
 
     @Override
-    public MemberDto get(int id) {
-        return memberDao.get(id);
+    public Optional<Member> get(Long id) {
+        return memberRepository.findById(id);
     }
 
     public Member post(MemberCreateRequest dto)throws Exception {
-        if(memberRepository.findByEmail(dto.getEmail()).isPresent()){
-            throw new Exception("이미 존재하는 ID");
+        if(memberRepository.findByUserName(dto.getUserName()).isPresent()){
+            throw new Exception("이미 존재하는 userName");
         }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         dto.setRole(UserRoleEnum.USER);
@@ -69,8 +72,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int delete(MemberDto dto) {
-        return memberDao.delete(dto);
+    public void delete(Long id) {
+        memberRepository.deleteById(id);
     }
 
     @Override
