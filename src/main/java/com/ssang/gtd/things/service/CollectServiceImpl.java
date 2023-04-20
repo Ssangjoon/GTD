@@ -1,14 +1,16 @@
 package com.ssang.gtd.things.service;
 
+import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dao.CollectDao;
 import com.ssang.gtd.things.dao.CollectRepository;
-import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
-import com.ssang.gtd.things.dto.collect.CollectionDto;
+import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +31,18 @@ public class CollectServiceImpl implements CollectService {
         return collectRepository.save(dto.toEntity());
     }
     @Override
-    public int put(CollectionDto dto) {
-        return collectDao.put(dto);
+    @Transactional
+    public Collect put(CollectUpdateRequest dto) throws Exception {
+        Collect collect = collectRepository.findById(dto.getId()).orElseThrow(() -> new Exception("존재하지 않는 글"));
+        if(collect.getMember().getId().equals(dto.getMember().getId())){
+            if(!StringUtils.hasText(dto.getType())){
+                dto.setType(collect.getType());
+            }
+            collect.update(dto.getContent(), dto.getType());
+        }else{
+            throw new Exception("작성자가 아닙니다.");
+        }
+        return collect;
     }
     @Override
     public void delete(Long id) {

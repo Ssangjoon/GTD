@@ -2,10 +2,13 @@ package com.ssang.gtd.things.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateData;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
+import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
 import com.ssang.gtd.things.dto.collect.CollectionDto;
+import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateData;
+import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
+import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateResponse;
 import com.ssang.gtd.things.dto.matcol.MatColDto;
 import com.ssang.gtd.things.service.CollectService;
 import com.ssang.gtd.things.service.MatCollectService;
@@ -37,8 +40,9 @@ public class CollectController {
         return new CollectCreateResponse(CollectCreateData.create(collect));
     }
     @PutMapping("/collection")
-    public int update(@RequestBody CollectionDto dto){
-        return collectService.put(dto);
+    public CollectUpdateResponse update(@RequestBody CollectUpdateRequest dto) throws Exception {
+        Collect collect = collectService.put(dto);
+        return new CollectUpdateResponse(CollectUpdateData.update(collect));
     }
     @DeleteMapping("/collection/{id}")
     public void delete(@PathVariable("id") Long id){

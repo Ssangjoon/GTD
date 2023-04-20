@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @DynamicInsert
+@DynamicUpdate
 @Entity
 @Getter
 @ToString
@@ -30,11 +32,9 @@ public class Collect extends BaseEntity {
         this.type = type;
         this.member = member;
     }
-    public void update(Long id, String content, String type, Member member) {
-        this.id = id;
+    public void update(String content, String type) {
         this.content = content;
         this.type = type;
-        this.member = member;
     }
 
 }
