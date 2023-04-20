@@ -7,6 +7,7 @@ import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.domain.Member;
 import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.MemberDto;
+import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateRequest;
 import com.ssang.gtd.utils.TokenInfoVO;
 import com.ssang.gtd.utils.cons.UserRoleEnum;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +52,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     public Member post(MemberCreateRequest dto)throws Exception {
-        if(memberRepository.findById(dto.getId()).isPresent()){
+        if(memberRepository.findByEmail(dto.getEmail()).isPresent()){
             throw new Exception("이미 존재하는 ID");
         }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -59,8 +61,11 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int put(MemberDto dto) {
-        return memberDao.put(dto);
+    @Transactional
+    public Member put(MemberUpdateRequest dto)throws Exception {
+        Member member = memberRepository.findByUserName(dto.getUserName()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
+        member.update(dto.getUserName(), dto.getName(),dto.getPassword(), dto.getEmail());
+        return member;
     }
 
     @Override
@@ -72,7 +77,7 @@ public class MemberServiceImpl implements MemberService{
     public ResponseEntity<TokenInfoVO> login(MemberDto dto) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getId(), dto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUserName(), dto.getPassword());
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);

@@ -9,9 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
-    int uNo;
-    String id;
     String password;
+    String userName;
     String name;
     String status;
     String email;

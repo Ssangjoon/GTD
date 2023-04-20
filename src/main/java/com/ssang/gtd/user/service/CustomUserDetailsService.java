@@ -23,8 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Member> optionalMemberDto = memberRepository.findById(username);
+    public UserDetails loadUserByUsername(String uName) throws UsernameNotFoundException {
+        Optional<Member> optionalMemberDto = memberRepository.findByUserName(uName);
         Member member = optionalMemberDto.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
         UserDetails result = createUserDetails(member);
         return result;
@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(Member member) {
         return User.builder()
-                .username(member.getId())
+                .username(member.getName())
                 .password(member.getPassword())
                 .roles(String.valueOf(member.getRole()))
                 .authorities("USER")
