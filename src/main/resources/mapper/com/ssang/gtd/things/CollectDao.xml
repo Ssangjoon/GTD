@@ -17,13 +17,13 @@
     <select id="list" resultType="String">
         SELECT * FROM collection;
     </select>
-    <select id="get" parameterType="int" resultType="com.ssang.gtd.things.dto.CollectionDto">
+    <select id="get" parameterType="int" resultType="com.ssang.gtd.things.dto.collect.CollectionDto">
         SELECT * FROM collection where c_no=#{id};
     </select>
-    <insert id="post" parameterType="com.ssang.gtd.things.dto.CollectionDto">
+    <insert id="post" parameterType="com.ssang.gtd.things.dto.collect.CollectionDto">
         insert into collection(content,u_no,c_dt) values(#{content},#{uNo},current_timestamp);
     </insert>
-    <update id="put" parameterType="com.ssang.gtd.things.dto.CollectionDto">
+    <update id="put" parameterType="com.ssang.gtd.things.dto.collect.CollectionDto">
         update collection
         <set>
             <if test="type != null">type = #{type},</if>

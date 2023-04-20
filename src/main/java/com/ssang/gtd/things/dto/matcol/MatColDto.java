@@ -1,4 +1,4 @@
-package com.ssang.gtd.things.dto;
+package com.ssang.gtd.things.dto.matcol;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

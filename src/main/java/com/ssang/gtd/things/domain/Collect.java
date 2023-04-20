@@ -4,6 +4,7 @@ import com.ssang.gtd.BaseEntity;
 import com.ssang.gtd.user.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @DynamicInsert
@@ -18,6 +19,7 @@ public class Collect extends BaseEntity {
     @Column(length = 255)
     String content;
     @Column(length = 50, nullable = false)
+    @ColumnDefault("'collection'")
     String type;
     @ManyToOne
     @JoinColumn(name="userId")

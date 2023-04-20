@@ -1,6 +1,6 @@
 package com.ssang.gtd.things.dao;
 
-import com.ssang.gtd.things.dto.CollectionDto;
+import com.ssang.gtd.things.dto.collect.CollectionDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,10 +1,8 @@
 package com.ssang.gtd.things.dao;
 
 
-import com.ssang.gtd.things.dto.CollectionDto;
-import com.ssang.gtd.things.dto.MatColDto;
+import com.ssang.gtd.things.dto.matcol.MatColDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

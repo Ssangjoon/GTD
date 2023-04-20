@@ -1,5 +1,6 @@
-package com.ssang.gtd.things.dto;
+package com.ssang.gtd.things.dto.collect;
 
+import com.ssang.gtd.things.dto.matcol.MatColDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -22,7 +22,7 @@ public class MatCol extends BaseEntity {
     String goal;
     @Column(length = 50, nullable = false)
     String content;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="userId")
     Member member;
 

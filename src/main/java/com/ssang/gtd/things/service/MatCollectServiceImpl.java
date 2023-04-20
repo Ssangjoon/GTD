@@ -2,8 +2,8 @@ package com.ssang.gtd.things.service;
 
 import com.ssang.gtd.things.dao.CollectDao;
 import com.ssang.gtd.things.dao.MatCollectDao;
-import com.ssang.gtd.things.dto.CollectionDto;
-import com.ssang.gtd.things.dto.MatColDto;
+import com.ssang.gtd.things.dto.collect.CollectionDto;
+import com.ssang.gtd.things.dto.matcol.MatColDto;
 import com.ssang.gtd.utils.file.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

@@ -1,8 +1,7 @@
 package com.ssang.gtd.things.service;
 
-import com.ssang.gtd.things.dto.CollectionDto;
-import com.ssang.gtd.things.dto.MatColDto;
-import com.ssang.gtd.utils.file.FileDto;
+import com.ssang.gtd.things.dto.collect.CollectionDto;
+import com.ssang.gtd.things.dto.matcol.MatColDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

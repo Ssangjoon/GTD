@@ -1,8 +1,12 @@
 package com.ssang.gtd.things.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ssang.gtd.things.dto.CollectionDto;
-import com.ssang.gtd.things.dto.MatColDto;
+import com.ssang.gtd.things.domain.Collect;
+import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
+import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateData;
+import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
+import com.ssang.gtd.things.dto.collect.CollectionDto;
+import com.ssang.gtd.things.dto.matcol.MatColDto;
 import com.ssang.gtd.things.service.CollectService;
 import com.ssang.gtd.things.service.MatCollectService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +31,9 @@ public class CollectController {
         return collectService.get(id);
     }
     @PostMapping("/collection")
-    public int post(@RequestBody CollectionDto dto){
-        return collectService.post(dto);
+    public CollectCreateResponse post(@RequestBody CollectCreateRequest dto){
+        Collect collect =  collectService.post(dto);
+        return new CollectCreateResponse(CollectCreateData.create(collect));
     }
     @PutMapping("/collection")
     public int update(@RequestBody CollectionDto dto){
