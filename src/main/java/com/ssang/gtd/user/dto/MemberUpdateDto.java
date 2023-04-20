@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
-
 public class MemberUpdateDto {
 
     @Getter
@@ -45,10 +43,9 @@ public class MemberUpdateDto {
         private String name;
         private String password;
         private UserRoleEnum role;
-        private OffsetDateTime createdAt;
 
         public static MemberUpdateData update(Member member) {
-            return new MemberUpdateData(member.getName(), member.getPassword(), member.getRole(), member.getCreatedAt());
+            return new MemberUpdateData(member.getName(), member.getPassword(), member.getRole());
         }
     }
 }

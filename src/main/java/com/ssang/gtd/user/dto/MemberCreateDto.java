@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
-
 public class MemberCreateDto {
 
     @Getter
@@ -45,10 +43,9 @@ public class MemberCreateDto {
         private String name;
         private String password;
         private UserRoleEnum role;
-        private OffsetDateTime createdAt;
 
         public static MemberCreateData create(Member member) {
-            return new MemberCreateData(member.getName(), member.getPassword(), member.getRole(), member.getCreatedAt());
+            return new MemberCreateData(member.getName(), member.getPassword(), member.getRole());
         }
     }
 }

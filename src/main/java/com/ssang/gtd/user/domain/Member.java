@@ -1,19 +1,18 @@
 package com.ssang.gtd.user.domain;
 
+import com.ssang.gtd.BaseEntity;
 import com.ssang.gtd.utils.cons.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.time.OffsetDateTime;
-
 @DynamicInsert
 @Entity
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -31,7 +30,6 @@ public class Member {
     @Column(length = 50, nullable = false)
     UserRoleEnum role;
 
-    private OffsetDateTime createdAt = OffsetDateTime.now();
     @Builder
     public Member(String userName, String password, String name, String email, UserRoleEnum role) {
         this.userName = userName;
