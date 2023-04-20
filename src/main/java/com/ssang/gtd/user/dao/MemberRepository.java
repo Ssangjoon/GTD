@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.dao;
 
-import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

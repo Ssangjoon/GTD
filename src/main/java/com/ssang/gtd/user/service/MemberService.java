@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.service;
 
-import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateRequest;

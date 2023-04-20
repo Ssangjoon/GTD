@@ -1,15 +1,16 @@
 package com.ssang.gtd.things.service;
 
-import com.ssang.gtd.things.domain.Collect;
+import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
 import com.ssang.gtd.things.dto.collect.CollectionDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CollectService {
-    List<CollectionDto> list();
-    CollectionDto get(int id);
+    List<Collect> list();
+    Optional<Collect> get(Long id);
     Collect post(CollectCreateRequest dto);
     int put(CollectionDto dto);
-    int delete(int id);
+    void delete(Long id);
 }

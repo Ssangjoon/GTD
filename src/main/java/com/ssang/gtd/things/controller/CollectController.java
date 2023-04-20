@@ -1,7 +1,7 @@
 package com.ssang.gtd.things.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ssang.gtd.things.domain.Collect;
+import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateData;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +26,9 @@ public class CollectController {
     private final MatCollectService matCollectService;
 
     @GetMapping("/collection")
-    public List<CollectionDto> getList(){ return collectService.list();}
+    public List<Collect> getList(){ return collectService.list();}
     @GetMapping("/collection/{id}")
-    public CollectionDto get(@PathVariable("id") int id){
+    public Optional<Collect> get(@PathVariable("id") Long id){
         return collectService.get(id);
     }
     @PostMapping("/collection")
@@ -40,8 +41,8 @@ public class CollectController {
         return collectService.put(dto);
     }
     @DeleteMapping("/collection/{id}")
-    public int delete(@PathVariable("id") int id){
-        return collectService.delete(id);
+    public void delete(@PathVariable("id") Long id){
+        collectService.delete(id);
     }
 
     @PostMapping("/material")

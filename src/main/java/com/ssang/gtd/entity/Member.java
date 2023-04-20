@@ -1,6 +1,5 @@
-package com.ssang.gtd.user.domain;
+package com.ssang.gtd.entity;
 
-import com.ssang.gtd.BaseEntity;
 import com.ssang.gtd.utils.cons.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +28,7 @@ public class Member extends BaseEntity {
     String email;
     @Column(length = 50, nullable = false)
     UserRoleEnum role;
+
 
     @Builder
     public Member(String userName, String password, String name, String email, UserRoleEnum role) {

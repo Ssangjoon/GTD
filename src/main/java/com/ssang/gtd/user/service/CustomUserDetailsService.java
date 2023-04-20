@@ -2,7 +2,7 @@ package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
-import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.ssang.gtd.things.dto.collect;
 
-import com.ssang.gtd.things.domain.Collect;
-import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.entity.Collect;
+import com.ssang.gtd.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

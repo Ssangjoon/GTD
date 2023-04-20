@@ -1,4 +1,4 @@
-package com.ssang.gtd;
+package com.ssang.gtd.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

@@ -1,7 +1,5 @@
-package com.ssang.gtd.things.domain;
+package com.ssang.gtd.entity;
 
-import com.ssang.gtd.BaseEntity;
-import com.ssang.gtd.user.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

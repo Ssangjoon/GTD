@@ -1,7 +1,5 @@
-package com.ssang.gtd.things.domain;
+package com.ssang.gtd.entity;
 
-import com.ssang.gtd.BaseEntity;
-import com.ssang.gtd.user.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -32,4 +30,11 @@ public class Collect extends BaseEntity {
         this.type = type;
         this.member = member;
     }
+    public void update(Long id, String content, String type, Member member) {
+        this.id = id;
+        this.content = content;
+        this.type = type;
+        this.member = member;
+    }
+
 }

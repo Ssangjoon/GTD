@@ -4,7 +4,7 @@ import com.ssang.gtd.filter.JwtAuthenticationFilter;
 import com.ssang.gtd.jwt.JwtTokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
-import com.ssang.gtd.user.domain.Member;
+import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateRequest;

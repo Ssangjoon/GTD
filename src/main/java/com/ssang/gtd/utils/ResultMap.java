@@ -1,4 +1,4 @@
-package com.ssang.gtd;
+package com.ssang.gtd.utils;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
