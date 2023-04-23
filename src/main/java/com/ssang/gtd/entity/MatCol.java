@@ -1,11 +1,10 @@
 package com.ssang.gtd.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+
+import java.util.Date;
 
 @DynamicInsert
 @Entity
@@ -20,11 +19,23 @@ public class MatCol extends BaseEntity {
     String goal;
     @Column(length = 50, nullable = false)
     String content;
-    @OneToOne
+    @Temporal(TemporalType.DATE)
+    Date goalDt;
+
+    @ManyToOne
     @JoinColumn(name="userId")
     Member member;
 
     @OneToOne
     @JoinColumn(name = "collectId")
-    private Collect collect;
+    Collect collect;
+    @Builder
+    public MatCol(Long id, String goal, String content, Date goalDt, Member member, Collect collect) {
+        this.id = id;
+        this.goal = goal;
+        this.content = content;
+        this.goalDt = goalDt;
+        this.member = member;
+        this.collect = collect;
+    }
 }

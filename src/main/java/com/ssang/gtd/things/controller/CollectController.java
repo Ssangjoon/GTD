@@ -5,11 +5,10 @@ import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateData;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
-import com.ssang.gtd.things.dto.collect.CollectionDto;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateData;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateResponse;
-import com.ssang.gtd.things.dto.matcol.MatColDto;
+import com.ssang.gtd.things.dto.matcol.MatColCreateDto.MatColCreateRequest;
 import com.ssang.gtd.things.service.CollectService;
 import com.ssang.gtd.things.service.MatCollectService;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +49,9 @@ public class CollectController {
     }
 
     @PostMapping("/material")
-    public int post(@RequestPart(value = "cDto") CollectionDto cDto,@RequestPart(value = "mDto") MatColDto mDto, List<MultipartFile> files) throws JsonProcessingException {
+    public int post(@RequestBody MatColCreateRequest dto, List<MultipartFile> files) throws JsonProcessingException {
         try {
-            return matCollectService.post(cDto,mDto,files);
+            return matCollectService.post(dto,files);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
