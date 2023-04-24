@@ -2,11 +2,9 @@ package com.ssang.gtd.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Date;
 
-@DynamicInsert
 @Entity
 @Getter
 @ToString
