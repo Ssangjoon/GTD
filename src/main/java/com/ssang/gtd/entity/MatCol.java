@@ -12,17 +12,17 @@ import java.util.Date;
 public class MatCol extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(length = 255)
-    String goal;
+    private String goal;
     @Column(length = 50, nullable = false)
-    String content;
+    private String content;
     @Temporal(TemporalType.DATE)
-    Date goalDt;
+    private Date goalDt;
 
     @ManyToOne
     @JoinColumn(name="userId")
-    Member member;
+    private Member member;
 
     @OneToOne
     @JoinColumn(name = "collectId")

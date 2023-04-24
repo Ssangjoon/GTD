@@ -12,10 +12,10 @@ public class CollectionUpdateDto {
     @Setter
     @NoArgsConstructor
     public static class CollectUpdateRequest{
-        Long id;
-        String content;
-        Member member;
-        String type;
+        private Long id;
+        private String content;
+        private Member member;
+        private String type;
         public Collect toEntity() {
             return Collect.builder()
                     .id(id)

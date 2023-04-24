@@ -14,13 +14,15 @@ public class MatColCreateDto {
     @Setter
     @NoArgsConstructor
     public static class MatColCreateRequest{
-        String goal;
-        String content;
-        Date goalDt;
-        Member member;
-        Collect collect;
+        private Long id;
+        private String goal;
+        private String content;
+        private Date goalDt;
+        private Member member;
+        private Collect collect;
         public MatCol toEntity(){
             return MatCol.builder()
+                    .id(id)
                     .goal(goal)
                     .goalDt(goalDt)
                     .member(member)

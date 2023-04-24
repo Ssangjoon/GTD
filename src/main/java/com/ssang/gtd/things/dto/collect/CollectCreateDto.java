@@ -12,8 +12,8 @@ public class CollectCreateDto {
     @Setter
     @NoArgsConstructor
     public static class CollectCreateRequest{
-        String content;
-        Member member;
+        private String content;
+        private Member member;
         public Collect toEntity() {
             return Collect.builder()
                     .content(content)
@@ -32,10 +32,10 @@ public class CollectCreateDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectCreateData {
-        Long id;
-        String content;
-        String type;
-        Member member;
+        private Long id;
+        private String content;
+        private String type;
+        private Member member;
 
         public static CollectCreateData create(Collect collect) {
             return new CollectCreateData(collect.getId(),collect.getContent(),collect.getType(),collect.getMember());
