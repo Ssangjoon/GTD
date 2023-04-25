@@ -30,12 +30,8 @@ public class MatColCreateDto {
                     .collect(collect)
                     .build();
         }
-        public void addCollectType(Long id, String content){
-            this.collect = Collect.builder()
-                    .id(id)
-                    .content(content)
-                    .type("collection")
-                    .build();
+        public void addCollectType(Collect collect){
+            this.collect = collect;
         }
     }
 }
