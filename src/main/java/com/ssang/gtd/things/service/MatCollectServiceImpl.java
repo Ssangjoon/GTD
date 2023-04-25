@@ -7,6 +7,7 @@ import com.ssang.gtd.things.dao.MatCollectDao;
 import com.ssang.gtd.things.dao.MatCollectRepository;
 import com.ssang.gtd.things.dto.matcol.MatColCreateDto.MatColCreateRequest;
 import com.ssang.gtd.things.dto.matcol.MatColDto;
+import com.ssang.gtd.utils.file.FileRepository;
 import com.ssang.gtd.utils.file.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class MatCollectServiceImpl implements MatCollectService {
     private final CollectService collectService;
     private final MatCollectRepository matCollectRepository;
     private final CollectRepository collectRepository;
+    private final FileRepository fileRepository;
 
 
     @Override
@@ -38,27 +40,35 @@ public class MatCollectServiceImpl implements MatCollectService {
     @Override
     @Transactional(noRollbackFor=Exception.class)
     public int post(MatColCreateRequest dto, List<MultipartFile> files) throws Exception {
+
         Collect collect = dto.getCollect();
         Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new Exception("존재하지 않는 글"));
+
         if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
+
             if(!StringUtils.hasText(collect.getType())){
+                // type 미기재시 update 전에 디폴트 타입 'collection'으로 새 객체 생성
                 Collect newCollect= Collect.builder()
                         .id(collect.getId())
                         .content(collect.getContent())
                         .type("collection")
                         .build();
-                dto.setCollect(newCollect);
+
+                dto.addCollectType(newCollect);
             }
+
             oldCollect.update(dto.getCollect().getContent(), dto.getCollect().getType());
+
         }else{
             throw new Exception("작성자가 아닙니다.");
         }
         matCollectRepository.save(dto.toEntity());
-        /*if(files != null && !files.isEmpty()){
-            logger.trace("파일 업로드");
-            List<Map<String, Object>> params = fileService.fileUpload("material", files, mDto.getMcNo());
-            matCollectDao.saveFile(params);
-        }*/
+        if(files != null && !files.isEmpty()){
+            /*logger.trace("파일 업로드");
+            // file dto 리스트를 만든다.
+            List<FileEntity> params = fileService.fileUpload("material", files, dto.getId());
+            fileRepository.saveAll(params);*/
+        }
         return 1;
     }
     @Override
