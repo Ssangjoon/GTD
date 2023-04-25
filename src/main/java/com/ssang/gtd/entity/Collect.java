@@ -21,7 +21,7 @@ public class Collect extends BaseEntity {
     @Column(length = 50, nullable = false)
     @ColumnDefault("'collection'")
     private String type;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
     private Member member;
 
