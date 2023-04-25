@@ -47,14 +47,8 @@ public class MatCollectServiceImpl implements MatCollectService {
         if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
 
             if(!StringUtils.hasText(collect.getType())){
-                // type 미기재시 update 전에 디폴트 타입 'collection'으로 새 객체 생성
-                Collect newCollect= Collect.builder()
-                        .id(collect.getId())
-                        .content(collect.getContent())
-                        .type("collection")
-                        .build();
-
-                dto.addCollectType(newCollect);
+                // 타입 미기재시 티폴트 타입으로 새 객체 생성
+                dto.addCollectType(collect.getId(), collect.getContent());
             }
 
             oldCollect.update(dto.getCollect().getContent(), dto.getCollect().getType());
