@@ -33,5 +33,8 @@ public class MatColCreateDto {
         public void addCollectType(Collect collect){
             this.collect = collect;
         }
+        public static void addCollectTypeTest(MatColCreateRequest dto, Collect collect){
+            dto.setCollect(collect);
+        }
     }
 }
