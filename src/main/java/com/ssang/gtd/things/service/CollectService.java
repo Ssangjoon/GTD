@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CollectService {
-    List<Collect> list();
-    Optional<Collect> get(Long id);
-    Collect post(CollectCreateRequest dto);
-    Collect put(CollectUpdateRequest dto) throws Exception;
-    void delete(Long id);
+    public List<Collect> list();
+    public Optional<Collect> get(Long id);
+    public Collect post(CollectCreateRequest dto);
+    public Collect put(CollectUpdateRequest dto) throws Exception;
+    public void delete(Long id);
 }

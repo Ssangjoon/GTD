@@ -7,9 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface MatCollectService {
-    List<MatColDto> list();
-    MatColDto get(int id);
-    int post(MatColCreateRequest dto, List<MultipartFile> files) throws Exception;
-    int put(MatColDto dto);
-    int delete(int id);
+    public List<MatColDto> list();
+    public MatColDto get(int id);
+    public int post(MatColCreateRequest dto, List<MultipartFile> files) throws Exception;
+    public int put(MatColDto dto);
+    public int delete(int id);
 }
