@@ -11,8 +11,6 @@ import com.ssang.gtd.things.dto.matcol.MatColCreateDto.MatColServiceDto;
 import com.ssang.gtd.things.dto.matcol.MatColDto;
 import com.ssang.gtd.utils.file.FileRepository;
 import com.ssang.gtd.utils.file.FileServiceImpl;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +24,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MatCollectServiceImpl implements MatCollectService {
-    @PersistenceContext
-    private EntityManager em;
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MatCollectDao matCollectDao;
     private final CollectDao collectDao;
@@ -46,8 +42,6 @@ public class MatCollectServiceImpl implements MatCollectService {
     @Override
     @Transactional(noRollbackFor=Exception.class)
     public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
-        /*EntityTransaction tx = em.getTransaction();
-        tx.begin();*/
 
         Collect collect = dto.getCollect();
         Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new Exception("존재하지 않는 글"));
@@ -72,8 +66,6 @@ public class MatCollectServiceImpl implements MatCollectService {
         }
 
         MatCol savedMatCol = matCollectRepository.save(dto.toEntity());
-        em.persist(savedMatCol);
-        em.flush();
 
         if(files != null && !files.isEmpty()){
             logger.trace("파일 업로드");
