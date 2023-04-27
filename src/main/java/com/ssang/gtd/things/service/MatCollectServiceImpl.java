@@ -7,7 +7,7 @@ import com.ssang.gtd.things.dao.CollectDao;
 import com.ssang.gtd.things.dao.CollectRepository;
 import com.ssang.gtd.things.dao.MatCollectDao;
 import com.ssang.gtd.things.dao.MatCollectRepository;
-import com.ssang.gtd.things.dto.matcol.MatColCreateDto.MatColCreateRequest;
+import com.ssang.gtd.things.dto.matcol.MatColCreateDto.MatColServiceDto;
 import com.ssang.gtd.things.dto.matcol.MatColDto;
 import com.ssang.gtd.utils.file.FileRepository;
 import com.ssang.gtd.utils.file.FileServiceImpl;
@@ -45,7 +45,7 @@ public class MatCollectServiceImpl implements MatCollectService {
 
     @Override
     @Transactional(noRollbackFor=Exception.class)
-    public int post(MatColCreateRequest dto, List<MultipartFile> files) throws Exception {
+    public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
         /*EntityTransaction tx = em.getTransaction();
         tx.begin();*/
 
@@ -62,7 +62,7 @@ public class MatCollectServiceImpl implements MatCollectService {
                         .type("collection")
                         .build();
 
-                dto = MatColCreateRequest.initMatColCreateRequest(dto,newCollect);
+                dto = MatColServiceDto.initMatColCreateRequest(dto,newCollect);
             }
 
             oldCollect.update(dto.getCollect().getContent(), dto.getCollect().getType());
@@ -72,8 +72,8 @@ public class MatCollectServiceImpl implements MatCollectService {
         }
 
         MatCol savedMatCol = matCollectRepository.save(dto.toEntity());
-        /*em.persist(savedMatCol);
-        em.flush();*/
+        em.persist(savedMatCol);
+        em.flush();
 
         if(files != null && !files.isEmpty()){
             logger.trace("파일 업로드");
