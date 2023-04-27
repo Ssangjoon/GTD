@@ -30,11 +30,14 @@ public class MatColCreateDto {
                     .collect(collect)
                     .build();
         }
-        public void addCollectType(Collect collect){
-            this.collect = collect;
-        }
-        public static void addCollectTypeTest(MatColCreateRequest dto, Collect collect){
-            dto.setCollect(collect);
+        public static MatColCreateRequest initMatColCreateRequest(MatColCreateRequest dto, Collect collect){
+            MatColCreateRequest matColCreateRequest = new MatColCreateRequest();
+            matColCreateRequest.goal = dto.goal;
+            matColCreateRequest.content = dto.content;
+            matColCreateRequest.goalDt = dto.goalDt;
+            matColCreateRequest.member = dto.member;
+            matColCreateRequest.collect = collect;
+            return matColCreateRequest;
         }
     }
 }
