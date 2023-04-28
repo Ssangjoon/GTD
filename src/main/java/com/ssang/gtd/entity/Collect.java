@@ -21,9 +21,6 @@ public class Collect extends BaseEntity {
     @Column(length = 50, nullable = false)
     @ColumnDefault("'collection'")
     private String type;
-    @ManyToOne
-    @JoinColumn(name="userId")
-    private Member member;
 
     @Builder
     public Collect(Long id, String content, String type, Member member) {
@@ -32,6 +29,12 @@ public class Collect extends BaseEntity {
         this.type = type;
         this.member = member;
     }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="userId")
+    //@JsonIgnore
+    private Member member;
     public void update(String content, String type) {
         this.content = content;
         this.type = type;
