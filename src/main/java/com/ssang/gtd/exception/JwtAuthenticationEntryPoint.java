@@ -2,7 +2,6 @@ package com.ssang.gtd.exception;
 
 
 import com.ssang.gtd.utils.ResVO;
-import com.ssang.gtd.utils.cons.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,7 +26,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         PrintWriter writer = response.getWriter();
         ErrorCode errorCode = ErrorCode.UNAUTORIZED;
         ResVO res = ResVO.builder()
-                .status(errorCode.getStatus())
+                .status(errorCode.getHttpStatus().value())
                 .message(errorCode.getMessage()).build();
         try{
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);

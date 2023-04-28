@@ -3,6 +3,8 @@ package com.ssang.gtd.things.service;
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.FileEntity;
 import com.ssang.gtd.entity.MatCol;
+import com.ssang.gtd.exception.ErrorCode;
+import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.things.dao.CollectDao;
 import com.ssang.gtd.things.dao.CollectRepository;
 import com.ssang.gtd.things.dao.MatCollectDao;
@@ -44,7 +46,8 @@ public class MatCollectServiceImpl implements MatCollectService {
     public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
 
         Collect collect = dto.getCollect();
-        Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new Exception("존재하지 않는 글"));
+        logger.info(ErrorCode.NOT_FOUND.getMessage());
+        Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 
         if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
 
