@@ -47,7 +47,7 @@ public class MatCollectServiceImpl implements MatCollectService {
 
         Collect collect = dto.getCollect();
         logger.info(ErrorCode.NOT_FOUND.getMessage());
-        Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+        Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.CAN_NOT_FOUND_BY_ID));
 
         if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
 
@@ -65,7 +65,7 @@ public class MatCollectServiceImpl implements MatCollectService {
             oldCollect.update(dto.getCollect().getContent(), dto.getCollect().getType());
 
         }else{
-            throw new Exception("작성자가 아닙니다.");
+            throw new CustomException(ErrorCode.DIFFRENT_WRITER);
         }
 
         MatCol savedMatCol = matCollectRepository.save(dto.toEntity());

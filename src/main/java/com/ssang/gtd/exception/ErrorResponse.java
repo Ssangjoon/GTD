@@ -1,9 +1,11 @@
 package com.ssang.gtd.exception;
 
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 
 @Builder
+@Getter
 public class ErrorResponse {
     private int status;
     private String code;
