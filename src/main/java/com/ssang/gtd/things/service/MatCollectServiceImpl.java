@@ -46,7 +46,6 @@ public class MatCollectServiceImpl implements MatCollectService {
     public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
 
         Collect collect = dto.getCollect();
-        logger.info(ErrorCode.NOT_FOUND.getMessage());
         Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.CAN_NOT_FOUND_BY_ID));
 
         if(dto.getMember().getId().equals(oldCollect.getMember().getId())){

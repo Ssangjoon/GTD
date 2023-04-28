@@ -15,14 +15,13 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Collect extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "collect_id")
     private Long id;
     @Column(length = 255)
     private String content;
     @Column(length = 50, nullable = false)
     @ColumnDefault("'collection'")
     private String type;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="userId")
     private Member member;
 

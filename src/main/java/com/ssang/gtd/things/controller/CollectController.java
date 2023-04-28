@@ -35,12 +35,12 @@ public class CollectController {
     }
     @PostMapping("/collection")
     public CollectCreateResponse post(@RequestBody CollectCreateRequest dto){
-        Collect collect =  collectService.post(dto);
+        Collect collect =  collectService.post(dto.toServiceDto());
         return new CollectCreateResponse(CollectCreateData.create(collect));
     }
     @PutMapping("/collection")
     public CollectUpdateResponse update(@RequestBody CollectUpdateRequest dto) throws Exception {
-        Collect collect = collectService.put(dto);
+        Collect collect = collectService.put(dto.toServiceDto());
         return new CollectUpdateResponse(CollectUpdateData.update(collect));
     }
     @DeleteMapping("/collection/{id}")

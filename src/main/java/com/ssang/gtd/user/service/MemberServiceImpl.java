@@ -1,13 +1,12 @@
 package com.ssang.gtd.user.service;
 
+import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.filter.JwtAuthenticationFilter;
 import com.ssang.gtd.jwt.JwtTokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
-import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.MemberDto;
-import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateRequest;
+import com.ssang.gtd.user.dto.MemberServiceDto;
 import com.ssang.gtd.utils.TokenInfoVO;
 import com.ssang.gtd.utils.cons.UserRoleEnum;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +53,7 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findById(id);
     }
 
-    public Member post(MemberCreateRequest dto)throws Exception {
+    public Member post(MemberServiceDto dto)throws Exception {
         if(memberRepository.findByUserName(dto.getUserName()).isPresent()){
             throw new Exception("이미 존재하는 userName");
         }
@@ -65,7 +64,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public Member put(MemberUpdateRequest dto)throws Exception {
+    public Member put(MemberServiceDto dto)throws Exception {
         Member member = memberRepository.findByUserName(dto.getUserName()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
         member.update(dto.getUserName(), dto.getName(),dto.getPassword(), dto.getEmail());
         return member;

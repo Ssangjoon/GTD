@@ -14,19 +14,21 @@ public class CollectCreateDto {
     public static class CollectCreateRequest{
         private String content;
         private Member member;
-        public Collect toEntity() {
-            return Collect.builder()
-                    .content(content)
-                    .member(member)
-                    .build();
+
+        public CollectServiceDto toServiceDto(){
+            CollectServiceDto serviceDto = new CollectServiceDto();
+            serviceDto.setContent(this.content);
+            serviceDto.setMember(this.member);
+            return serviceDto;
         }
+
     }
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectCreateResponse {
-        private CollectCreateDto.CollectCreateData data;
-    }
+    private CollectCreateDto.CollectCreateData data;
+}
 
     @Getter
     @AllArgsConstructor
