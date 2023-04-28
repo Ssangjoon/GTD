@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Collect extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "collect_id")
     private Long id;
     @Column(length = 255)
     private String content;

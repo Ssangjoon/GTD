@@ -71,11 +71,6 @@ public class MatCollectServiceImpl implements MatCollectService {
             logger.trace("파일 업로드");
             // file dto 리스트를 만든다.
             List<FileEntity> params = fileService.fileUpload("material", files, savedMatCol.getId());
-            logger.info(String.valueOf("matCollectRepository.findById(savedMatCol.getId()))"));
-            logger.info("result ===>> " + String.valueOf(matCollectRepository.findById(savedMatCol.getId())));
-            for(FileEntity param:params){
-                logger.info(param.toString());
-            }
             fileRepository.saveAll(params);
         }
         return 1;
