@@ -1,5 +1,6 @@
 package com.ssang.gtd.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -30,10 +31,9 @@ public class Collect extends BaseEntity {
         this.member = member;
     }
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
-    //@JsonIgnore
     private Member member;
     public void update(String content, String type) {
         this.content = content;

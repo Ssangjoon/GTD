@@ -1,5 +1,6 @@
 package com.ssang.gtd.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,11 +20,11 @@ public class MatCol extends BaseEntity {
     private String content;
     @Temporal(TemporalType.DATE)
     private Date goalDt;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
     private Member member;
-
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collectId")
     Collect collect;

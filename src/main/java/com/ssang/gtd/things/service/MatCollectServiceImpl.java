@@ -51,11 +51,11 @@ public class MatCollectServiceImpl implements MatCollectService {
         if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
 
             if(!StringUtils.hasText(collect.getType())){
-                // type 미기재시 update 전에 디폴트 타입 'collection'으로 새 객체 생성
+                // type 미기재시 update 전에 디폴트 타입 'material'으로 새 객체 생성
                 Collect newCollect= Collect.builder()
                         .id(collect.getId())
                         .content(collect.getContent())
-                        .type("collection")
+                        .type("material")
                         .build();
 
                 dto = MatColServiceDto.initMatColCreateRequest(dto,newCollect);
