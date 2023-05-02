@@ -1,5 +1,6 @@
 package com.ssang.gtd.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -15,15 +16,12 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Collect extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(length = 255)
-    String content;
+    private String content;
     @Column(length = 50, nullable = false)
     @ColumnDefault("'collection'")
-    String type;
-    @ManyToOne
-    @JoinColumn(name="userId")
-    Member member;
+    private String type;
 
     @Builder
     public Collect(Long id, String content, String type, Member member) {
@@ -32,6 +30,11 @@ public class Collect extends BaseEntity {
         this.type = type;
         this.member = member;
     }
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="userId")
+    private Member member;
     public void update(String content, String type) {
         this.content = content;
         this.type = type;

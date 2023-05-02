@@ -19,13 +19,14 @@ public class MemberUpdateDto {
         private String email;
         private UserRoleEnum role;
 
-        public Member toEntity(){
-            return Member.builder()
-                    .name(name)
-                    .userName(userName)
-                    .password(password)
-                    .role(role)
-                    .email(email).build();
+        public MemberServiceDto toServiceDto(){
+            MemberServiceDto serviceDto = new MemberServiceDto();
+            serviceDto.setName(this.name);
+            serviceDto.setUserName(this.userName);
+            serviceDto.setPassword(this.password);
+            serviceDto.setEmail(this.email);
+            serviceDto.setRole(this.role);
+            return serviceDto;
         }
     }
 

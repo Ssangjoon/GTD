@@ -12,30 +12,32 @@ public class CollectCreateDto {
     @Setter
     @NoArgsConstructor
     public static class CollectCreateRequest{
-        String content;
-        Member member;
-        public Collect toEntity() {
-            return Collect.builder()
-                    .content(content)
-                    .member(member)
-                    .build();
+        private String content;
+        private Member member;
+
+        public CollectServiceDto toServiceDto(){
+            CollectServiceDto serviceDto = new CollectServiceDto();
+            serviceDto.setContent(this.content);
+            serviceDto.setMember(this.member);
+            return serviceDto;
         }
+
     }
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectCreateResponse {
-        private CollectCreateDto.CollectCreateData data;
-    }
+    private CollectCreateDto.CollectCreateData data;
+}
 
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectCreateData {
-        Long id;
-        String content;
-        String type;
-        Member member;
+        private Long id;
+        private String content;
+        private String type;
+        private Member member;
 
         public static CollectCreateData create(Collect collect) {
             return new CollectCreateData(collect.getId(),collect.getContent(),collect.getType(),collect.getMember());

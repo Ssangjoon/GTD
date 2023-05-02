@@ -1,12 +1,13 @@
 package com.ssang.gtd.utils.file;
 
+import com.ssang.gtd.entity.FileEntity;
+import com.ssang.gtd.utils.file.dto.FileDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 public interface FileService {
-    List<Map<String, Object>> fileUpload(String type, List<MultipartFile> files, int id) throws Exception;
-    int fileDelete(String name);
-    int fileDeleteAll(List<FileDto> fileDto) throws Exception;
+    public List<FileEntity> fileUpload(String type, List<MultipartFile> files, Long id) throws Exception;
+    public int fileDelete(String name);
+    public int fileDeleteAll(List<FileDto> fileDto) throws Exception;
 }

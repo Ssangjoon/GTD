@@ -14,20 +14,20 @@ import org.hibernate.annotations.DynamicInsert;
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(length = 50, nullable = false)
-    String userName;
+    private String userName;
     @Column(length = 50, nullable = false)
-    String name;
+    private  String name;
     @Column(length = 100, nullable = false)
-    String password;
+    private String password;
     @Column(length = 50, nullable = false)
     @ColumnDefault("1")
-    String status;
+    private String status;
     @Column(length = 50, nullable = false)
-    String email;
+    private String email;
     @Column(length = 50, nullable = false)
-    UserRoleEnum role;
+    private UserRoleEnum role;
 
 
     @Builder

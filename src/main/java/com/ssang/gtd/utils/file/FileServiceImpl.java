@@ -1,5 +1,9 @@
 package com.ssang.gtd.utils.file;
 
+import com.ssang.gtd.entity.FileEntity;
+import com.ssang.gtd.entity.MatCol;
+import com.ssang.gtd.utils.file.dto.FileCreateDto;
+import com.ssang.gtd.utils.file.dto.FileDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,8 +24,9 @@ public class FileServiceImpl implements FileService{
     private static final String FILEPATH = "C:\\upload\\"; // 파일이 저장될 위치
 
     @Override
-    public List<Map<String, Object>> fileUpload(String type, List<MultipartFile> files, int id) throws Exception {
-        List<Map<String, Object>> params = new ArrayList<Map<String,Object>>();
+    public List<FileEntity> fileUpload(String type, List<MultipartFile> files, Long id) throws Exception {
+        //List<Map<String, Object>> params = new ArrayList<Map<String,Object>>();
+        List<FileEntity> params = new ArrayList<>();
 
         File f = new File(FILEPATH);
 
@@ -42,13 +47,16 @@ public class FileServiceImpl implements FileService{
                 String savedName = destination.getName();
                 long size = file.getSize();
 
-                param.put("board_type", type);
-                param.put("board_id", id);
-                param.put("file_name", originalName);
-                param.put("saved_file_name", savedName);
-                param.put("file_size", size);
+                FileCreateDto fileCreateDto = new FileCreateDto();
+                fileCreateDto.setBoard_type(type);
+                fileCreateDto.setFile_name(originalName);
+                fileCreateDto.setSaved_file_name(savedName);
+                fileCreateDto.setFile_size(size);
 
-                params.add(param);
+                MatCol matcol = MatCol.builder().id(id).build();
+                fileCreateDto.setMatcol(matcol);
+
+                params.add(fileCreateDto.toEntity());
             }
         }
 

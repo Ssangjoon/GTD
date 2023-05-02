@@ -1,30 +1,40 @@
 package com.ssang.gtd.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.DynamicInsert;
+import lombok.*;
 
-@DynamicInsert
+import java.util.Date;
+
 @Entity
 @Getter
-@ToString
+@ToString(exclude = {"member","collect"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MatCol extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(length = 255)
-    String goal;
+    private String goal;
     @Column(length = 50, nullable = false)
-    String content;
-    @OneToOne
+    private String content;
+    @Temporal(TemporalType.DATE)
+    private Date goalDt;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
-    Member member;
-
-    @OneToOne
+    private Member member;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collectId")
-    private Collect collect;
+    Collect collect;
+    @Builder
+    public MatCol(Long id, String goal, String content, Date goalDt, Member member, Collect collect) {
+        this.id = id;
+        this.goal = goal;
+        this.content = content;
+        this.goalDt = goalDt;
+        this.member = member;
+        this.collect = collect;
+    }
 }

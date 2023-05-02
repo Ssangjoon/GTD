@@ -1,19 +1,27 @@
 package com.ssang.gtd.things.service;
 
+import com.ssang.gtd.entity.Collect;
+import com.ssang.gtd.entity.FileEntity;
+import com.ssang.gtd.entity.MatCol;
+import com.ssang.gtd.exception.ErrorCode;
+import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.things.dao.CollectDao;
+import com.ssang.gtd.things.dao.CollectRepository;
 import com.ssang.gtd.things.dao.MatCollectDao;
-import com.ssang.gtd.things.dto.collect.CollectionDto;
+import com.ssang.gtd.things.dao.MatCollectRepository;
+import com.ssang.gtd.things.dto.matcol.MatColCreateDto.MatColServiceDto;
 import com.ssang.gtd.things.dto.matcol.MatColDto;
+import com.ssang.gtd.utils.file.FileRepository;
 import com.ssang.gtd.utils.file.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +30,10 @@ public class MatCollectServiceImpl implements MatCollectService {
     private final MatCollectDao matCollectDao;
     private final CollectDao collectDao;
     private final FileServiceImpl fileService;
+    private final CollectService collectService;
+    private final MatCollectRepository matCollectRepository;
+    private final CollectRepository collectRepository;
+    private final FileRepository fileRepository;
 
 
     @Override
@@ -31,14 +43,37 @@ public class MatCollectServiceImpl implements MatCollectService {
 
     @Override
     @Transactional(noRollbackFor=Exception.class)
-    public int post(CollectionDto cDto, MatColDto mDto, List<MultipartFile> files) throws Exception {
-        collectDao.put(cDto);
-        matCollectDao.post(mDto);
-        System.out.println(mDto.getMcNo());
+    public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
+
+        Collect collect = dto.getCollect();
+        Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.CAN_NOT_FOUND_BY_ID));
+
+        if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
+
+            if(!StringUtils.hasText(collect.getType())){
+                // type 미기재시 update 전에 디폴트 타입 'material'으로 새 객체 생성
+                Collect newCollect= Collect.builder()
+                        .id(collect.getId())
+                        .content(collect.getContent())
+                        .type("material")
+                        .build();
+
+                dto = MatColServiceDto.initMatColCreateRequest(dto,newCollect);
+            }
+
+            oldCollect.update(dto.getCollect().getContent(), dto.getCollect().getType());
+
+        }else{
+            throw new CustomException(ErrorCode.DIFFRENT_WRITER);
+        }
+
+        MatCol savedMatCol = matCollectRepository.save(dto.toEntity());
+
         if(files != null && !files.isEmpty()){
             logger.trace("파일 업로드");
-            List<Map<String, Object>> params = fileService.fileUpload("material", files, mDto.getMcNo());
-            matCollectDao.saveFile(params);
+            // file dto 리스트를 만든다.
+            List<FileEntity> params = fileService.fileUpload("material", files, savedMatCol.getId());
+            fileRepository.saveAll(params);
         }
         return 1;
     }

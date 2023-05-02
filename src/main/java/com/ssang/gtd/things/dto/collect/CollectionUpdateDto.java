@@ -12,17 +12,18 @@ public class CollectionUpdateDto {
     @Setter
     @NoArgsConstructor
     public static class CollectUpdateRequest{
-        Long id;
-        String content;
-        Member member;
-        String type;
-        public Collect toEntity() {
-            return Collect.builder()
-                    .id(id)
-                    .content(content)
-                    .member(member)
-                    .type(type)
-                    .build();
+        private Long id;
+        private String content;
+        private Member member;
+        private String type;
+
+        public CollectServiceDto toServiceDto(){
+            CollectServiceDto serviceDto = new CollectServiceDto();
+            serviceDto.setId(this.id);
+            serviceDto.setContent(this.content);
+            serviceDto.setType(this.type);
+            serviceDto.setMember(this.member);
+            return serviceDto;
         }
     }
     @Getter

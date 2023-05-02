@@ -24,13 +24,13 @@ public class MemberController {
 
     @PostMapping("/joinUp")
     public MemberCreateResponse joinUp(@RequestBody MemberCreateRequest dto) throws Exception {
-        Member member = memberService.post(dto);
+        Member member = memberService.post(dto.toServiceDto());
         return new MemberCreateResponse(MemberCreateData.create(member));
     }
 
     @PutMapping("/member")
     public MemberUpdateResponse update(@RequestBody MemberUpdateRequest dto)throws Exception{
-        Member member = memberService.put(dto);
+        Member member = memberService.put(dto.toServiceDto());
         return new MemberUpdateResponse(MemberUpdateData.update(member));
     }
     @DeleteMapping("/member/{id}")

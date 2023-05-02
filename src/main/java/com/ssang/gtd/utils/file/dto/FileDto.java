@@ -1,4 +1,4 @@
-package com.ssang.gtd.utils.file;
+package com.ssang.gtd.utils.file.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
