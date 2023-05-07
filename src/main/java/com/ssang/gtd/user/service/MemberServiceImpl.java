@@ -1,14 +1,15 @@
 package com.ssang.gtd.user.service;
 
+import com.ssang.gtd.Role;
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.filter.JwtAuthenticationFilter;
-import com.ssang.gtd.jwt.JwtTokenProvider;
+import com.ssang.gtd.exception.CustomException;
+import com.ssang.gtd.exception.ErrorCode;
+import com.ssang.gtd.jwt.JwtAuthenticationFilter;
+import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
-import com.ssang.gtd.user.dto.MemberDto;
 import com.ssang.gtd.user.dto.MemberServiceDto;
 import com.ssang.gtd.utils.TokenInfoVO;
-import com.ssang.gtd.utils.cons.UserRoleEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberDao memberDao;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final RedisTemplate redisTemplate;
 
@@ -55,10 +56,10 @@ public class MemberServiceImpl implements MemberService{
 
     public Member post(MemberServiceDto dto)throws Exception {
         if(memberRepository.findByUserName(dto.getUserName()).isPresent()){
-            throw new Exception("이미 존재하는 userName");
+            throw new CustomException(ErrorCode.ALREADY_USER);
         }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        dto.setRole(UserRoleEnum.USER);
+        dto.setRole(Role.USER);
         return memberRepository.save(dto.toEntity());
     }
 
@@ -66,7 +67,7 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     public Member put(MemberServiceDto dto)throws Exception {
         Member member = memberRepository.findByUserName(dto.getUserName()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
-        member.update(dto.getUserName(), dto.getName(),dto.getPassword(), dto.getEmail());
+        //member.update(dto.getUserName(), dto.getName(), dto.getEmail());
         return member;
     }
 
@@ -76,7 +77,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public ResponseEntity<TokenInfoVO> login(MemberDto dto) {
+    @Transactional
+    public ResponseEntity<TokenInfoVO> login(MemberServiceDto dto) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUserName(), dto.getPassword());
@@ -85,6 +87,9 @@ public class MemberServiceImpl implements MemberService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfoVO tokenInfo = jwtTokenProvider.generateToken(authentication);
+        // 4. DB에 refreshToken 저장`
+        Member member = memberRepository.findByUserName(dto.getUserName()).get();
+        member.updateRefreshToken(tokenInfo.getRefreshToken());
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + tokenInfo);
@@ -111,4 +116,5 @@ public class MemberServiceImpl implements MemberService{
         Long expiration = jwtTokenProvider.getExpiration(accessToken);
         redisTemplate.opsForValue().set(accessToken,"logout",expiration, TimeUnit.MILLISECONDS);
     }
+
 }

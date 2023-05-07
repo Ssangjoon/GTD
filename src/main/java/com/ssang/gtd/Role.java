@@ -1,13 +1,13 @@
-package com.ssang.gtd.utils.cons;
+package com.ssang.gtd;
 
-public enum UserRoleEnum {
+public enum Role {
     USER(Authority.USER),
-    ADMIN(Authority.ADMIN);
+    ADMIN(Authority.ADMIN),
+    GUEST(Authority.GUEST);
 
     private final String authority;
 
-    //ENUM의 생성자 부분
-    UserRoleEnum(String authority){
+    Role(String authority){
         this.authority = authority;
     }
 
@@ -16,6 +16,7 @@ public enum UserRoleEnum {
     }
 
     public static class Authority {
+        public static final String GUEST = "ROLE_GUEST";
         public static final String USER = "ROLE_USER";
         public static final String ADMIN = "ROLE_ADMIN";
     }

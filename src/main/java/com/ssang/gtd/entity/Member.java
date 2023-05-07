@@ -1,6 +1,6 @@
 package com.ssang.gtd.entity;
 
-import com.ssang.gtd.utils.cons.UserRoleEnum;
+import com.ssang.gtd.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -26,24 +26,49 @@ public class Member extends BaseEntity {
     private String status;
     @Column(length = 50, nullable = false)
     private String email;
+    //@Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
-    private UserRoleEnum role;
+    private Role role;
+    @Column(length = 255, nullable = false)
+    private String refreshToken; // 리프레시 토큰
 
+
+
+    public void update(String userName, String name, String email) {
+        this.userName = userName;
+        this.name = name;
+        this.email = email;
+    }
+    public void updateRefreshToken(String newToken) {
+        this.refreshToken = newToken;
+    }
 
     @Builder
-    public Member(String userName, String password, String name, String email, UserRoleEnum role) {
+    public Member(Long id, String userName, String name, String password, String status, String email, Role role, String refreshToken) {
+        this.id = id;
         this.userName = userName;
-        this.password = password;
         this.name = name;
+        this.password = password;
+        this.status = status;
         this.email = email;
         this.role = role;
+        this.refreshToken = refreshToken;
+    }
+    public String getAuthority() {
+        return this.role.getAuthority();
     }
 
-    public void update(String userName, String name, String password, String email) {
-        this.userName = userName;
+    public Member update(String name,String refreshToken) {
         this.name = name;
-        this.password = password;
-        this.email = email;
+        this.refreshToken = refreshToken;
+        return this;
     }
-    /*https://testGTD.com*/
+    // 유저 권한 설정 메소드
+    /*public void authorizeUser() {
+        this.role = Role.USER;
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
+    }*/
 }

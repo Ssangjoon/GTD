@@ -1,20 +1,23 @@
 package com.ssang.gtd.config;
 
-import com.ssang.gtd.exception.JwtAccessDeniedHandler;
-import com.ssang.gtd.exception.JwtAuthenticationEntryPoint;
-import com.ssang.gtd.filter.JwtAuthenticationFilter;
-import com.ssang.gtd.jwt.JwtTokenProvider;
+import com.ssang.gtd.auth.JwtService;
+import com.ssang.gtd.jwt.*;
+import com.ssang.gtd.user.dao.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -22,13 +25,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
     private final JwtAuthenticationEntryPoint jwtAtuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final AuthenticationFailureHandler authenticationFailureHandler;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final MemberRepository memberRepository;
+    private final JwtService jwtService;
+    private final CustomAuthorizationFilter customAuthorizationFilter;
+    private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter =new CustomAuthenticationFilter(authenticationManager(authenticationConfiguration));
+        customAuthenticationFilter.setFilterProcessesUrl("/login");
+        customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+
         http
                 .httpBasic().disable()
                 .csrf().disable()
@@ -44,13 +58,22 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST,"/joinUp").permitAll()
                 .requestMatchers(HttpMethod.POST,"/login").permitAll()
-                .anyRequest().permitAll()
-                //.anyRequest().authenticated()
-
+                //.anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider,redisTemplate), UsernamePasswordAuthenticationFilter.class);
+                //.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
+                .addFilter(customAuthenticationFilter)
+                .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                //.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider,redisTemplate,memberRepository, jwtService),UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();

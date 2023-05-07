@@ -1,7 +1,7 @@
 package com.ssang.gtd.user.dto;
 
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.utils.cons.UserRoleEnum;
+import com.ssang.gtd.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class MemberCreateDto {
         private String userName;
         private String password;
         private String email;
-        private UserRoleEnum role;
+        private Role role;
 
         public MemberServiceDto toServiceDto(){
             MemberServiceDto serviceDto = new MemberServiceDto();
@@ -45,7 +45,7 @@ public class MemberCreateDto {
     public static class MemberCreateData {
         private String name;
         private String password;
-        private UserRoleEnum role;
+        private Role role;
 
         public static MemberCreateData create(Member member) {
             return new MemberCreateData(member.getName(), member.getPassword(), member.getRole());
