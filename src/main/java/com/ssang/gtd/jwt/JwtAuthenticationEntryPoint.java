@@ -1,6 +1,7 @@
-package com.ssang.gtd.exception;
+package com.ssang.gtd.jwt;
 
 
+import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.utils.ResVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

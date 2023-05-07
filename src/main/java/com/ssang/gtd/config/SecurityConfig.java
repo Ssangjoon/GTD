@@ -1,6 +1,5 @@
 package com.ssang.gtd.config;
 
-import com.ssang.gtd.auth.JwtService;
 import com.ssang.gtd.jwt.*;
 import com.ssang.gtd.user.dao.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +31,7 @@ public class SecurityConfig {
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final MemberRepository memberRepository;
-    private final JwtService jwtService;
-    private final CustomAuthorizationFilter2 customAuthorizationFilter;
+    private final CustomAuthorizationFilter customAuthorizationFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
@@ -64,7 +62,6 @@ public class SecurityConfig {
                 //.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
                 .addFilter(customAuthenticationFilter)
                 .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-                //.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider,redisTemplate,memberRepository, jwtService),UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

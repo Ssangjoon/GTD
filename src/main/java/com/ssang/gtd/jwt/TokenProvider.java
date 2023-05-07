@@ -1,6 +1,5 @@
 package com.ssang.gtd.jwt;
 
-import com.ssang.gtd.utils.TokenInfoVO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -90,20 +89,6 @@ public class TokenProvider {
         return false;
     }
 
-    /** 유저 정보를 가지고
-     * generateAccessToken 메서드와 generateRefreshToken메서드를 호출하여
-     * 토큰을 발급한다.
-     * @param authentication
-     * @return TokenInfoVO
-     */
-    public TokenInfoVO generateToken(Authentication authentication) {
-
-        return TokenInfoVO.builder()
-                .grantType("Bearer")
-                .accessToken(generateAccessToken(authentication))
-                .refreshToken(generateRefreshToken())
-                .build();
-    }
     /**
      * AccessToken
      * 생성
