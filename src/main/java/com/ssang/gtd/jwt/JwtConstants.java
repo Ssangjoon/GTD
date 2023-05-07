@@ -8,7 +8,7 @@ public class JwtConstants {
     public static final long MONTH = 30 * DAY;
 
     public static final long AT_EXP_TIME =  1 * MINUTE;
-    public static final long RT_EXP_TIME =  10 * MINUTE;
+    public static final long RT_EXP_TIME =  7 * DAY;
 
 
     // Header

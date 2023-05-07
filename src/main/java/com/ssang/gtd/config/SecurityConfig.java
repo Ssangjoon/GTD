@@ -54,8 +54,9 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST,"/joinUp").permitAll()
-                .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                .requestMatchers(HttpMethod.POST,"/joinUp","/login","/refresh").permitAll()
+                /*.requestMatchers(HttpMethod.POST,"/login").permitAll()
+                .requestMatchers(HttpMethod.POST,"/refresh").permitAll()*/
                 //.anyRequest().permitAll()
                 .anyRequest().authenticated()
                 .and()

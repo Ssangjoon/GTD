@@ -19,20 +19,22 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static com.ssang.gtd.jwt.JwtConstants.AT_EXP_TIME;
+import static com.ssang.gtd.jwt.JwtConstants.RT_EXP_TIME;
+
 @Component
 public class TokenProvider {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final long tokenValidityInMilliseconds;
+
     private static final String AUTHORITIES_KEY = "auth";
     private Key key;
 
     private long now = (new Date()).getTime();
 
     // 빈이 생성되고 주입을 받은 후에 secret 값을 Base64 Decode해서 key변수에 할당
-    public TokenProvider(@Value("${jwt.secret}") String secretKey, @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds) {
+    public TokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
-        this.tokenValidityInMilliseconds = tokenValidityInMilliseconds;
     }
 
 
@@ -42,7 +44,7 @@ public class TokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
+        Date validity = new Date(now + AT_EXP_TIME);
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
@@ -98,7 +100,8 @@ public class TokenProvider {
         String authorities = getAuthorities(authentication);
 
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + this.tokenValidityInMilliseconds);
+        Date accessTokenExpiresIn = new Date(now + AT_EXP_TIME);
+        log.info("accessTokenExpiresIn" + accessTokenExpiresIn.toString());
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -111,9 +114,11 @@ public class TokenProvider {
      * 생성
      */
     public String generateRefreshToken() {
+        Date refreshTokenExpiresIn = new Date(now + RT_EXP_TIME);
+        log.info("refreshTokenExpiresIn" + refreshTokenExpiresIn.toString());
         // Refresh Token 생성
         return Jwts.builder()
-                .setExpiration(new Date(now + this.tokenValidityInMilliseconds))
+                .setExpiration(refreshTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
