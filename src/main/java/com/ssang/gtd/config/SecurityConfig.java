@@ -33,7 +33,7 @@ public class SecurityConfig {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final MemberRepository memberRepository;
     private final JwtService jwtService;
-    private final CustomAuthorizationFilter customAuthorizationFilter;
+    private final CustomAuthorizationFilter2 customAuthorizationFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean

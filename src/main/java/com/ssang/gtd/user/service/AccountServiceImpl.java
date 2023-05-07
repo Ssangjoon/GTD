@@ -8,8 +8,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.user.dao.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -20,8 +22,11 @@ import static com.ssang.gtd.jwt.JwtConstants.*;
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService{
+    @Value("${jwt.secret}")
+    private String secretKey;
     private final MemberRepository memberRepository;
     @Override
+    @Transactional
     public void updateRefreshToken(String username, String refreshToken) {
         Member member = memberRepository.findByUserName(username).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
         member.updateRefreshToken(refreshToken);
@@ -30,7 +35,7 @@ public class AccountServiceImpl implements AccountService{
     public Map<String, String> refresh(String refreshToken) {
 
         // === Refresh Token 유효성 검사 === //
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(JWT_SECRET)).build();
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
         DecodedJWT decodedJWT = verifier.verify(refreshToken);
 
         // === Access Token 재발급 === //
@@ -46,7 +51,7 @@ public class AccountServiceImpl implements AccountService{
                 .withExpiresAt(new Date(now + AT_EXP_TIME))
                 /*.withClaim("roles", member.getRoles().stream().map(Role::getName)
                         .collect(Collectors.toList()))*/
-                .sign(Algorithm.HMAC256(JWT_SECRET));
+                .sign(Algorithm.HMAC256(secretKey));
         Map<String, String> accessTokenResponseMap = new HashMap<>();
 
         // === 현재시간과 Refresh Token 만료날짜를 통해 남은 만료기간 계산 === //
@@ -58,7 +63,7 @@ public class AccountServiceImpl implements AccountService{
             String newRefreshToken = JWT.create()
                     .withSubject(member.getUserName())
                     .withExpiresAt(new Date(now + RT_EXP_TIME))
-                    .sign(Algorithm.HMAC256(JWT_SECRET));
+                    .sign(Algorithm.HMAC256(secretKey));
             accessTokenResponseMap.put(RT_HEADER, newRefreshToken);
             member.updateRefreshToken(newRefreshToken);
         }

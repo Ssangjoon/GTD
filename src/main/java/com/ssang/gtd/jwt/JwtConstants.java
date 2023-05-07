@@ -10,8 +10,6 @@ public class JwtConstants {
     public static final long AT_EXP_TIME =  1 * MINUTE;
     public static final long RT_EXP_TIME =  10 * MINUTE;
 
-    // Secret
-    public static final String JWT_SECRET = "jwt_secret_key_hunseong_secret_key_jwt";
 
     // Header
     public static final String AT_HEADER = "access_token";

@@ -23,31 +23,23 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("로그인 시도 : attemptAuthentication()");
+
         if(!request.getMethod().equals("POST")){
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
+
         ObjectMapper om = new ObjectMapper();
+
         try {
-            log.info("username, password 받기");
+
             LoginReq login = om.readValue(request.getInputStream(), LoginReq.class);
-            log.info(login.toString());
-
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword());
-            log.info("username : " + authenticationToken.getPrincipal().toString());
-            log.info("password : " + authenticationToken.getCredentials().toString());
-            log.info("=========================================================");
 
-            log.info("정상적인 로그인 시도 여부를 검증한다.");
-            log.info("=> Authentication start");
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            log.info("<= Authentication end");
-            log.info("=========================================================");
-            return authentication;
+            return authenticationManager.authenticate(authenticationToken);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
-
     }
 }

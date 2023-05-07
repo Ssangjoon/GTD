@@ -4,21 +4,15 @@ import com.ssang.gtd.Role;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.exception.ErrorCode;
-import com.ssang.gtd.jwt.JwtAuthenticationFilter;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dto.MemberServiceDto;
-import com.ssang.gtd.utils.TokenInfoVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -76,25 +70,6 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public ResponseEntity<TokenInfoVO> login(MemberServiceDto dto) {
-        // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
-        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(dto.getUserName(), dto.getPassword());
-        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
-        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenInfoVO tokenInfo = jwtTokenProvider.generateToken(authentication);
-        // 4. DB에 refreshToken 저장`
-        Member member = memberRepository.findByUserName(dto.getUserName()).get();
-        member.updateRefreshToken(tokenInfo.getRefreshToken());
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + tokenInfo);
-        return new ResponseEntity<>(tokenInfo, httpHeaders, HttpStatus.OK);
-    }
     @Override
     public void logout(HttpServletRequest request){
         String accessToken = request.getHeader("Authorization").substring(7);
