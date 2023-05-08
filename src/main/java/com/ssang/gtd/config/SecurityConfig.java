@@ -1,11 +1,12 @@
 package com.ssang.gtd.config;
 
-import com.ssang.gtd.jwt.*;
-import com.ssang.gtd.user.dao.MemberRepository;
+import com.ssang.gtd.jwt.CustomAuthenticationFilter;
+import com.ssang.gtd.jwt.CustomAuthorizationFilter;
+import com.ssang.gtd.jwt.JwtAccessDeniedHandler;
+import com.ssang.gtd.jwt.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -24,20 +25,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final TokenProvider jwtTokenProvider;
-    private final RedisTemplate redisTemplate;
     private final JwtAuthenticationEntryPoint jwtAtuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
-    private final MemberRepository memberRepository;
     private final CustomAuthorizationFilter customAuthorizationFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         CustomAuthenticationFilter customAuthenticationFilter =new CustomAuthenticationFilter(authenticationManager(authenticationConfiguration));
-        customAuthenticationFilter.setFilterProcessesUrl("/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
 
@@ -54,15 +53,14 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST,"/joinUp","/login","/refresh").permitAll()
-                /*.requestMatchers(HttpMethod.POST,"/login").permitAll()
-                .requestMatchers(HttpMethod.POST,"/refresh").permitAll()*/
+                .requestMatchers(HttpMethod.POST,"/joinUp","/refresh").permitAll()
                 //.anyRequest().permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
-                .addFilter(customAuthenticationFilter)
-                .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+
+                .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -70,7 +68,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
