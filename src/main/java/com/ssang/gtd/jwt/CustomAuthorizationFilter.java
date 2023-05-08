@@ -30,62 +30,62 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Component
-@RequiredArgsConstructor
-public class CustomAuthorizationFilter extends OncePerRequestFilter {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    @Value("${jwt.secret}")
-    private String secretKey;
-    private final TokenProvider jwtTokenProvider;
-    @NoLogging
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String servletPath = request.getServletPath();
-        String authrizationHeader = request.getHeader(AUTHORIZATION);
+    @RequiredArgsConstructor
+    public class CustomAuthorizationFilter extends OncePerRequestFilter {
+        private final Logger log = LoggerFactory.getLogger(getClass());
+        @Value("${jwt.secret}")
+        private String secretKey;
+        private final TokenProvider jwtTokenProvider;
+        @NoLogging
+        @Override
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            String servletPath = request.getServletPath();
+            String authrizationHeader = request.getHeader(AUTHORIZATION);
 
-        // 1. 로그인, 리프레시 요청이라면 토큰 검사하지 않음
-        if (servletPath.equals("/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")) {
-            filterChain.doFilter(request, response);
-        } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
-            //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
-            log.info("CustomAuthorizationFilter : JWT Token이 존재하지 않습니다.");
-            response.setStatus(SC_BAD_REQUEST);
-            response.setContentType(APPLICATION_JSON_VALUE);
-            response.setCharacterEncoding("utf-8");
-            new ObjectMapper().writeValue(response.getWriter(), ErrorResponse.toResponseEntity(ErrorCode.UNAUTORIZED));
-        } else {
-            try {
-                // Access Token만 꺼내옴
-                String accessToken = authrizationHeader.substring(TOKEN_HEADER_PREFIX.length());
-                String requestURI = request.getRequestURI();
-
-                Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(accessToken);
-
-                // === Access Token 내 Claim에서 Authorities 꺼내 Authentication 객체 생성 & SecurityContext에 저장 === //
-                Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                log.info("Scurity Context에 '{}' 인증 정보를 저장했습니다. uri: {}", authentication.getName(), requestURI);
-
-            } catch (ExpiredJwtException e) {
-
-                log.info("CustomAuthorizationFilter : Access Token이 만료되었습니다.");
-                response.setStatus(SC_UNAUTHORIZED);
-                response.setContentType(APPLICATION_JSON_VALUE);
-                response.setCharacterEncoding("utf-8");
-                new ObjectMapper().writeValue(response.getWriter(), ErrorResponse.toResponseEntity(ErrorCode.UNAUTORIZED));
-
-            } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-
-                log.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : {}", e.getMessage());
+            // 1. 로그인, 리프레시 요청이라면 토큰 검사하지 않음
+            if (servletPath.equals("/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")) {
+                filterChain.doFilter(request, response);
+            } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
+                //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
+                log.info("CustomAuthorizationFilter : JWT Token이 존재하지 않습니다.");
                 response.setStatus(SC_BAD_REQUEST);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 response.setCharacterEncoding("utf-8");
                 new ObjectMapper().writeValue(response.getWriter(), ErrorResponse.toResponseEntity(ErrorCode.UNAUTORIZED));
+            } else {
+                try {
+                    // Access Token만 꺼내옴
+                    String accessToken = authrizationHeader.substring(TOKEN_HEADER_PREFIX.length());
+                    String requestURI = request.getRequestURI();
 
-            } catch (UnsupportedJwtException e) {
-                log.info("지원되지 않는 JWT 토큰입니다.");
-            } catch (IllegalArgumentException e) {
-                log.info("JWT 토큰이 잘못되었습니다.");
+                    Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(accessToken);
+
+                    // === Access Token 내 Claim에서 Authorities 꺼내 Authentication 객체 생성 & SecurityContext에 저장 === //
+                    Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    log.info("Scurity Context에 '{}' 인증 정보를 저장했습니다. uri: {}", authentication.getName(), requestURI);
+
+                } catch (ExpiredJwtException e) {
+
+                    log.info("CustomAuthorizationFilter : Access Token이 만료되었습니다.");
+                    response.setStatus(SC_UNAUTHORIZED);
+                    response.setContentType(APPLICATION_JSON_VALUE);
+                    response.setCharacterEncoding("utf-8");
+                    new ObjectMapper().writeValue(response.getWriter(), ErrorResponse.toResponseEntity(ErrorCode.UNAUTORIZED));
+
+                } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+
+                    log.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : {}", e.getMessage());
+                    response.setStatus(SC_BAD_REQUEST);
+                    response.setContentType(APPLICATION_JSON_VALUE);
+                    response.setCharacterEncoding("utf-8");
+                    new ObjectMapper().writeValue(response.getWriter(), ErrorResponse.toResponseEntity(ErrorCode.UNAUTORIZED));
+
+                } catch (UnsupportedJwtException e) {
+                    log.info("지원되지 않는 JWT 토큰입니다.");
+                } catch (IllegalArgumentException e) {
+                    log.info("JWT 토큰이 잘못되었습니다.");
+                }
             }
         }
-    }
 }
