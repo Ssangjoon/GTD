@@ -15,6 +15,5 @@ public interface MemberService {
     public Member post(MemberServiceDto dto) throws Exception;
     public Member put(MemberServiceDto dto) throws Exception;
     public void delete(Long id);
-    public void logout(HttpServletRequest request);
-    public ResponseEntity<HttpStatus> logout2(HttpServletRequest request);
+    public ResponseEntity<HttpStatus> logout(HttpServletRequest request);
 }

@@ -40,8 +40,6 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
         String accessToken = tokenProvider.generateAccessToken(authentication);
         String refreshToken = tokenProvider.generateRefreshToken();
 
-        // Refresh Token DB에 저장
-        //accountService.updateRefreshToken(user.getUsername(), refreshToken);
         // username을 키로 하여 리프레시 토큰을 저장한다.
         redisDao.setValues(user.getUsername(), refreshToken, Duration.ofDays(14));
         log.info("redis key:{} , value: {} ==> 저장하였습니다.", user.getUsername(),refreshToken);

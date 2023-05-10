@@ -31,7 +31,7 @@ public class LoginController {
     }
     @PostMapping("/api/logout")
     public int logout(HttpServletResponse response, HttpServletRequest request) {
-        memberService.logout2(request);
+        memberService.logout(request);
         return 1;
     }
     @PostMapping("/refresh")
