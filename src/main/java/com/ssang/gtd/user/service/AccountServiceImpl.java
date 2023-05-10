@@ -2,6 +2,7 @@ package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,7 @@ public class AccountServiceImpl implements AccountService{
     private String secretKey;
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
+    private final RedisDao redisDao;
     @Override
     @Transactional
     public void updateRefreshToken(String username, String refreshToken) {
@@ -61,7 +64,8 @@ public class AccountServiceImpl implements AccountService{
         if(diffMin < 5){
             String newRefreshToken = jwtTokenProvider.generateRefreshToken();
             accessTokenResponseMap.put(RT_HEADER, newRefreshToken);
-            member.updateRefreshToken(newRefreshToken);
+            //member.updateRefreshToken(newRefreshToken);
+            redisDao.setValues(member.getUserName(), newRefreshToken, Duration.ofDays(14));
         }
         accessTokenResponseMap.put(AT_HEADER, accessToken);
         return accessTokenResponseMap;

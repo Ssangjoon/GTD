@@ -5,6 +5,7 @@ import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dto.MemberServiceDto;
@@ -13,16 +14,22 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 @Service
@@ -36,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
     private final TokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final RedisTemplate redisTemplate;
+    private final RedisDao redisDao;
 
 
     @Override
@@ -77,10 +85,8 @@ public class MemberServiceImpl implements MemberService{
         if (!jwtTokenProvider.validateToken(accessToken)){
             throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
         }
-
         // Access Token에서 User email을 가져온다
         Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
-        logger.info("authentication" + authentication.toString());
         // Redis에서 해당 User email로 저장된 Refresh Token 이 있는지 여부를 확인 후에 있을 경우 삭제를 한다.
         if (redisTemplate.opsForValue().get("RT:"+authentication.getName())!=null){
             // Refresh Token을 삭제
@@ -90,6 +96,24 @@ public class MemberServiceImpl implements MemberService{
         // 해당 Access Token 유효시간을 가지고 와서 BlackList에 저장하기
         Long expiration = jwtTokenProvider.getExpiration(accessToken);
         redisTemplate.opsForValue().set(accessToken,"logout",expiration, TimeUnit.MILLISECONDS);
+    }
+    @Override
+    public ResponseEntity<HttpStatus> logout2(HttpServletRequest request){
+        String token = request.getHeader(AUTHORIZATION).substring(TOKEN_HEADER_PREFIX.length());
+
+        // 로그아웃 하고 싶은 토큰이 유효한 지 먼저 검증하기
+        if (!jwtTokenProvider.validateToken(token)){
+            throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
+        }
+        Long expiration = jwtTokenProvider.getExpiration(token);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if(redisDao.getValues(username) != null){
+            redisDao.deleteValues(username);
+        }
+
+        redisDao.setValues(token,"logout", Duration.ofMillis(expiration));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ssang.gtd.jwt;
+package com.ssang.gtd.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

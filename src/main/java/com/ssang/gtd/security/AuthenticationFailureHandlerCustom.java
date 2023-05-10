@@ -1,4 +1,4 @@
-package com.ssang.gtd.jwt;
+package com.ssang.gtd.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

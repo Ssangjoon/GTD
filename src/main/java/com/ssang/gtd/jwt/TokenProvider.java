@@ -37,22 +37,38 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    /**
+     * AccessToken
+     * 생성
+     */
+    public String generateAccessToken(Authentication authentication) {
+        // 권한 가져오기
+        String authorities = getAuthorities(authentication);
 
-    public String createToken(Authentication authentication) {
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
-        long now = (new Date()).getTime();
-        Date validity = new Date(now + AT_EXP_TIME);
-
+        // Access Token 생성
+        Date accessTokenExpiresIn = new Date(now + AT_EXP_TIME);
+        log.info("accessTokenExpiresIn" + accessTokenExpiresIn.toString());
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(validity)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
+    /**
+     * RefreshToken
+     * 생성
+     */
+    public String generateRefreshToken() {
+        Date refreshTokenExpiresIn = new Date(now + RT_EXP_TIME);
+        log.info("refreshTokenExpiresIn" + refreshTokenExpiresIn.toString());
+        // Refresh Token 생성
+        return Jwts.builder()
+                .setExpiration(refreshTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     public Authentication getAuthentication(String token) {
         Claims claims = parseClaims(token);
 
@@ -74,6 +90,22 @@ public class TokenProvider {
         }
     }
 
+    public static String getAuthorities(Authentication authentication) {
+        // 권한 가져오기
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+    }
+
+    public Long getExpiration(String accessToken) {
+        // accessToken 남은 유효시간
+        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        // 현재 시간
+        Long now = new Date().getTime();
+        return (expiration.getTime() - now);
+    }
+
+    // 토큰 정보를 검증하는 메서드
 
     public boolean validateToken(String token) {
         try {
@@ -89,53 +121,5 @@ public class TokenProvider {
             log.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
-    }
-
-    /**
-     * AccessToken
-     * 생성
-     */
-    public String generateAccessToken(Authentication authentication) {
-        // 권한 가져오기
-        String authorities = getAuthorities(authentication);
-
-        // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + AT_EXP_TIME);
-        log.info("accessTokenExpiresIn" + accessTokenExpiresIn.toString());
-        return Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim("auth", authorities)
-                .setExpiration(accessTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
-    /**
-     * RefreshToken
-     * 생성
-     */
-    public String generateRefreshToken() {
-        Date refreshTokenExpiresIn = new Date(now + RT_EXP_TIME);
-        log.info("refreshTokenExpiresIn" + refreshTokenExpiresIn.toString());
-        // Refresh Token 생성
-        return Jwts.builder()
-                .setExpiration(refreshTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
-    // 토큰 정보를 검증하는 메서드
-
-    public Long getExpiration(String accessToken) {
-        // accessToken 남은 유효시간
-        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
-        // 현재 시간
-        Long now = new Date().getTime();
-        return (expiration.getTime() - now);
-    }
-
-    public static String getAuthorities(Authentication authentication) {
-        // 권한 가져오기
-        return authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
     }
 }

@@ -1,9 +1,11 @@
 package com.ssang.gtd.config;
 
-import com.ssang.gtd.jwt.CustomAuthenticationFilter;
-import com.ssang.gtd.jwt.CustomAuthorizationFilter;
 import com.ssang.gtd.jwt.JwtAccessDeniedHandler;
 import com.ssang.gtd.jwt.JwtAuthenticationEntryPoint;
+import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.redis.RedisDao;
+import com.ssang.gtd.security.CustomAuthenticationFilter;
+import com.ssang.gtd.security.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +33,8 @@ public class SecurityConfig {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final CustomAuthorizationFilter customAuthorizationFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final TokenProvider tokenProvider;
+    private final RedisDao redisDao;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -39,6 +43,7 @@ public class SecurityConfig {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+
 
         http
                 .httpBasic().disable()

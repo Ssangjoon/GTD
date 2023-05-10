@@ -1,6 +1,8 @@
-package com.ssang.gtd.jwt;
+package com.ssang.gtd.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +29,10 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final AccountService accountService;
     private final TokenProvider tokenProvider;
+    private final RedisDao redisDao;
     @Value("${jwt.secret}")
     private String secretKey;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         User user = (User) authentication.getPrincipal();
@@ -36,7 +41,10 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
         String refreshToken = tokenProvider.generateRefreshToken();
 
         // Refresh Token DB에 저장
-        accountService.updateRefreshToken(user.getUsername(), refreshToken);
+        //accountService.updateRefreshToken(user.getUsername(), refreshToken);
+        // username을 키로 하여 리프레시 토큰을 저장한다.
+        redisDao.setValues(user.getUsername(), refreshToken, Duration.ofDays(14));
+        log.info("redis key:{} , value: {} ==> 저장하였습니다.", user.getUsername(),refreshToken);
 
         // Access Token , Refresh Token 프론트 단에 Response Header로 전달
         response.setContentType(APPLICATION_JSON_VALUE);
