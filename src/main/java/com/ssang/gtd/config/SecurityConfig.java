@@ -2,8 +2,6 @@ package com.ssang.gtd.config;
 
 import com.ssang.gtd.jwt.JwtAccessDeniedHandler;
 import com.ssang.gtd.jwt.JwtAuthenticationEntryPoint;
-import com.ssang.gtd.jwt.TokenProvider;
-import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.security.CustomAuthenticationFilter;
 import com.ssang.gtd.security.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -26,15 +24,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final JwtAuthenticationEntryPoint jwtAtuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final CustomAuthorizationFilter customAuthorizationFilter;
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final TokenProvider tokenProvider;
-    private final RedisDao redisDao;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

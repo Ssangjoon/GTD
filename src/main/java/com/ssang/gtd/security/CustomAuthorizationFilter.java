@@ -51,9 +51,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
             filterChain.doFilter(request, response);
 
+
+        //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
         } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
 
-            //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
             log.info("CustomAuthorizationFilter : JWT Token이 존재하지 않습니다.");
             response.setStatus(SC_BAD_REQUEST);
             response.setContentType(APPLICATION_JSON_VALUE);
@@ -62,6 +63,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
         } else {
             try {
+
                 // === Access Token만 꺼내옴 === //
                 String accessToken = authrizationHeader.substring(TOKEN_HEADER_PREFIX.length());
                 String requestURI = request.getRequestURI();

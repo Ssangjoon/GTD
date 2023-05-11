@@ -20,6 +20,7 @@ public class MatColCreateDto {
         private Date goalDt;
         private Member member;
         private Collect collect;
+
         public MatColServiceDto toServiceDto(){
             MatColServiceDto serviceDto = new MatColServiceDto();
             serviceDto.setContent(this.content);

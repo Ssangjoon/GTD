@@ -23,6 +23,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class CollectController {
+    // TODO : 응답 일관성있게 하기
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final CollectService collectService;
     private final MatCollectService matCollectService;
