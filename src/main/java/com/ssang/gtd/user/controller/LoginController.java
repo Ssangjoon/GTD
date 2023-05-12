@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.ssang.gtd.jwt.JwtConstants.AT_HEADER;
-import static com.ssang.gtd.jwt.JwtConstants.RT_HEADER;
+import static com.ssang.gtd.jwt.JwtConstants.ACCESS_TOKEN_HEADER;
+import static com.ssang.gtd.jwt.JwtConstants.REFRESH_TOKEN_HEADER;
 
 
 @RestController
@@ -38,10 +38,10 @@ public class LoginController {
 
         TokenReissueDto reissueDto = accountService.refresh(request);
 
-        response.setHeader(AT_HEADER, reissueDto.getAccessToken());
+        response.setHeader(ACCESS_TOKEN_HEADER, reissueDto.getAccessToken());
 
         if (reissueDto.getRefreshToken() != null) {
-            response.setHeader(RT_HEADER, reissueDto.getRefreshToken());
+            response.setHeader(REFRESH_TOKEN_HEADER, reissueDto.getRefreshToken());
         }
 
         return ResponseEntity.ok(reissueDto);

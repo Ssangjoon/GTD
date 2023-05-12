@@ -48,7 +48,7 @@ public class JwtService {
         try{
             checkHeaderValid(request);
             String refreshJwtToken = request
-                    .getHeader(RT_HEADER)
+                    .getHeader(REFRESH_TOKEN_HEADER)
                     .replace(TOKEN_HEADER_PREFIX, "");
             removeRefreshToken(refreshJwtToken);
         } catch (Exception e){
@@ -56,8 +56,8 @@ public class JwtService {
         }
     }
     public void checkHeaderValid(HttpServletRequest request){
-        String accessJwt = request.getHeader(AT_HEADER);
-        String refreshJwt = request.getHeader(RT_HEADER);
+        String accessJwt = request.getHeader(ACCESS_TOKEN_HEADER);
+        String refreshJwt = request.getHeader(REFRESH_TOKEN_HEADER);
         if(accessJwt == null){
             throw new CustomException(ErrorCode.JWT_ACCESS_NOT_VALID);
         } else if(refreshJwt == null){

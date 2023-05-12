@@ -76,12 +76,12 @@ public class AccountServiceImpl implements AccountService{
 
         if(diffMin < 5){
             String newRefreshToken = jwtTokenProvider.generateRefreshToken();
-            accessTokenResponseMap.put(RT_HEADER, newRefreshToken);
+            accessTokenResponseMap.put(REFRESH_TOKEN_HEADER, newRefreshToken);
             member.updateRefreshToken(newRefreshToken);
-            reissueDto = TokenReissueDto.toResponseToken(newRefreshToken, RT_HEADER);
+            reissueDto = TokenReissueDto.toResponseToken(newRefreshToken, REFRESH_TOKEN_HEADER);
         }
-        accessTokenResponseMap.put(AT_HEADER, accessToken);
-        reissueDto = TokenReissueDto.toResponseToken(accessToken, AT_HEADER);
+        accessTokenResponseMap.put(ACCESS_TOKEN_HEADER, accessToken);
+        reissueDto = TokenReissueDto.toResponseToken(accessToken, ACCESS_TOKEN_HEADER);
 
         return reissueDto;
     }
@@ -94,7 +94,7 @@ public class AccountServiceImpl implements AccountService{
         String accessToken = Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + AT_EXP_TIME)) // set Expire Time
+                .setExpiration(new Date(now.getTime() + ACCESS_EXP_TIME)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
                 // signature 에 들어갈 secret값 세팅
                 .compact();
