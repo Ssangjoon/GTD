@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ssang.gtd.jwt.JwtConstants.*;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RequiredArgsConstructor
 @Service
@@ -36,11 +38,23 @@ public class AccountServiceImpl implements AccountService{
         member.updateRefreshToken(refreshToken);
     }
     @Override
-    public Map<String, String> refresh(String refreshToken) {
+    public Map<String, String> refresh(HttpServletRequest request) {
+
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+
+        // === 토큰 존재 확인 === //
+        if (authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
+            throw new RuntimeException("JWT Token이 존재하지 않습니다.");
+        }
+
+        String refreshToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
+
         long now = System.currentTimeMillis();
+
         String accessToken = "";
-        // Refresh Token 유효성 검사
-        //refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다.
+
+        // === Refresh Token 유효성 검사 === //
+        // === refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다. === //
         Member member = memberRepository.findByRefreshToken(refreshToken).orElseThrow(
                 () -> new UsernameNotFoundException("유효하지 않은 Refresh Token입니다.")
         );
