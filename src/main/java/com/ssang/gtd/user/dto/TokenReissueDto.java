@@ -7,8 +7,8 @@ import static com.ssang.gtd.jwt.JwtConstants.REFRESH_TOKEN_HEADER;
 
 @Getter
 public class TokenReissueDto {
-    String accessToken;
-    String refreshToken;
+    private String accessToken;
+    private String refreshToken;
     public static TokenReissueDto toResponseToken(String token, String type){
         TokenReissueDto dto = new TokenReissueDto();
         if(type.equals(ACCESS_TOKEN_HEADER)){
