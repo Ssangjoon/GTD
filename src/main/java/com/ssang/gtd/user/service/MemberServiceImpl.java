@@ -7,7 +7,7 @@ import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
-import com.ssang.gtd.user.dto.MemberServiceDto;
+import com.ssang.gtd.user.dto.member.MemberServiceDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

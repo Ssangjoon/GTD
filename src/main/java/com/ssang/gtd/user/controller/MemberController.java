@@ -1,12 +1,12 @@
 package com.ssang.gtd.user.controller;
 
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateData;
-import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateRequest;
-import com.ssang.gtd.user.dto.MemberCreateDto.MemberCreateResponse;
-import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateData;
-import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateRequest;
-import com.ssang.gtd.user.dto.MemberUpdateDto.MemberUpdateResponse;
+import com.ssang.gtd.user.dto.member.MemberCreateDto.MemberCreateData;
+import com.ssang.gtd.user.dto.member.MemberCreateDto.MemberCreateRequest;
+import com.ssang.gtd.user.dto.member.MemberCreateDto.MemberCreateResponse;
+import com.ssang.gtd.user.dto.member.MemberUpdateDto.MemberUpdateData;
+import com.ssang.gtd.user.dto.member.MemberUpdateDto.MemberUpdateRequest;
+import com.ssang.gtd.user.dto.member.MemberUpdateDto.MemberUpdateResponse;
 import com.ssang.gtd.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

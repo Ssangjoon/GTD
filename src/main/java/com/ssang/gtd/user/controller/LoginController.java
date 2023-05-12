@@ -1,5 +1,6 @@
 package com.ssang.gtd.user.controller;
 
+import com.ssang.gtd.user.dto.TokenReissueDto;
 import com.ssang.gtd.user.service.AccountService;
 import com.ssang.gtd.user.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 import static com.ssang.gtd.jwt.JwtConstants.AT_HEADER;
 import static com.ssang.gtd.jwt.JwtConstants.RT_HEADER;
@@ -35,20 +34,17 @@ public class LoginController {
         return 1;
     }
     @PostMapping("/refresh")
-    public ResponseEntity<Map<String, String>> refresh(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<TokenReissueDto> refresh(HttpServletRequest request, HttpServletResponse response) {
 
-        Map<String, String> tokens = accountService.refresh(request);
+        TokenReissueDto reissueDto = accountService.refresh(request);
 
-        response.setHeader(AT_HEADER, tokens.get(AT_HEADER));
+        response.setHeader(AT_HEADER, reissueDto.getAccessToken());
 
-        if (tokens.get(RT_HEADER) != null) {
-            response.setHeader(RT_HEADER, tokens.get(RT_HEADER));
+        if (reissueDto.getRefreshToken() != null) {
+            response.setHeader(RT_HEADER, reissueDto.getRefreshToken());
         }
 
-        return ResponseEntity.ok(tokens);
+        return ResponseEntity.ok(reissueDto);
     }
-    public String index() {
 
-        return "index";
-    }
 }

@@ -1,4 +1,4 @@
-package com.ssang.gtd.user.dto;
+package com.ssang.gtd.user.dto.member;
 
 import com.ssang.gtd.Role;
 import lombok.*;

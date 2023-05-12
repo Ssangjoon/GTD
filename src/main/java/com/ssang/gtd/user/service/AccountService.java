@@ -1,10 +1,9 @@
 package com.ssang.gtd.user.service;
 
+import com.ssang.gtd.user.dto.TokenReissueDto;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Map;
 
 public interface AccountService {
     void updateRefreshToken(String username, String refreshToken);
-    Map<String, String> refresh(HttpServletRequest request);
+    TokenReissueDto refresh(HttpServletRequest request);
 }

@@ -1,7 +1,7 @@
 package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.user.dto.MemberServiceDto;
+import com.ssang.gtd.user.dto.member.MemberServiceDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;

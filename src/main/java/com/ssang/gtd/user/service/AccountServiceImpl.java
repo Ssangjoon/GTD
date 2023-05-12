@@ -3,6 +3,7 @@ package com.ssang.gtd.user.service;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.user.dao.MemberRepository;
+import com.ssang.gtd.user.dto.TokenReissueDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -38,7 +39,7 @@ public class AccountServiceImpl implements AccountService{
         member.updateRefreshToken(refreshToken);
     }
     @Override
-    public Map<String, String> refresh(HttpServletRequest request) {
+    public TokenReissueDto refresh(HttpServletRequest request) {
 
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
@@ -67,6 +68,7 @@ public class AccountServiceImpl implements AccountService{
         }
 
         Map<String, String> accessTokenResponseMap = new HashMap<>();
+        TokenReissueDto reissueDto;
 
         // === 현재시간과 Refresh Token 만료날짜를 통해 남은 만료기간 계산 === //
         long refreshExpireTime = claims.getBody().getExpiration().getTime();
@@ -76,9 +78,12 @@ public class AccountServiceImpl implements AccountService{
             String newRefreshToken = jwtTokenProvider.generateRefreshToken();
             accessTokenResponseMap.put(RT_HEADER, newRefreshToken);
             member.updateRefreshToken(newRefreshToken);
+            reissueDto = TokenReissueDto.toResponseToken(newRefreshToken, RT_HEADER);
         }
         accessTokenResponseMap.put(AT_HEADER, accessToken);
-        return accessTokenResponseMap;
+        reissueDto = TokenReissueDto.toResponseToken(accessToken, AT_HEADER);
+
+        return reissueDto;
     }
     public String recreationAccessToken(Object roles){
         Claims claims = Jwts.claims(); // JWT payload 에 저장되는 정보단위

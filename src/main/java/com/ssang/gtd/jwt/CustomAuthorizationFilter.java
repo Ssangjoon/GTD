@@ -43,7 +43,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
             String authrizationHeader = request.getHeader(AUTHORIZATION);
 
             // 1. 로그인, 리프레시 요청이라면 토큰 검사하지 않음
-            if (servletPath.equals("/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")) {
+            if (servletPath.equals("/api/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")) {
                 filterChain.doFilter(request, response);
             } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
                 //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
@@ -86,6 +86,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
                 } catch (IllegalArgumentException e) {
                     log.info("JWT 토큰이 잘못되었습니다.");
                 }
+
+                filterChain.doFilter(request, response);
             }
         }
 }
