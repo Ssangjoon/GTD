@@ -1,10 +1,13 @@
 package com.ssang.gtd.entity;
 
-import com.ssang.gtd.Role;
+
+import com.ssang.gtd.oauth2.Role;
+import com.ssang.gtd.oauth2.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+
 
 @DynamicInsert
 @Entity
@@ -59,9 +62,9 @@ public class Member extends BaseEntity {
         this.role = role;
         this.refreshToken = refreshToken;
     }
-    public String getAuthority() {
+    /*public String getAuthority() {
         return this.role.getAuthority();
-    }
+    }*/
 
     public Member update(String name,String refreshToken) {
         this.name = name;

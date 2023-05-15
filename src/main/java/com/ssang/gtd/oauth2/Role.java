@@ -1,4 +1,4 @@
-package com.ssang.gtd.auth;
+package com.ssang.gtd.oauth2;
 
 import lombok.Getter;
 

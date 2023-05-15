@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.dto;
 
-import com.ssang.gtd.auth.Role;
+import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
