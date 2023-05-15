@@ -29,6 +29,11 @@ public class Member extends BaseEntity {
     //@Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
     private Role role;
+    @Column(length = 50, nullable = true)
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType; // KAKAO, NAVER, GOOGLE
+    @Column(length = 50, nullable = true)
+    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
     @Column(length = 255, nullable = false)
     private String refreshToken; // 리프레시 토큰
 
@@ -63,12 +68,5 @@ public class Member extends BaseEntity {
         this.refreshToken = refreshToken;
         return this;
     }
-    // 유저 권한 설정 메소드
-    /*public void authorizeUser() {
-        this.role = Role.USER;
-    }
 
-    public void updateRefreshToken(String updateRefreshToken) {
-        this.refreshToken = updateRefreshToken;
-    }*/
 }
