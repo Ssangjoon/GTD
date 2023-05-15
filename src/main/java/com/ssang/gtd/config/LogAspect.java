@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Before("execution(* com.ssang.gtd..*(..))")
+    @Before("execution(* com.ssang.gtd..*(..))" + "&& !@annotation(com.ssang.gtd.utils.anno.NoLogging)")
     public void beforeMethodExecution(JoinPoint joinPoint) {
         logger.info("[{}] => [{} 실행]", joinPoint.getTarget().getClass().getSimpleName(), joinPoint.getSignature().getName());
     }

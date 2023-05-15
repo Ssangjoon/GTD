@@ -12,10 +12,8 @@ public class ExControllerAdvice {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorResponse> userExHandle(CustomException e) {
-        log.error("userExHandle : {}", e.getErrorCode().getMessage(),e);
+        log.error("ExControllerAdvice userExHandle : {}", e.getErrorCode().getMessage(),e);
         return ErrorResponse.toResponseEntity(e.getErrorCode());
     }
-
-
 
 }

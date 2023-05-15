@@ -1,7 +1,6 @@
-package com.ssang.gtd.exception;
+package com.ssang.gtd.jwt;
 
 
-import com.ssang.gtd.utils.ResVO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,13 +23,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
         PrintWriter writer = response.getWriter();
-        ErrorCode errorCode = ErrorCode.UNAUTORIZED;
-        ResVO res = ResVO.builder()
-                .status(errorCode.getHttpStatus().value())
-                .message(errorCode.getMessage()).build();
         try{
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            //writer.write(CmmnVar.GSON.toJson(res));
         }catch(NullPointerException e){
             logger.error("응답 메시지 작성 에러", e);
         }finally{
@@ -39,6 +33,5 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 writer.close();
             }
         }
-        //response.getWriter().write(CmmnVar.GSON.toJson(res));
     }
 }
