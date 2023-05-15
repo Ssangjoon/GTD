@@ -208,7 +208,7 @@ package-lock.json
 
 ##application.properties
 application.properties
-/src/main/resources/application-oauth.yml
+application-oauth.yml
 
 ## test
 common/
