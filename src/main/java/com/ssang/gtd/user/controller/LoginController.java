@@ -28,7 +28,7 @@ public class LoginController {
     public String test(HttpServletRequest request) {
         return "success";
     }
-    @PostMapping("/logout")
+    @PostMapping("/api/logout")
     public int logout(HttpServletResponse response, HttpServletRequest request) {
         memberService.logout(request);
         return 1;

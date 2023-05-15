@@ -3,6 +3,8 @@ package com.ssang.gtd.user.service;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.user.dto.member.MemberServiceDto;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,5 +15,5 @@ public interface MemberService {
     public Member post(MemberServiceDto dto) throws Exception;
     public Member put(MemberServiceDto dto) throws Exception;
     public void delete(Long id);
-    public void logout(HttpServletRequest request);
+    public ResponseEntity<HttpStatus> logout(HttpServletRequest request);
 }

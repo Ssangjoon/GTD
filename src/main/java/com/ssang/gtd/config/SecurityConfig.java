@@ -1,9 +1,9 @@
 package com.ssang.gtd.config;
 
-import com.ssang.gtd.jwt.CustomAuthenticationFilter;
-import com.ssang.gtd.jwt.CustomAuthorizationFilter;
 import com.ssang.gtd.jwt.JwtAccessDeniedHandler;
 import com.ssang.gtd.jwt.JwtAuthenticationEntryPoint;
+import com.ssang.gtd.security.CustomAuthenticationFilter;
+import com.ssang.gtd.security.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final JwtAuthenticationEntryPoint jwtAtuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
@@ -39,6 +38,7 @@ public class SecurityConfig {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+
 
         http
                 .httpBasic().disable()

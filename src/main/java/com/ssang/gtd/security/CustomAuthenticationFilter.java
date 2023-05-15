@@ -1,4 +1,4 @@
-package com.ssang.gtd.jwt;
+package com.ssang.gtd.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssang.gtd.user.dto.LoginReq;
