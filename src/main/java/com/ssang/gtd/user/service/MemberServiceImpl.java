@@ -1,10 +1,10 @@
 package com.ssang.gtd.user.service;
 
-import com.ssang.gtd.Role;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
