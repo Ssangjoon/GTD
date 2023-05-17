@@ -19,8 +19,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static com.ssang.gtd.jwt.JwtConstants.AT_EXP_TIME;
-import static com.ssang.gtd.jwt.JwtConstants.RT_EXP_TIME;
+import static com.ssang.gtd.jwt.JwtConstants.ACCESS_TOKEN_EXP_TIME;
+import static com.ssang.gtd.jwt.JwtConstants.REFRESH_TOKEN_EXP_TIME;
 
 @Component
 public class TokenProvider {
@@ -46,7 +46,7 @@ public class TokenProvider {
         String authorities = getAuthorities(authentication);
 
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + AT_EXP_TIME);
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXP_TIME);
         log.info("accessTokenExpiresIn" + accessTokenExpiresIn.toString());
         return Jwts.builder()
                 .setSubject(authentication.getName())
@@ -60,7 +60,7 @@ public class TokenProvider {
      * 생성
      */
     public String generateRefreshToken() {
-        Date refreshTokenExpiresIn = new Date(now + RT_EXP_TIME);
+        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXP_TIME);
         log.info("refreshTokenExpiresIn" + refreshTokenExpiresIn.toString());
         // Refresh Token 생성
         return Jwts.builder()

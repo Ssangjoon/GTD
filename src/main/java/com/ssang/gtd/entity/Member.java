@@ -29,8 +29,8 @@ public class Member extends BaseEntity {
     private String status;
     @Column(length = 50, nullable = false)
     private String email;
-    //@Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
+    //@Enumerated(EnumType.STRING)
     private Role role;
     @Column(length = 50, nullable = true)
     @Enumerated(EnumType.STRING)
@@ -39,6 +39,7 @@ public class Member extends BaseEntity {
     private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
     @Column(length = 255, nullable = false)
     private String refreshToken; // 리프레시 토큰
+    private String imageUrl;
 
 
 
@@ -50,9 +51,8 @@ public class Member extends BaseEntity {
     public void updateRefreshToken(String newToken) {
         this.refreshToken = newToken;
     }
-
     @Builder
-    public Member(Long id, String userName, String name, String password, String status, String email, Role role, String refreshToken) {
+    public Member(Long id, String userName, String name, String password, String status, String email, Role role, SocialType socialType, String socialId, String refreshToken, String imageUrl) {
         this.id = id;
         this.userName = userName;
         this.name = name;
@@ -60,8 +60,12 @@ public class Member extends BaseEntity {
         this.status = status;
         this.email = email;
         this.role = role;
+        this.socialType = socialType;
+        this.socialId = socialId;
         this.refreshToken = refreshToken;
+        this.imageUrl = imageUrl;
     }
+
     /*public String getAuthority() {
         return this.role.getAuthority();
     }*/

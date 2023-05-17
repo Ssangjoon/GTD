@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -20,10 +21,11 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ssang.gtd.jwt.JwtConstants.AT_HEADER;
-import static com.ssang.gtd.jwt.JwtConstants.RT_HEADER;
+import static com.ssang.gtd.jwt.JwtConstants.ACCESS_TOKEN_HEADER;
+import static com.ssang.gtd.jwt.JwtConstants.REFRESH_TOKEN_HEADER;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
+@Primary
 @Component
 public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccessHandler {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -47,12 +49,12 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
         // Access Token , Refresh Token 프론트 단에 Response Header로 전달
         response.setContentType(APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("utf-8");
-        response.setHeader(AT_HEADER, accessToken);
-        response.setHeader(RT_HEADER, refreshToken);
+        response.setHeader(ACCESS_TOKEN_HEADER, accessToken);
+        response.setHeader(REFRESH_TOKEN_HEADER, refreshToken);
 
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put(AT_HEADER, accessToken);
-        responseMap.put(RT_HEADER, refreshToken);
+        responseMap.put(ACCESS_TOKEN_HEADER, accessToken);
+        responseMap.put(REFRESH_TOKEN_HEADER, refreshToken);
         new ObjectMapper().writeValue(response.getWriter(), responseMap);
     }
 

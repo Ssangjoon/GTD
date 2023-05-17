@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인테스트</title>
+</head>
+<body>
+    <input id="id1" type="text">
+    <input id="id2" type="text">
+    <button onclick="login()">버튼이닷1</button>
+    <hr>
+    <a href="/oauth2/authorization/kakao">Kakao Login</a><br>
+    <a href="/oauth2/authorization/google">Google Login</a><br>
+    <a href="/oauth2/authorization/naver">Naver Login</a><br>
+
+    <script type="text/javascript" >
+        const BASE_URL = "http://localhost:8080"
+        function login(){
+            const username = document.querySelector("#id1").value;
+            const pwd = document.querySelector("#id2").value;
+            const data = {
+                username : username,
+                password : pwd
+            }
+            fetch(`${BASE_URL}/api/login`,HTTP_METHOD.POST(data))
+                .then(res => res.json())
+                .then(data => console.log(data))
+        }
+
+        const HTTP_METHOD = {
+            POST(data) {
+                return {
+                    method: "POST",
+                    headers: {"Content-Type" : "application/json"},
+                    body: JSON.stringify(data),
+                };
+            },
+        }
+
+    </script>
+</body>
+</html>

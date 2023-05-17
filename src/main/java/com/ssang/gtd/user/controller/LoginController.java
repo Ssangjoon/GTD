@@ -43,9 +43,9 @@ public class LoginController {
         }
         String refreshToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
         Map<String, String> tokens = accountService.refresh(refreshToken);
-        response.setHeader(AT_HEADER, tokens.get(AT_HEADER));
-        if (tokens.get(RT_HEADER) != null) {
-            response.setHeader(RT_HEADER, tokens.get(RT_HEADER));
+        response.setHeader(ACCESS_TOKEN_HEADER, tokens.get(ACCESS_TOKEN_HEADER));
+        if (tokens.get(REFRESH_TOKEN_HEADER) != null) {
+            response.setHeader(REFRESH_TOKEN_HEADER, tokens.get(REFRESH_TOKEN_HEADER));
         }
         return ResponseEntity.ok(tokens);
     }

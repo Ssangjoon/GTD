@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
@@ -47,10 +48,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
         String authrizationHeader = request.getHeader(AUTHORIZATION);
 
         // 1. 로그인, 리프레시 요청이라면 토큰 검사하지 않음
-        if (servletPath.equals("/api/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")) {
+        if (servletPath.equals("/api/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")|| servletPath.equals("/login")) {
 
             filterChain.doFilter(request, response);
-
 
         //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
         } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
@@ -105,5 +105,14 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
             // 인증처리 후 정상적으로 다음 filter 수행
             filterChain.doFilter(request, response);
         }
+    }
+    @NoLogging
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request)
+            throws ServletException {
+        String path = request.getRequestURI();
+        String[] excludePath = {"/", "/login"};
+        Arrays.stream(excludePath).anyMatch(path::startsWith);
+        return path.startsWith("/library/books/all");
     }
 }
