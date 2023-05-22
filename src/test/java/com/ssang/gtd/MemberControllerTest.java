@@ -40,6 +40,16 @@ class MemberControllerTest  {
                                 responseFields( // response 필드 정보 입력
                                         fieldWithPath("id").description("ID"),
                                         fieldWithPath("name").description("name"),
+                                        fieldWithPath("createDate").description("createDate"),
+                                        fieldWithPath("modifiedDate").description("modifiedDate"),
+                                        fieldWithPath("userName").description("userName"),
+                                        fieldWithPath("password").description("password"),
+                                        fieldWithPath("status").description("status"),
+                                        fieldWithPath("role").description("role"),
+                                        fieldWithPath("socialType").description("socialType"),
+                                        fieldWithPath("socialId").description("socialId"),
+                                        fieldWithPath("refreshToken").description("refreshToken"),
+                                        fieldWithPath("imageUrl").description("imageUrl"),
                                         fieldWithPath("email").description("email")
                                 )
                         )
