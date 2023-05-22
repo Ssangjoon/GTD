@@ -55,6 +55,7 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put(ACCESS_TOKEN_HEADER, accessToken);
         responseMap.put(REFRESH_TOKEN_HEADER, refreshToken);
+
         new ObjectMapper().writeValue(response.getWriter(), responseMap);
     }
 
