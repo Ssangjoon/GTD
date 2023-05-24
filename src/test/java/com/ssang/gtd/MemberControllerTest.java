@@ -14,16 +14,15 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs // rest docs 자동 설정
 class MemberControllerTest  {
-
     @Autowired
     MockMvc mockMvc;
-
     @Test
     public void member_get() throws Exception {
         // 조회 API -> 대상의 데이터가 있어야 합니다.
@@ -31,6 +30,7 @@ class MemberControllerTest  {
                         get("/member/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작
                         document("member-get", // 문서 조각 디렉토리 명

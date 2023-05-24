@@ -1,5 +1,5 @@
 = REST Docs 문서 만들기 (글의 제목)
-backtony.github.io(부제)
+SsangJoon (GTD)
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
@@ -7,4 +7,9 @@ backtony.github.io(부제)
 :toclevels: 2
 :sectlinks:
 
-include::Member-API.adoc[]
+[[Member-API]]
+== Member API
+
+[[Member-단일-조회]]
+=== Member 단일 조회
+operation::member-get[snippets='http-request,path-parameters,http-response,response-fields']

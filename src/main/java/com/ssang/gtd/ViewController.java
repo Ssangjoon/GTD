@@ -1,4 +1,4 @@
-package com.ssang.gtd.user.controller;
+package com.ssang.gtd;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +8,5 @@ public class ViewController {
     @GetMapping("/login")
     public String loginPage(){
         return "login";
-    }
-    @GetMapping("/")
-    public String indexPage(){
-        return "index";
     }
 }
