@@ -115,7 +115,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
             throws ServletException {
         log.info("shouldNotFilter 실행");
         String path = request.getRequestURI();
-        String[] excludePath = {"/index", "/login","/swagger-ui","/v3/api-docs"};
+        String[] excludePath = {"/index", "/login","/swagger-ui"};
 
         return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }

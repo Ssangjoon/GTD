@@ -55,7 +55,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-devtools'
 
 	asciidoctorExt  'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
+	testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
 
 }
 
@@ -71,6 +74,9 @@ asciidoctor {
 	configurations 'asciidoctorExt'
 	inputs.dir snippetsDir
 	dependsOn test
+}
+asciidoctor.doFirst {
+	delete file('src/main/resources/static/docs')
 }
 task copyDocument(type: Copy) {
 	dependsOn asciidoctor

@@ -50,10 +50,13 @@ class MemberControllerTest  {
                                         fieldWithPath("socialId").description("socialId"),
                                         fieldWithPath("refreshToken").description("refreshToken"),
                                         fieldWithPath("imageUrl").description("imageUrl"),
+                                        fieldWithPath("gender").description("gender"),
                                         fieldWithPath("email").description("email")
                                 )
                         )
                 )
         ;
     }
+
+
 }

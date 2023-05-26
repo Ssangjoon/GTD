@@ -6,6 +6,8 @@ import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.redis.RedisDao;
+import com.ssang.gtd.test.MemberStatus;
+import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dto.MemberServiceDto;
@@ -60,6 +62,8 @@ public class MemberServiceImpl implements MemberService{
         }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         dto.setRole(Role.USER);
+        dto.setGender(Gender.MALE);
+        dto.setStatus(MemberStatus.NORMAL);
         return memberRepository.save(dto.toEntity());
     }
 
