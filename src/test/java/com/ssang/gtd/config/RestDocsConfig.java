@@ -14,7 +14,7 @@ public class RestDocsConfig {
     @Bean
     public RestDocumentationResultHandler write(){
         return MockMvcRestDocumentation.document(
-                "{class-name}/{method-name}", // 조각이 생성되는 디렉토리 명을 클래스명/메서드 명으로 정한다.
+                "{class-name}/{method-name}", // 조각이 생성되는 디렉토리 명을 클래스명/메서드 명으로 정한다. andDo(document()) 식으로 문서명을 지정하지 않아도 된다.
                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()), // json이 한 줄로 출력되던 내용을 pretty 하게 찍어준다.
                 Preprocessors.preprocessResponse(Preprocessors.prettyPrint())
         );
