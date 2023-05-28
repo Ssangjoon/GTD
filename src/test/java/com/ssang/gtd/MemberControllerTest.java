@@ -1,43 +1,37 @@
 package com.ssang.gtd;
 
+import com.ssang.gtd.docs.AbstractRestDocsTests;
+import com.ssang.gtd.oauth2.Role;
+import com.ssang.gtd.test.Gender;
+import com.ssang.gtd.user.dto.MemberCreateDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static com.ssang.gtd.config.RestDocsConfig.field;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs // rest docs 자동 설정
-class MemberControllerTest  {
-    @Autowired
-    MockMvc mockMvc;
+// optional과 커스텀해서 넣은 constraints를 명시해서 테스트를 작성
+class MemberControllerTest extends AbstractRestDocsTests {
+
     @Test
     public void member_get() throws Exception {
-        // 조회 API -> 대상의 데이터가 있어야 합니다.
+
         mockMvc.perform(
                         get("/member/{id}", 1L)
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
+                                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo( // rest docs 문서 작성 시작
-                        document("member-get", // 문서 조각 디렉토리 명
-                                pathParameters( // path 파라미터 정보 입력
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
                                         parameterWithName("id").description("Member ID")
                                 ),
-                                responseFields( // response 필드 정보 입력
+                                responseFields(
                                         fieldWithPath("id").description("ID"),
                                         fieldWithPath("name").description("name"),
                                         fieldWithPath("createDate").description("createDate"),
@@ -58,5 +52,88 @@ class MemberControllerTest  {
         ;
     }
 
+    @DisplayName("회원 가입 테스트")
+    @Test
+    public void member_create() throws Exception {
+
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("이상준", "굿데브상준", "12345", "test@test.com", Role.USER, Gender.MALE);
+
+        //when
+        mockMvc.perform(
+                        post("/joinUp")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(createJson(req)))
+                .andExpect(status().isOk())
+                //then
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("email").description("email").attributes(field("constraints", "길이 30 이하")),
+                                        fieldWithPath("name").description("name"),
+                                        fieldWithPath("userName").description("userName"),
+                                        fieldWithPath("password").description("password"),
+                                        fieldWithPath("role").description("role"),
+                                        fieldWithPath("gender").description("gender")
+                                        //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
+                                )
+                        )
+                )
+        ;
+    }
+
+//    @Test
+//    public void member_page_test() throws Exception {
+//        Member member = Member.builder()
+//                .email("SsangJoon@gmail.com")
+//                .status(MemberStatus.NORMAL)
+//                .build();
+//        PageImpl<Member> memberPage = new PageImpl<>(List.of(member), PageRequest.of(0, 10), 1);
+//        given(memberRepository.findAll(ArgumentMatchers.any(Pageable.class))).willReturn(memberPage);
+//
+//        mockMvc.perform(
+//                        get("/members")
+//                                .param("size", "10")
+//                                .param("page", "0")
+//                                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(
+//                        restDocs.document(
+//                                requestParameters(
+//                                        parameterWithName("size").optional().description("size"),
+//                                        parameterWithName("page").optional().description("page")
+//                                )
+//                        )
+//                )
+//        ;
+//    }
+
+//
+//    @Test
+//    public void member_modify() throws Exception {
+//        // given
+//        //MemberModificationRequest dto = MemberModificationRequest.builder().age(1).build();
+//        Member member = Member.builder()
+//                .email("SsangJoon@gmail.com")
+//                .status(MemberStatus.NORMAL)
+//                .build();
+//        given(memberRepository.findById(ArgumentMatchers.any())).willReturn(Optional.of(member));
+//
+//        mockMvc.perform(
+//                        patch("/api/members/{id}", 1)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(createJson(member)))
+//                .andExpect(status().isOk())
+//                .andDo(
+//                        restDocs.document(
+//                                pathParameters(
+//                                        parameterWithName("id").description("Member ID")
+//                                ),
+//                                requestFields(
+//                                        fieldWithPath("age").description("age")
+//                                )
+//                        )
+//                )
+//        ;
+//    }
 
 }

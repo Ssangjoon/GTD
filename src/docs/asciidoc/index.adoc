@@ -12,4 +12,8 @@ SsangJoon (GTD)
 
 [[Member-단일-조회]]
 === Member 단일 조회
-operation::member-get[snippets='http-request,path-parameters,http-response,response-fields']
+operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Member-생성]]
+=== Member 생성
+operation::member-controller-test/member_create[snippets='http-request,request-fields,http-response']
