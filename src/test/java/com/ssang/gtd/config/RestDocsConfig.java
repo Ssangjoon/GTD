@@ -9,6 +9,7 @@ import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import static org.springframework.restdocs.snippet.Attributes.Attribute;
 
 @TestConfiguration
+//@WebAppConfiguration
 public class RestDocsConfig {
 
     @Bean

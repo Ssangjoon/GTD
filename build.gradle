@@ -74,6 +74,9 @@ asciidoctor {
 	configurations 'asciidoctorExt'
 	inputs.dir snippetsDir
 	dependsOn test
+//	sources{
+//		include("**/index.adoc","**/common/*.adoc")
+//	}
 }
 asciidoctor.doFirst {
 	delete file('src/main/resources/static/docs')

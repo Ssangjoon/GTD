@@ -6,6 +6,7 @@ SsangJoon (GTD)
 :toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
 :toclevels: 2
 :sectlinks:
+:docinfo: shared-head
 
 [[Member-API]]
 == Member API

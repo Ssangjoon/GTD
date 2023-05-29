@@ -48,15 +48,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
         String servletPath = request.getServletPath();
         String authrizationHeader = request.getHeader(AUTHORIZATION);
 
-        // 1. 로그인, 리프레시 요청이라면 토큰 검사하지 않음
-        if (servletPath.equals("/api/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp") || true) {
-
-            log.info("여기 들어옴 무조건 통과");
-
-            filterChain.doFilter(request, response);
-
-        //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
-        } else if (StringUtils.isEmpty(authrizationHeader) || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
+        //1. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
+        if (StringUtils.isEmpty(authrizationHeader) || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
 
             log.info("CustomAuthorizationFilter : JWT Token이 존재하지 않습니다.");
             response.setStatus(SC_BAD_REQUEST);
@@ -66,7 +59,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
         } else {
             try {
-
                 // === Access Token만 꺼내옴 === //
                 String accessToken = authrizationHeader.substring(TOKEN_HEADER_PREFIX.length());
                 String requestURI = request.getRequestURI();
@@ -113,9 +105,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request)
             throws ServletException {
+        // excludePath에 해당하는 요청이라면 토큰 검사하지 않음
         log.info("shouldNotFilter 실행");
         String path = request.getRequestURI();
-        String[] excludePath = {"/index", "/login","/swagger-ui"};
+        String[] excludePath = {"/api/login","/api/joinUp","/api/refresh","/index","/swagger-ui"};
 
         return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }

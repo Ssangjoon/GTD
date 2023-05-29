@@ -60,8 +60,8 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST,"/joinUp","/refresh").permitAll()
-                .requestMatchers("/","/login","/swagger-ui").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/joinUp","/api/refresh").permitAll()
+                .requestMatchers("/","/api/login","/swagger-ui").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().permitAll()
                 //.anyRequest().authenticated()

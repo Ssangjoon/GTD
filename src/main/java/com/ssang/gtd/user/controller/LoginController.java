@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -18,6 +19,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -29,7 +31,7 @@ public class LoginController {
     public String test(HttpServletRequest request) {
         return "success";
     }
-    @PostMapping("/api/logout")
+    @PostMapping("/logout")
     public int logout(HttpServletResponse response, HttpServletRequest request) {
         memberService.logout(request);
         return 1;
@@ -48,9 +50,5 @@ public class LoginController {
             response.setHeader(REFRESH_TOKEN_HEADER, tokens.get(REFRESH_TOKEN_HEADER));
         }
         return ResponseEntity.ok(tokens);
-    }
-    public String index() {
-
-        return "index";
     }
 }

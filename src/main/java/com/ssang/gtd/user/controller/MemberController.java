@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class MemberController {
     private final Logger logger = LoggerFactory.getLogger(getClass());

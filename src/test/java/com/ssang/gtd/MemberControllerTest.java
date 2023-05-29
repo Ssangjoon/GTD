@@ -18,12 +18,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // optional과 커스텀해서 넣은 constraints를 명시해서 테스트를 작성
 class MemberControllerTest extends AbstractRestDocsTests {
-
+    @DisplayName("회원 조회 단건")
     @Test
     public void member_get() throws Exception {
 
         mockMvc.perform(
-                        get("/member/{id}", 1L)
+                        get("/api/member/{id}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -56,11 +56,11 @@ class MemberControllerTest extends AbstractRestDocsTests {
     @Test
     public void member_create() throws Exception {
 
-        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("이상준", "굿데브상준", "12345", "test@test.com", Role.USER, Gender.MALE);
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("이상준4", "굿데브상준4", "12345", "test@test.com", Role.USER, Gender.MALE);
 
         //when
         mockMvc.perform(
-                        post("/joinUp")
+                        post("/api/joinUp")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(createJson(req)))
                 .andExpect(status().isOk())
@@ -107,7 +107,7 @@ class MemberControllerTest extends AbstractRestDocsTests {
 //        ;
 //    }
 
-//
+
 //    @Test
 //    public void member_modify() throws Exception {
 //        // given
