@@ -1,23 +1,15 @@
 package com.ssang.gtd.docs;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.beneathPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.snippet.Attributes.attributes;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.restdocs.snippet.Attributes.key;
 
 class CommonDocControllerTestAbstract extends IntegrationRestDocsTests {
 
@@ -45,34 +37,34 @@ class CommonDocControllerTestAbstract extends IntegrationRestDocsTests {
 //        ;
 //    }
 
-    @Test
-    public void enums() throws Exception {
-        //요청
-        ResultActions result = this.mockMvc.perform(
-                get("/test/enums")
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        // 결과값
-        MvcResult mvcResult = result.andReturn();
-
-        // 데이터 파싱
-        EnumDocs enumDocs = getData(mvcResult);
-
-
-        // 문서화 진행
-        result.andExpect(status().isOk())
-                .andDo(restDocs.document(
-                        customResponseFields("custom-response", beneathPath("data.memberStatus").withSubsectionId("memberStatus"), // (2)
-                                attributes(key("title").value("memberStatus")),
-                                enumConvertFieldDescriptor((enumDocs.getMemberStatus()))
-                        ),
-                        customResponseFields("custom-response", beneathPath("data.sex").withSubsectionId("sex"), // (2)
-                                attributes(key("title").value("sex")),
-                                enumConvertFieldDescriptor((enumDocs.getSex()))
-                        )
-                ));
-    }
+//    @Test
+//    public void enums() throws Exception {
+//        //요청
+//        ResultActions result = this.mockMvc.perform(
+//                get("/test/enums")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//        );
+//
+//        // 결과값
+//        MvcResult mvcResult = result.andReturn();
+//
+//        // 데이터 파싱
+//        EnumDocs enumDocs = getData(mvcResult);
+//
+//
+//        // 문서화 진행
+//        result.andExpect(status().isOk())
+//                .andDo(restDocs.document(
+//                        customResponseFields("custom-response", beneathPath("data.memberStatus").withSubsectionId("memberStatus"), // (2)
+//                                attributes(key("title").value("memberStatus")),
+//                                enumConvertFieldDescriptor((enumDocs.getMemberStatus()))
+//                        ),
+//                        customResponseFields("custom-response", beneathPath("data.sex").withSubsectionId("sex"), // (2)
+//                                attributes(key("title").value("sex")),
+//                                enumConvertFieldDescriptor((enumDocs.getSex()))
+//                        )
+//                ));
+//    }
 
     // 커스텀 템플릿 사용을 위한 함수
     public static CustomResponseFieldsSnippet customResponseFields

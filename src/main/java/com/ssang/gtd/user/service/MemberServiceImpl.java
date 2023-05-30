@@ -71,7 +71,7 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     public Member put(MemberServiceDto dto)throws Exception {
         Member member = memberRepository.findByUserName(dto.getUserName()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
-        //member.update(dto.getUserName(), dto.getName(), dto.getEmail());
+        member.update(dto.getUserName(), dto.getName(), dto.getEmail());
         return member;
     }
 

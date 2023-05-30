@@ -11,6 +11,7 @@ public class MemberUpdateDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class MemberUpdateRequest{
         private String userName;
@@ -18,6 +19,7 @@ public class MemberUpdateDto {
         private String password;
         private String email;
         private Role role;
+
         private  String refreshToken;
 
         public MemberServiceDto toServiceDto(){
