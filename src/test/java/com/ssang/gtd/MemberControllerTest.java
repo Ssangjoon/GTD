@@ -1,29 +1,35 @@
 package com.ssang.gtd;
 
-import com.ssang.gtd.docs.AbstractRestDocsTests;
+import com.ssang.gtd.docs.IntegrationRestDocsTests;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.user.dto.MemberCreateDto;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ssang.gtd.config.RestDocsConfig.field;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // optional과 커스텀해서 넣은 constraints를 명시해서 테스트를 작성
-class MemberControllerTest extends AbstractRestDocsTests {
+class MemberControllerTest extends IntegrationRestDocsTests {
     @DisplayName("회원 조회 단건")
+    @Order(3)
+    //@WithUserDetails(value="굿데브상준3", userDetailsServiceBeanName = "customUserDetailsService")
     @Test
     public void member_get() throws Exception {
 
         mockMvc.perform(
                         get("/api/member/{id}", 1L)
+                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -53,10 +59,12 @@ class MemberControllerTest extends AbstractRestDocsTests {
     }
 
     @DisplayName("회원 가입 테스트")
+    @Order(1)
     @Test
+    @Transactional
     public void member_create() throws Exception {
 
-        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("이상준4", "굿데브상준4", "12345", "test@test.com", Role.USER, Gender.MALE);
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임2", "테스트네임2", "12345", "test@test.com", Role.USER, Gender.MALE);
 
         //when
         mockMvc.perform(

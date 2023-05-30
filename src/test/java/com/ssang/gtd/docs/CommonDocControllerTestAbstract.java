@@ -19,7 +19,7 @@ import static org.springframework.restdocs.snippet.Attributes.attributes;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.restdocs.snippet.Attributes.key;
 
-class CommonDocControllerTestAbstract extends AbstractRestDocsTests {
+class CommonDocControllerTestAbstract extends IntegrationRestDocsTests {
 
 //    @Test
 //    public void errorSample() throws Exception {

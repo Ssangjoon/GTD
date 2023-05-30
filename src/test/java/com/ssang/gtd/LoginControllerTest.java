@@ -1,8 +1,9 @@
 package com.ssang.gtd;
 
-import com.ssang.gtd.docs.AbstractRestDocsTests;
+import com.ssang.gtd.docs.IntegrationRestDocsTests;
 import com.ssang.gtd.user.dto.LoginReq;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
@@ -12,11 +13,12 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class LoginControllerTest extends AbstractRestDocsTests {
+public class LoginControllerTest extends IntegrationRestDocsTests {
     @DisplayName("로그인")
+    @Order(2)
     @Test
     public void login() throws Exception {
-        LoginReq login = new LoginReq("굿데브상준3","12345");
+        LoginReq login = new LoginReq("테스트유저이름","1");
 
         //when
         mockMvc.perform(
@@ -29,7 +31,7 @@ public class LoginControllerTest extends AbstractRestDocsTests {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("userName").description("userName"),
+                                        fieldWithPath("username").description("userName"),
                                         fieldWithPath("password").description("password")
                                 )
                         )
@@ -41,7 +43,8 @@ public class LoginControllerTest extends AbstractRestDocsTests {
     public void logout() throws Exception {
 
         // given
-
+        // 로그아웃을 위한 사전 작업 -> 로그인!
+        //
 
         //when
         mockMvc.perform(

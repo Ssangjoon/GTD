@@ -1,5 +1,8 @@
 package com.ssang.gtd.user.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.user.dto.LoginReq;
 import com.ssang.gtd.user.service.AccountService;
 import com.ssang.gtd.user.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,10 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static com.ssang.gtd.jwt.JwtConstants.*;
@@ -26,6 +32,8 @@ public class LoginController {
 
     private final MemberService memberService;
     private final AccountService accountService;
+    private final AuthenticationManager authenticationManager;
+    private final TokenProvider tokenProvider;
 
     @PostMapping("/test")
     public String test(HttpServletRequest request) {
@@ -50,5 +58,22 @@ public class LoginController {
             response.setHeader(REFRESH_TOKEN_HEADER, tokens.get(REFRESH_TOKEN_HEADER));
         }
         return ResponseEntity.ok(tokens);
+    }
+    @PostMapping("/oauth/token")
+    public String generateToken(HttpServletRequest request){
+        ObjectMapper om = new ObjectMapper();
+
+        try {
+
+            LoginReq login = om.readValue(request.getInputStream(), LoginReq.class);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword());
+
+            System.out.println(authenticationManager.authenticate(authenticationToken));
+            return tokenProvider.generateAccessToken(authenticationManager.authenticate(authenticationToken));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
