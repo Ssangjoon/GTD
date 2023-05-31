@@ -45,12 +45,13 @@ public class MemberUpdateDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class MemberUpdateData {
+        private String userName;
         private String name;
-        private String password;
+        private String email;
         private Role role;
 
         public static MemberUpdateData update(Member member) {
-            return new MemberUpdateData(member.getName(), member.getPassword(), member.getRole());
+            return new MemberUpdateData(member.getUserName(), member.getName(), member.getEmail(), member.getRole());
         }
     }
 }

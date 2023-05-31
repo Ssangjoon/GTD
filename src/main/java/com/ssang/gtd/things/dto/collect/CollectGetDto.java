@@ -21,12 +21,12 @@ public class CollectGetDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectGetData{
-        Long id;
-        String content;
-        String type;
+        private Long id;
+        private String content;
+        private String type;
         private LocalDateTime modifiedDate;
         private LocalDateTime createdDate;
-        MemberResponseDto member;
+        private MemberResponseDto member;
         public static List<CollectGetData> update(List<Collect> collectList) {
             return collectList.stream()
                     .map(CollectGetData::fromCollect)

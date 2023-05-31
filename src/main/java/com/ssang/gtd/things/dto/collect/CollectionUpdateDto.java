@@ -39,10 +39,10 @@ public class CollectionUpdateDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectUpdateData{
-        Long id;
-        String content;
-        String type;
-        MemberResponseDto member;
+        private Long id;
+        private String content;
+        private String type;
+        private MemberResponseDto member;
 
         public static CollectUpdateData update(Collect collect) {
 

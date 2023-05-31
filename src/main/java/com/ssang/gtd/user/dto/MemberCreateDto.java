@@ -47,11 +47,10 @@ public class MemberCreateDto {
     @NoArgsConstructor
     public static class MemberCreateData {
         private String name;
-        private String password;
         private Role role;
 
         public static MemberCreateData create(Member member) {
-            return new MemberCreateData(member.getName(), member.getPassword(), member.getRole());
+            return new MemberCreateData(member.getName(), member.getRole());
         }
     }
 }

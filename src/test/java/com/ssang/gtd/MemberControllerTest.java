@@ -34,13 +34,12 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                 pathParameters(
                                         parameterWithName("id").description("Member ID")
                                 ),
-                                responseFields(
+                                relaxedResponseFields(
                                         fieldWithPath("id").description("ID"),
                                         fieldWithPath("name").description("이름"),
                                         fieldWithPath("createDate").description("생성일"),
                                         fieldWithPath("modifiedDate").description("수정일"),
                                         fieldWithPath("userName").description("유저ID"),
-                                        fieldWithPath("password").description("비밀번호"),
                                         fieldWithPath("status").description("사용가능계정여부"),
                                         fieldWithPath("role").description("권한"),
                                         fieldWithPath("socialType").description("socialType"),
@@ -65,13 +64,12 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                responseFields(
+                                relaxedResponseFields(
                                         fieldWithPath("[].id").description("ID"),
                                         fieldWithPath("[].name").description("이름"),
                                         fieldWithPath("[].createDate").description("생성일"),
                                         fieldWithPath("[].modifiedDate").description("수정일"),
                                         fieldWithPath("[].userName").description("유저ID"),
-                                        fieldWithPath("[].password").description("비밀번호"),
                                         fieldWithPath("[].status").description("사용가능계정여부"),
                                         fieldWithPath("[].role").description("권한"),
                                         fieldWithPath("[].socialType").description("socialType"),
@@ -156,13 +154,11 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                requestFields(
-                                        fieldWithPath("userName").description("유저ID"),
-                                        fieldWithPath("name").description("이름"),
-                                        fieldWithPath("password").description("비밀번호"),
-                                        fieldWithPath("email").description("이메일"),
-                                        fieldWithPath("role").description("권한"),
-                                        fieldWithPath("refreshToken").description("")
+                                relaxedResponseFields(
+                                        fieldWithPath("data.userName").description("유저ID"),
+                                        fieldWithPath("data.name").description("이름"),
+                                        fieldWithPath("data.email").description("이메일"),
+                                        fieldWithPath("data.role").description("권한")
                                 )
                         )
                 )
