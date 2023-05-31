@@ -10,6 +10,7 @@ import lombok.Setter;
 public class CollectCreateDto {
     @Getter
     @Setter
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectCreateRequest{
         private String content;

@@ -10,6 +10,7 @@ import lombok.Setter;
 public class CollectionUpdateDto {
     @Getter
     @Setter
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectUpdateRequest{
         private Long id;

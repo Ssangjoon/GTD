@@ -46,14 +46,18 @@ public class LoginController {
     }
     @PostMapping("/refresh")
     public ResponseEntity<Map<String, String>> refresh(HttpServletRequest request, HttpServletResponse response) {
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
 
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
             throw new RuntimeException("JWT Token이 존재하지 않습니다.");
         }
+
         String refreshToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
+
         Map<String, String> tokens = accountService.refresh(refreshToken);
+
         response.setHeader(ACCESS_TOKEN_HEADER, tokens.get(ACCESS_TOKEN_HEADER));
+
         if (tokens.get(REFRESH_TOKEN_HEADER) != null) {
             response.setHeader(REFRESH_TOKEN_HEADER, tokens.get(REFRESH_TOKEN_HEADER));
         }

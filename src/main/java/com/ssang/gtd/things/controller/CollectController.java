@@ -24,7 +24,6 @@ import java.util.Optional;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class CollectController {
-    // TODO : 응답 일관성있게 하기
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final CollectService collectService;
     private final MatCollectService matCollectService;
@@ -43,7 +42,13 @@ public class CollectController {
     @PutMapping("/collection")
     public CollectUpdateResponse update(@RequestBody CollectUpdateRequest dto) throws Exception {
         Collect collect = collectService.put(dto.toServiceDto());
-        return new CollectUpdateResponse(CollectUpdateData.update(collect));
+
+        // Lazy가 걸린 엔티티를를 사용함으로써 Proxy 객체를 초기화 시켜서 Lazy가 걸린 연관관계 객체를 조회한다..
+        collect.getMember();
+
+        CollectUpdateResponse result = new CollectUpdateResponse(CollectUpdateData.update(collect));
+
+        return result;
     }
     @DeleteMapping("/collection/{id}")
     public void delete(@PathVariable("id") Long id){

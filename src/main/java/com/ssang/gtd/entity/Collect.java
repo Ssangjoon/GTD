@@ -30,11 +30,11 @@ public class Collect extends BaseEntity {
         this.type = type;
         this.member = member;
     }
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userId")
+    @JoinColumn(name="userId", nullable = false)
     private Member member;
+
     public void update(String content, String type) {
         this.content = content;
         this.type = type;

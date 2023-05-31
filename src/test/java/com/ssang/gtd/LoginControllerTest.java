@@ -8,8 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginControllerTest extends IntegrationRestDocsTests {
@@ -37,12 +36,8 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
         ;
     }
     @DisplayName("로그아웃")
-    //@Test
+    @Test
     public void logout() throws Exception {
-
-        // given
-        // 로그아웃을 위한 사전 작업 -> 로그인!
-        //
 
         //when
         mockMvc.perform(
@@ -50,24 +45,35 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                //then
+        //then
 //                .andDo(
 //                        restDocs.document(
-//                                requestFields(
+//                                responseFields(
+//
 //                                )
 //                        )
 //                )
         ;
     }
-
-//    @DisplayName("로그인")
+//    @DisplayName("레프레시 토큰을 통한 액세스토큰 갱신")
 //    @Test
-//    public void login(){
+//    public void refresh() throws Exception {
 //
+//        //when
 //        mockMvc.perform(
-//                get("/api/login")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(createJson())
-//        )
+//                        post("/api/refresh")
+//                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getRefreshToken())
+//                                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//        //then
+////                .andDo(
+////                        restDocs.document(
+////                                responseFields(
+////
+////                                )
+////                        )
+////                )
+//        ;
 //    }
+
 }

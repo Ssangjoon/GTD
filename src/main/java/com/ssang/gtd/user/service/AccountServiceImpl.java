@@ -32,18 +32,20 @@ public class AccountServiceImpl implements AccountService{
     private final MemberRepository memberRepository;
     private final TokenProvider jwtTokenProvider;
     private final RedisDao redisDao;
+
     @Override
     @Transactional
     public void updateRefreshToken(String username, String refreshToken) {
         Member member = memberRepository.findByUserName(username).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
         member.updateRefreshToken(refreshToken);
     }
+
     @Override
     public Map<String, String> refresh(String refreshToken) {
         long now = System.currentTimeMillis();
         String accessToken = "";
         // Refresh Token 유효성 검사
-        //refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다.
+        // refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성.
         Member member = memberRepository.findByRefreshToken(refreshToken).orElseThrow(
                 () -> new UsernameNotFoundException("유효하지 않은 Refresh Token입니다.")
         );
@@ -70,6 +72,7 @@ public class AccountServiceImpl implements AccountService{
         accessTokenResponseMap.put(ACCESS_TOKEN_HEADER, accessToken);
         return accessTokenResponseMap;
     }
+
     public String recreationAccessToken(Object roles){
         Claims claims = Jwts.claims(); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
