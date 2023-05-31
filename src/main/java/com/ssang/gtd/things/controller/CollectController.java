@@ -5,6 +5,7 @@ import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateData;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
+import com.ssang.gtd.things.dto.collect.CollectGetDto;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateData;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateResponse;
@@ -29,27 +30,29 @@ public class CollectController {
     private final MatCollectService matCollectService;
 
     @GetMapping("/collection")
-    public List<Collect> getList(){ return collectService.list();}
+    public CollectGetDto.CollectGetResponse getList(){
+        return new CollectGetDto.CollectGetResponse(CollectGetDto.CollectGetData.update(collectService.list()));
+    }
+
     @GetMapping("/collection/{id}")
     public Optional<Collect> get(@PathVariable("id") Long id){
         return collectService.get(id);
     }
+
     @PostMapping("/collection")
     public CollectCreateResponse post(@RequestBody CollectCreateRequest dto){
         Collect collect =  collectService.post(dto.toServiceDto());
         return new CollectCreateResponse(CollectCreateData.create(collect));
     }
+
     @PutMapping("/collection")
     public CollectUpdateResponse update(@RequestBody CollectUpdateRequest dto) throws Exception {
+
         Collect collect = collectService.put(dto.toServiceDto());
 
-        // Lazy가 걸린 엔티티를를 사용함으로써 Proxy 객체를 초기화 시켜서 Lazy가 걸린 연관관계 객체를 조회한다..
-        collect.getMember();
-
-        CollectUpdateResponse result = new CollectUpdateResponse(CollectUpdateData.update(collect));
-
-        return result;
+        return new CollectUpdateResponse(CollectUpdateData.update(collect));
     }
+
     @DeleteMapping("/collection/{id}")
     public void delete(@PathVariable("id") Long id){
         collectService.delete(id);

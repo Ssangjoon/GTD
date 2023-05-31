@@ -56,9 +56,13 @@ operation::things-controller-test/collect_post[snippets='http-request,path-param
 operation::things-controller-test/collect_list[snippets='http-request,http-response,response-fields']
 
 [[Collect-단건-조회]]
-=== Collect-단건 조회]]
+=== Collect-단건 조회
 operation::things-controller-test/collect_get[snippets='http-request,path-parameters,http-response,response-fields']
 
 [[Collect-수정]]
-=== Collect-수정]]
+=== Collect-수정
 operation::things-controller-test/collect_put[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Collect-삭제]]
+=== Collect-삭제
+operation::things-controller-test/collect_delete[snippets='http-request,path-parameters,http-response,response-fields']

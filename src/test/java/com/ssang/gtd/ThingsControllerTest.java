@@ -32,26 +32,23 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                relaxedResponseFields(
+                                responseFields(
                                         subsectionWithPath("data").description("info of collect"),
                                         fieldWithPath("data.id").description("게시글 번호"),
                                         fieldWithPath("data.content").description("내용"),
                                         fieldWithPath("data.type").description("타입"),
                                         fieldWithPath("data.member.id").description("ID"),
                                         fieldWithPath("data.member.name").description("이름"),
-                                        fieldWithPath("data.member.createDate").description("생성일"),
-                                        fieldWithPath("data.member.modifiedDate").description("수정일"),
                                         fieldWithPath("data.member.userName").description("유저ID")
                                 )
                         )
                 )
         ;
     }
-    @DisplayName("Collect 게시글 조회")
+    @DisplayName("Collect 게시글 단건 조회")
     @Transactional
     @Test
     public void collect_get() throws Exception {
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("사이드 프로젝트 마무리하기", Member.builder().id(1L).build());
 
         mockMvc.perform(
                         get("/api/collection/{id}",6L)
@@ -88,11 +85,14 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                 .andDo(
                         restDocs.document(
                                 relaxedResponseFields(
-                                        fieldWithPath("[].createDate").description("작성일"),
-                                        fieldWithPath("[].modifiedDate").description("수정일"),
-                                        fieldWithPath("[].id").description("게시글 번호"),
-                                        fieldWithPath("[].content").description("내용"),
-                                        fieldWithPath("[].type").description("타입")
+                                        fieldWithPath("data[].id").description("게시글 번호"),
+                                        fieldWithPath("data[].content").description("내용"),
+                                        fieldWithPath("data[].type").description("타입"),
+                                        fieldWithPath("data[].modifiedDate").description("수정일"),
+                                        fieldWithPath("data[].createdDate").description("작성일"),
+                                        fieldWithPath("data[].member.id").description("고객 번호"),
+                                        fieldWithPath("data[].member.userName").description("유저 이름"),
+                                        fieldWithPath("data[].member.name").description("이름")
                                 )
                         )
                 )
@@ -120,9 +120,27 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("data.type").description("타입"),
                                         fieldWithPath("data.member.id").description("ID"),
                                         fieldWithPath("data.member.name").description("이름"),
-                                        fieldWithPath("data.member.createDate").description("생성일"),
-                                        fieldWithPath("data.member.modifiedDate").description("수정일"),
                                         fieldWithPath("data.member.userName").description("유저ID")
+                                )
+                        )
+                )
+        ;
+    }
+
+    @DisplayName("Collect 게시글 삭제")
+    @Transactional
+    @Test
+    public void collect_delete() throws Exception {
+
+        mockMvc.perform(
+                        delete("/api/collection/{id}",6L)
+                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
+                                        parameterWithName("id").description("Member ID")
                                 )
                         )
                 )

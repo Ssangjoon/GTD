@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static com.ssang.gtd.things.dto.collect.MemberResponseDto.convertToDto;
+
+
 public class CollectCreateDto {
     @Getter
     @Setter
@@ -38,10 +41,12 @@ public class CollectCreateDto {
         private Long id;
         private String content;
         private String type;
-        private Member member;
+        private MemberResponseDto member;
 
         public static CollectCreateData create(Collect collect) {
-            return new CollectCreateData(collect.getId(),collect.getContent(),collect.getType(),collect.getMember());
+
+            return new CollectCreateData(collect.getId(),collect.getContent(),collect.getType(), convertToDto(collect.getMember()));
         }
+
     }
 }
