@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -24,6 +25,7 @@ import static com.ssang.gtd.jwt.JwtConstants.ACCESS_TOKEN_HEADER;
 import static com.ssang.gtd.jwt.JwtConstants.REFRESH_TOKEN_HEADER;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
+@Primary
 @Component
 public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccessHandler {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -37,7 +39,7 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         User user = (User) authentication.getPrincipal();
 
-        String accessToken = tokenProvider.generateAccessToken(authentication);
+        String accessToken = tokenProvider.createToken(authentication);
         String refreshToken = tokenProvider.generateRefreshToken();
 
         // username을 키로 하여 리프레시 토큰을 저장한다.
@@ -53,6 +55,7 @@ public class AuthenticationSuccessHandlerCustom implements AuthenticationSuccess
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put(ACCESS_TOKEN_HEADER, accessToken);
         responseMap.put(REFRESH_TOKEN_HEADER, refreshToken);
+
         new ObjectMapper().writeValue(response.getWriter(), responseMap);
     }
 

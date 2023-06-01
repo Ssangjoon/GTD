@@ -1,7 +1,8 @@
 package com.ssang.gtd.user.dto.member;
 
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.Role;
+import com.ssang.gtd.oauth2.Role;
+import com.ssang.gtd.test.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ public class MemberCreateDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class MemberCreateRequest{
         private String name;
@@ -18,6 +20,7 @@ public class MemberCreateDto {
         private String password;
         private String email;
         private Role role;
+        private Gender gender;
 
         public MemberServiceDto toServiceDto(){
             MemberServiceDto serviceDto = new MemberServiceDto();
@@ -25,6 +28,7 @@ public class MemberCreateDto {
             serviceDto.setUserName(this.userName);
             serviceDto.setPassword(this.password);
             serviceDto.setEmail(this.email);
+            serviceDto.setGender(this.gender);
             serviceDto.setRole(this.role);
             return serviceDto;
         }
@@ -44,11 +48,10 @@ public class MemberCreateDto {
     @NoArgsConstructor
     public static class MemberCreateData {
         private String name;
-        private String password;
         private Role role;
 
         public static MemberCreateData create(Member member) {
-            return new MemberCreateData(member.getName(), member.getPassword(), member.getRole());
+            return new MemberCreateData(member.getName(), member.getRole());
         }
     }
 }

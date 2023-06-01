@@ -22,8 +22,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.thymeleaf.util.StringUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
@@ -46,14 +48,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
         String servletPath = request.getServletPath();
         String authrizationHeader = request.getHeader(AUTHORIZATION);
 
-        // 1. 로그인, 리프레시 요청이라면 토큰 검사하지 않음
-        if (servletPath.equals("/api/login") || servletPath.equals("/refresh")|| servletPath.equals("/joinUp")) {
-
-            filterChain.doFilter(request, response);
-
-
-        //2. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
-        } else if (authrizationHeader == null || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
+        //1. Header를 확인하여 토큰값이 없거나 정상적이지 않다면 400 오류
+        if (StringUtils.isEmpty(authrizationHeader) || !authrizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
 
             log.info("CustomAuthorizationFilter : JWT Token이 존재하지 않습니다.");
             response.setStatus(SC_BAD_REQUEST);
@@ -63,7 +59,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
         } else {
             try {
-
                 // === Access Token만 꺼내옴 === //
                 String accessToken = authrizationHeader.substring(TOKEN_HEADER_PREFIX.length());
                 String requestURI = request.getRequestURI();
@@ -105,5 +100,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
             // 인증처리 후 정상적으로 다음 filter 수행
             filterChain.doFilter(request, response);
         }
+    }
+    @NoLogging
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request)
+            throws ServletException {
+        // excludePath에 해당하는 요청이라면 토큰 검사하지 않음
+        log.info("shouldNotFilter 실행");
+        String path = request.getRequestURI();
+        String[] excludePath = {"/api/login","/api/joinUp","/api/refresh","/api/oauth/token","/docs","/index"};
+
+        return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }
 }

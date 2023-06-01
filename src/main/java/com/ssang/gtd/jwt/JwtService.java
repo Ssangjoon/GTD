@@ -7,6 +7,7 @@ import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.user.dao.MemberRepository;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +64,19 @@ public class JwtService {
         } else if(refreshJwt == null){
             throw new CustomException(ErrorCode.JWT_REFRESH_NOT_VALID);
         }
+    }
+    /**
+     * AccessToken + RefreshToken 헤더에 실어서 보내기
+     */
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+        response.setStatus(HttpServletResponse.SC_OK);
+        if(accessToken != null){
+            response.setHeader(ACCESS_TOKEN_HEADER, accessToken);
+        }
+        if(refreshToken != null){
+            response.setHeader(REFRESH_TOKEN_HEADER, refreshToken);
+        }
+        log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
     public boolean isNeedToUpdateRefreshToken(String token){
         try{

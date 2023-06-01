@@ -7,9 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static com.ssang.gtd.things.dto.collect.MemberResponseDto.convertToDto;
+
 public class CollectionUpdateDto {
     @Getter
     @Setter
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectUpdateRequest{
         private Long id;
@@ -36,14 +39,16 @@ public class CollectionUpdateDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CollectUpdateData{
-        Long id;
-        String content;
-        String type;
-        Member member;
+        private Long id;
+        private String content;
+        private String type;
+        private MemberResponseDto member;
 
         public static CollectUpdateData update(Collect collect) {
-            return new CollectUpdateData(collect.getId(),collect.getContent(),collect.getType(),collect.getMember());
+
+            return new CollectUpdateData(collect.getId(),collect.getContent(),collect.getType(),convertToDto(collect.getMember()));
         }
+
     }
 
 

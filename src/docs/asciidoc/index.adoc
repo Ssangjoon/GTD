@@ -1,0 +1,68 @@
+= Getting Things Done
+SsangJoon (GTD)
+:sectnums:
+:doctype: book
+:toc: left
+//:icons: font
+:source-highlighter: prettify
+:toclevels: 2
+:toc-title: Table of Contents
+:sectlinks:
+:docinfo: shared-head
+
+[[Member-API]]
+== Member API
+
+[[Member-생성]]
+=== Member 생성
+operation::member-controller-test/member_create[snippets='http-request,request-fields,http-response']
+
+[[Member-단일-조회]]
+=== Member 단일 조회
+operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Member-리스트-조회]]
+=== Member 리스트 조회
+operation::member-controller-test/member_list[snippets='http-request,http-response,response-fields']
+
+[[Member-수정]]
+=== Member 수정
+operation::member-controller-test/member_modify[snippets='http-request,http-response,response-fields']
+
+[[Member-삭제]]
+=== Member 삭제
+operation::member-controller-test/member_delete[snippets='http-request,path-parameters,http-response']
+
+[[Login-API]]
+== Login API
+
+[[Login]]
+=== Login
+operation::login-controller-test/login[snippets='http-request,request-fields,http-response']
+
+[[Logout]]
+=== Logout
+operation::login-controller-test/logout[snippets='http-request,request-fields,http-response']
+
+[[Things-API]]
+== Things API
+
+[[Collect-등록]]
+=== Collect 등록
+operation::things-controller-test/collect_post[snippets='http-request,http-response,response-fields']
+
+[[Collect-단일-조회]]
+=== Collect 단일 조회
+operation::things-controller-test/collect_get[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Collect-조회]]
+=== Collect 리스트 조회
+operation::things-controller-test/collect_list[snippets='http-request,http-response,response-fields']
+
+[[Collect-수정]]
+=== Collect 수정
+operation::things-controller-test/collect_put[snippets='http-request,http-response,response-fields']
+
+[[Collect-삭제]]
+=== Collect 삭제
+operation::things-controller-test/collect_delete[snippets='http-request,path-parameters,http-response']

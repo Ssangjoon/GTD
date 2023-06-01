@@ -1,7 +1,7 @@
 package com.ssang.gtd.user.dto.member;
 
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.Role;
+import com.ssang.gtd.oauth2.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,7 @@ public class MemberUpdateDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class MemberUpdateRequest{
         private String userName;
@@ -18,7 +19,6 @@ public class MemberUpdateDto {
         private String password;
         private String email;
         private Role role;
-        private  String refreshToken;
 
         public MemberServiceDto toServiceDto(){
             MemberServiceDto serviceDto = new MemberServiceDto();
@@ -27,7 +27,6 @@ public class MemberUpdateDto {
             serviceDto.setPassword(this.password);
             serviceDto.setEmail(this.email);
             serviceDto.setRole(this.role);
-            serviceDto.setRefreshToken(this.refreshToken);
             return serviceDto;
         }
     }
@@ -43,12 +42,13 @@ public class MemberUpdateDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class MemberUpdateData {
+        private String userName;
         private String name;
-        private String password;
+        private String email;
         private Role role;
 
         public static MemberUpdateData update(Member member) {
-            return new MemberUpdateData(member.getName(), member.getPassword(), member.getRole());
+            return new MemberUpdateData(member.getUserName(), member.getName(), member.getEmail(), member.getRole());
         }
     }
 }

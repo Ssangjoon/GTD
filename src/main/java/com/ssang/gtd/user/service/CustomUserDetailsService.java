@@ -23,15 +23,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String uName) throws UsernameNotFoundException {
-        Optional<Member> optionalMemberDto = memberRepository.findByUserName(uName);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        Optional<Member> optionalMemberDto = memberRepository.findByUserName(userName);
         Member member = optionalMemberDto.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
-        UserDetails result = createUserDetails(member);
-        return result;
-    }
-
-    // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
-    private UserDetails createUserDetails(Member member) {
         return User.builder()
                 .username(member.getUserName())
                 .password(member.getPassword())
@@ -39,4 +33,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .authorities("USER")
                 .build();
     }
+
 }

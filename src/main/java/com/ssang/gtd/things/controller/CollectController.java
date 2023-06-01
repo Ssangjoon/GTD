@@ -5,6 +5,7 @@ import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateData;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateRequest;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto.CollectCreateResponse;
+import com.ssang.gtd.things.dto.collect.CollectGetDto;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateData;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto.CollectUpdateResponse;
@@ -21,29 +22,37 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class CollectController {
-    // TODO : 응답 일관성있게 하기
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final CollectService collectService;
     private final MatCollectService matCollectService;
 
     @GetMapping("/collection")
-    public List<Collect> getList(){ return collectService.list();}
+    public CollectGetDto.CollectGetResponse getList(){
+        return new CollectGetDto.CollectGetResponse(CollectGetDto.CollectGetData.update(collectService.list()));
+    }
+
     @GetMapping("/collection/{id}")
     public Optional<Collect> get(@PathVariable("id") Long id){
         return collectService.get(id);
     }
+
     @PostMapping("/collection")
     public CollectCreateResponse post(@RequestBody CollectCreateRequest dto){
         Collect collect =  collectService.post(dto.toServiceDto());
         return new CollectCreateResponse(CollectCreateData.create(collect));
     }
+
     @PutMapping("/collection")
     public CollectUpdateResponse update(@RequestBody CollectUpdateRequest dto) throws Exception {
+
         Collect collect = collectService.put(dto.toServiceDto());
+
         return new CollectUpdateResponse(CollectUpdateData.update(collect));
     }
+
     @DeleteMapping("/collection/{id}")
     public void delete(@PathVariable("id") Long id){
         collectService.delete(id);

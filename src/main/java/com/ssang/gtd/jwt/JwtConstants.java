@@ -7,8 +7,8 @@ public class JwtConstants {
     public static final long DAY = 24 * HOUR;
     public static final long MONTH = 30 * DAY;
 
-    public static final long ACCESS_EXP_TIME =  1 * MINUTE;
-    public static final long REFRESH_EXP_TIME =  7 * DAY;
+    public static final long ACCESS_TOKEN_EXP_TIME =  10 * MINUTE;
+    public static final long REFRESH_TOKEN_EXP_TIME =  7 * DAY;
 
 
     // Header

@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.dto.member;
 
-import com.ssang.gtd.Role;
+import com.ssang.gtd.oauth2.Role;
 import lombok.*;
 
 @Getter
