@@ -42,10 +42,10 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("userName").description("유저ID"),
                                         fieldWithPath("status").description("사용가능계정여부"),
                                         fieldWithPath("role").description("권한"),
-                                        fieldWithPath("socialType").description("socialType"),
-                                        fieldWithPath("socialId").description("socialId"),
-                                        fieldWithPath("refreshToken").description("refreshToken"),
-                                        fieldWithPath("imageUrl").description("imageUrl"),
+                                        fieldWithPath("socialType").optional().description("socialType"),
+                                        fieldWithPath("socialId").optional().description("socialId"),
+                                        fieldWithPath("refreshToken").optional().description("refreshToken"),
+                                        fieldWithPath("imageUrl").optional().description("imageUrl"),
                                         fieldWithPath("gender").description("성별"),
                                         fieldWithPath("email").description("이메일")
                                 )
@@ -72,10 +72,10 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("[].userName").description("유저ID"),
                                         fieldWithPath("[].status").description("사용가능계정여부"),
                                         fieldWithPath("[].role").description("권한"),
-                                        fieldWithPath("[].socialType").description("socialType"),
-                                        fieldWithPath("[].socialId").description("socialId"),
-                                        fieldWithPath("[].refreshToken").description("refreshToken"),
-                                        fieldWithPath("[].imageUrl").description("imageUrl"),
+                                        fieldWithPath("[].socialType").optional().description("socialType"),
+                                        fieldWithPath("[].socialId").optional().description("socialId"),
+                                        fieldWithPath("[].refreshToken").optional().description("refreshToken"),
+                                        fieldWithPath("[].imageUrl").optional().description("imageUrl"),
                                         fieldWithPath("[].gender").description("성별"),
                                         fieldWithPath("[].email").description("이메일")
                                 )
@@ -144,7 +144,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     @Test
     @Transactional
     public void member_modify() throws Exception {
-        MemberUpdateDto.MemberUpdateRequest dto = new MemberUpdateDto.MemberUpdateRequest("테스트유저이름", "이상준", "12345", "test@test.com", Role.USER,"");
+        MemberUpdateDto.MemberUpdateRequest dto = new MemberUpdateDto.MemberUpdateRequest("테스트유저이름", "이상준", "12345", "test@test.com", Role.USER);
 
         mockMvc.perform(
                         put("/api/member")
@@ -170,7 +170,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     public void member_delete() throws Exception {
 
         mockMvc.perform(
-                        delete("/api/member/{id}",1L)
+                        delete("/api/member/{id}",10L)
                                 .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

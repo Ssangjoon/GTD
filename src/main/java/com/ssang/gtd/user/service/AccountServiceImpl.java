@@ -50,6 +50,8 @@ public class AccountServiceImpl implements AccountService{
                 () -> new UsernameNotFoundException("유효하지 않은 Refresh Token입니다.")
         );
 
+        //redisDao.getValues(refreshToken);
+
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
 
         if (!claims.getBody().getExpiration().before(new Date())) {

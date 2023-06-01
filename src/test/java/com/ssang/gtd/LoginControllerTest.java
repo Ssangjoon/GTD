@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import java.time.Duration;
+
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,25 +57,32 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
 //                )
         ;
     }
-//    @DisplayName("레프레시 토큰을 통한 액세스토큰 갱신")
-//    @Test
-//    public void refresh() throws Exception {
+    @DisplayName("레프레시 토큰을 통한 액세스토큰 갱신")
+    @Test
+    public void refresh() throws Exception {
+
+        //given
+        String refreshToken = tokenProvider.generateRefreshToken();
+        String username = "test";
+        redisDao.setValues(username, refreshToken, Duration.ofDays(14));
+
+        //when
+        mockMvc.perform(
+                        post("/api/refresh")
+                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + refreshToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(username)
+                )
+                .andExpect(status().isOk())
+        //then
+//                .andDo(
+//                        restDocs.document(
+//                                responseFields(
 //
-//        //when
-//        mockMvc.perform(
-//                        post("/api/refresh")
-//                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getRefreshToken())
-//                                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//        //then
-////                .andDo(
-////                        restDocs.document(
-////                                responseFields(
-////
-////                                )
-////                        )
-////                )
-//        ;
-//    }
+//                                )
+//                        )
+//                )
+        ;
+    }
 
 }

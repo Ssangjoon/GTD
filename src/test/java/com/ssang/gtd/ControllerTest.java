@@ -2,6 +2,8 @@ package com.ssang.gtd;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssang.gtd.jwt.TokenProvider;
+import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dto.LoginReq;
 import com.ssang.gtd.user.service.MemberService;
@@ -29,6 +31,10 @@ public class ControllerTest {
     protected MemberRepository memberRepository;
     @Autowired
     protected MemberService memberService;
+    @Autowired
+    protected RedisDao redisDao;
+    @Autowired
+    protected TokenProvider tokenProvider;
 
     protected String createJson(Object dto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(dto);

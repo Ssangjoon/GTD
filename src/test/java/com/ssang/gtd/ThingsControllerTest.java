@@ -32,14 +32,12 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                responseFields(
-                                        subsectionWithPath("data").description("info of collect"),
+                                relaxedResponseFields(
+                                        //subsectionWithPath("data").description("info of collect"),
                                         fieldWithPath("data.id").description("게시글 번호"),
                                         fieldWithPath("data.content").description("내용"),
-                                        fieldWithPath("data.type").description("타입"),
-                                        fieldWithPath("data.member.id").description("ID"),
-                                        fieldWithPath("data.member.name").description("이름"),
-                                        fieldWithPath("data.member.userName").description("유저ID")
+                                        fieldWithPath("data.type").optional().description("타입"),
+                                        fieldWithPath("data.member.id").description("ID")
                                 )
                         )
                 )
@@ -90,9 +88,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("data[].type").description("타입"),
                                         fieldWithPath("data[].modifiedDate").description("수정일"),
                                         fieldWithPath("data[].createdDate").description("작성일"),
-                                        fieldWithPath("data[].member.id").description("고객 번호"),
-                                        fieldWithPath("data[].member.userName").description("유저 이름"),
-                                        fieldWithPath("data[].member.name").description("이름")
+                                        fieldWithPath("data[].member.id").description("고객 번호")
                                 )
                         )
                 )

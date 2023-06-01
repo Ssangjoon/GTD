@@ -20,8 +20,6 @@ public class MemberUpdateDto {
         private String email;
         private Role role;
 
-        private  String refreshToken;
-
         public MemberServiceDto toServiceDto(){
             MemberServiceDto serviceDto = new MemberServiceDto();
             serviceDto.setName(this.name);
@@ -29,7 +27,6 @@ public class MemberUpdateDto {
             serviceDto.setPassword(this.password);
             serviceDto.setEmail(this.email);
             serviceDto.setRole(this.role);
-            serviceDto.setRefreshToken(this.refreshToken);
             return serviceDto;
         }
     }
