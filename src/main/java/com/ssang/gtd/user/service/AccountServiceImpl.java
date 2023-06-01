@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -46,23 +47,24 @@ public class AccountServiceImpl implements AccountService{
     public TokenReissueDto refresh(HttpServletRequest request) {
 
         String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String refreshHeader = request.getHeader(AUTHORIZATION+"-refresh");
 
-        // === 토큰 존재 확인 === //
+        // === 토큰 유무 확인 === //
         if (authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_HEADER_PREFIX)) {
             throw new RuntimeException("JWT Token이 존재하지 않습니다.");
         }
 
-        String refreshToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
+        String accessToken = authorizationHeader.substring(TOKEN_HEADER_PREFIX.length());
+        String refreshToken = refreshHeader.substring(TOKEN_HEADER_PREFIX.length());
 
         long now = System.currentTimeMillis();
 
-        String accessToken = "";
-
         // === Refresh Token 유효성 검사 === //
         // === refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다. === //
-        Member member = memberRepository.findByRefreshToken(refreshToken).orElseThrow(
-                () -> new UsernameNotFoundException("유효하지 않은 Refresh Token입니다.")
-        );
+        String username = jwtTokenProvider.getAuthentication(accessToken).getName();
+        if(!StringUtils.hasText(redisDao.getValues(username))){
+            throw new UsernameNotFoundException("유효하지 않은 Refresh Token입니다.");
+        }
 
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken);
 
@@ -72,7 +74,7 @@ public class AccountServiceImpl implements AccountService{
         }
 
         Map<String, String> accessTokenResponseMap = new HashMap<>();
-        TokenReissueDto reissueDto;
+        TokenReissueDto reissueDto = new TokenReissueDto();
 
         // === 현재시간과 Refresh Token 만료날짜를 통해 남은 만료기간 계산 === //
         long refreshExpireTime = claims.getBody().getExpiration().getTime();
@@ -81,11 +83,10 @@ public class AccountServiceImpl implements AccountService{
         if(diffMin < 5){
             String newRefreshToken = jwtTokenProvider.generateRefreshToken();
             accessTokenResponseMap.put(REFRESH_TOKEN_HEADER, newRefreshToken);
-            member.updateRefreshToken(newRefreshToken);
-            reissueDto = TokenReissueDto.toResponseToken(newRefreshToken, REFRESH_TOKEN_HEADER);
+            reissueDto = reissueDto.withToken(newRefreshToken, REFRESH_TOKEN_HEADER);
         }
         accessTokenResponseMap.put(ACCESS_TOKEN_HEADER, accessToken);
-        reissueDto = TokenReissueDto.toResponseToken(accessToken, ACCESS_TOKEN_HEADER);
+        reissueDto = reissueDto.withToken(accessToken, ACCESS_TOKEN_HEADER);
 
         return reissueDto;
     }

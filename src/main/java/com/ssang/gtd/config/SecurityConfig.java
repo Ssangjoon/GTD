@@ -63,8 +63,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/api/joinUp","/api/refresh").permitAll()
                 .requestMatchers("/","/api/login","/swagger-ui").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .anyRequest().permitAll()
-                //.anyRequest().authenticated()
+                //.anyRequest().permitAll()
+                .anyRequest().authenticated()
 
                 .and()
                 .oauth2Login()

@@ -85,7 +85,7 @@ public class TokenProvider {
         }
     }
 
-    public static String getAuthorities(Authentication authentication) {
+    public  String getAuthorities(Authentication authentication) {
         // 권한 가져오기
         return authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

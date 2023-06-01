@@ -10,7 +10,8 @@ import org.springframework.http.MediaType;
 import java.time.Duration;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginControllerTest extends IntegrationRestDocsTests {
@@ -63,13 +64,14 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
 
         //given
         String refreshToken = tokenProvider.generateRefreshToken();
-        String username = "test";
+        String username = "테스트유저이름";
         redisDao.setValues(username, refreshToken, Duration.ofDays(14));
 
         //when
         mockMvc.perform(
                         post("/api/refresh")
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + refreshToken)
+                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4")
+                                .header(HttpHeaders.AUTHORIZATION+"-refresh","Bearer " + refreshToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(username)
                 )
