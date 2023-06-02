@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +44,7 @@ public class LoginController {
         return 1;
     }
     @PostMapping("/refresh")
-    public ResponseEntity<TokenReissueDto> refresh(HttpServletRequest request, HttpServletResponse response) {
+    public TokenReissueDto refresh(HttpServletRequest request, HttpServletResponse response) {
 
         TokenReissueDto reissueDto = accountService.refresh(request);
 
@@ -55,7 +54,7 @@ public class LoginController {
             response.setHeader(REFRESH_TOKEN_HEADER, reissueDto.getRefreshToken());
         }
 
-        return ResponseEntity.ok(reissueDto);
+        return reissueDto;
     }
     @PostMapping("/oauth/token")
     public String generateToken(HttpServletRequest request){

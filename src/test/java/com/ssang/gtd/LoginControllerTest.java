@@ -57,7 +57,7 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
 //                )
         ;
     }
-    @DisplayName("레프레시 토큰을 통한 액세스토큰 갱신")
+    @DisplayName("레프레시 토큰을 통한 액세스 토큰 재발급")
     @Test
     public void refresh() throws Exception {
 
@@ -72,17 +72,17 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 .header(HttpHeaders.AUTHORIZATION,"Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4")
                                 .header(HttpHeaders.AUTHORIZATION+"-refresh","Bearer " + refreshToken)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(username)
                 )
                 .andExpect(status().isOk())
         //then
-//                .andDo(
-//                        restDocs.document(
-//                                responseFields(
-//
-//                                )
-//                        )
-//                )
+                .andDo(
+                        restDocs.document(
+                                responseFields(
+                                        fieldWithPath("accessToken").description("accessToken"),
+                                        fieldWithPath("refreshToken").optional().description("refreshToken")
+                                )
+                        )
+                )
         ;
     }
 
