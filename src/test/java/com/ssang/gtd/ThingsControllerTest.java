@@ -1,15 +1,22 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
+import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto;
+import com.ssang.gtd.things.dto.matcol.MatColCreateDto;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 
+import java.nio.charset.StandardCharsets;
+
+import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
+import static com.ssang.gtd.things.BoardType.MAT_COLLECTION;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -19,14 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ThingsControllerTest extends IntegrationRestDocsTests {
 
     @DisplayName("Collect 게시글 작성")
-    //@Transactional
+    @Transactional
     @Test
     public void collect_post() throws Exception {
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("사이드 프로젝트 마무리하기", Member.builder().id(1L).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(1L).build());
 
         mockMvc.perform(
                         post("/api/collection")
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(createJson(dto)))
                 .andExpect(status().isOk())
@@ -49,8 +56,8 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void collect_get() throws Exception {
 
         mockMvc.perform(
-                        get("/api/collection/{id}",6L)
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                        get("/api/collection/{id}",51L)
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -70,14 +77,12 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
         ;
     }
     @DisplayName("Collect 게시글 조회")
-    @Transactional
     @Test
     public void collect_list() throws Exception {
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("사이드 프로젝트 마무리하기", Member.builder().id(1L).build());
 
         mockMvc.perform(
                         get("/api/collection")
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -99,11 +104,11 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     @Transactional
     @Test
     public void collect_put() throws Exception {
-        CollectionUpdateDto.CollectUpdateRequest dto = new CollectionUpdateDto.CollectUpdateRequest(6L,"사이드 프로젝트 수정하기",Member.builder().id(3L).build(),"");
+        CollectionUpdateDto.CollectUpdateRequest dto = new CollectionUpdateDto.CollectUpdateRequest(6L,"사이드 프로젝트 수정하기",Member.builder().id(3L).build(),null);
 
         mockMvc.perform(
                         put("/api/collection")
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(createJson(dto)))
                 .andExpect(status().isOk())
@@ -130,7 +135,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
 
         mockMvc.perform(
                         delete("/api/collection/{id}",6L)
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -140,6 +145,65 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                 )
                         )
                 )
+        ;
+    }
+    @DisplayName("MAT_COLLECTION 등록")
+    @Transactional
+    @Test
+    public void material() throws Exception {
+        Member member = Member.builder().id(3L).build();
+        Collect collect = Collect.builder().id(6L).content("사이드 프로젝트").type(MAT_COLLECTION).build();
+        MatColCreateDto.MatColCreateRequest dto = new MatColCreateDto.MatColCreateRequest("파일 업로드", "업로드", null,collect,member);
+
+        String dtoJson = createJson(dto);
+        MockMultipartFile matcol = new MockMultipartFile("matcol", "matcol", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
+
+
+        mockMvc.perform(
+                        multipart("/api/material")
+                                .file(matcol)
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken()))
+                .andExpect(status().isOk())
+//                .andDo(
+//                        restDocs.document(
+//                                pathParameters(
+//                                        parameterWithName("id").description("Member ID")
+//                                )
+//                        )
+//                )
+        ;
+    }
+
+    @DisplayName("MAT_COLLECTION 등록(파일 업로드)")
+    @Transactional
+    @Test
+    public void material_file() throws Exception {
+        Member member = Member.builder().id(3L).build();
+        Collect collect = Collect.builder().id(6L).content("사이드 프로젝트").type(MAT_COLLECTION).build();
+        MatColCreateDto.MatColCreateRequest dto = new MatColCreateDto.MatColCreateRequest("파일 업로드", "업로드", null,collect,member);
+
+        String dtoJson = createJson(dto);
+        MockMultipartFile matcol = new MockMultipartFile("matcol", "matcol", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
+
+        MockMultipartFile files = new MockMultipartFile(
+                "files",
+                "imagefile.png",
+                "image/png",
+                "<<png data>>".getBytes());
+
+        mockMvc.perform(
+                        multipart("/api/material")
+                                .file(files)
+                                .file(matcol)
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken()))
+                .andExpect(status().isOk())
+//                .andDo(
+//                        restDocs.document(
+//                                pathParameters(
+//                                        parameterWithName("id").description("Member ID")
+//                                )
+//                        )
+//                )
         ;
     }
 }

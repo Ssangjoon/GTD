@@ -2,6 +2,7 @@ package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.things.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class CollectGetDto {
     public static class CollectGetData{
         private Long id;
         private String content;
-        private String type;
+        private BoardType type;
         private LocalDateTime modifiedDate;
         private LocalDateTime createdDate;
         private MemberResponseDto member;

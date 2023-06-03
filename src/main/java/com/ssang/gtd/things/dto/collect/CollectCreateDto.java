@@ -2,6 +2,7 @@ package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.things.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,7 @@ public class CollectCreateDto {
     public static class CollectCreateData {
         private Long id;
         private String content;
-        private String type;
+        private BoardType type;
         private MemberResponseDto member;
 
         public static CollectCreateData create(Collect collect) {

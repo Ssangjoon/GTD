@@ -3,6 +3,7 @@ package com.ssang.gtd.things.service;
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.FileEntity;
 import com.ssang.gtd.entity.MatCol;
+import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.things.dao.CollectDao;
@@ -23,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.ssang.gtd.things.BoardType.MAT_COLLECTION;
+
 @Service
 @RequiredArgsConstructor
 public class MatCollectServiceImpl implements MatCollectService {
@@ -41,21 +44,23 @@ public class MatCollectServiceImpl implements MatCollectService {
     @Override
     public MatColDto get(int id) { return matCollectDao.get(id); }
 
-    @Override
+
     @Transactional(noRollbackFor=Exception.class)
     public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
 
         Collect collect = dto.getCollect();
+        Member member = dto.getMember();
         Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.CAN_NOT_FOUND_BY_ID));
 
-        if(dto.getMember().getId().equals(oldCollect.getMember().getId())){
+        if(member.getId().equals(oldCollect.getMember().getId())){
 
-            if(!StringUtils.hasText(collect.getType())){
+            if(!StringUtils.hasText(String.valueOf(collect.getType()))){
                 // type 미기재시 update 전에 디폴트 타입 'material'으로 새 객체 생성
-                Collect newCollect= Collect.builder()
+                Collect newCollect = Collect.builder()
                         .id(collect.getId())
                         .content(collect.getContent())
-                        .type("material")
+                        .member(member)
+                        .type(MAT_COLLECTION)
                         .build();
 
                 dto = MatColServiceDto.initMatColCreateRequest(dto,newCollect);

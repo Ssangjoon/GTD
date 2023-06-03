@@ -3,6 +3,7 @@ package com.ssang.gtd.things.dto.matcol;
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.MatCol;
 import com.ssang.gtd.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,21 +14,21 @@ public class MatColCreateDto {
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class MatColCreateRequest{
-        private Long id;
         private String goal;
         private String content;
         private Date goalDt;
-        private Member member;
         private Collect collect;
+        private Member member;
 
         public MatColServiceDto toServiceDto(){
             MatColServiceDto serviceDto = new MatColServiceDto();
             serviceDto.setContent(this.content);
             serviceDto.setGoal(this.goal);
             serviceDto.setGoalDt(this.goalDt);
+            serviceDto.setCollect(this.collect);
             serviceDto.setMember(this.member);
-            serviceDto.setCollect(this.getCollect());
             return serviceDto;
         }
     }

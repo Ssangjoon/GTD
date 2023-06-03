@@ -24,7 +24,8 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public List<Collect> list() { return collectRepository.findAll(); }
     @Override
-    public Optional<Collect> get(Long id) { return collectRepository.findById(id); }
+    public Optional<Collect> get(Long id) {
+        return collectRepository.findById(id); }
     @Override
     public Collect post(CollectServiceDto dto) {
         return collectRepository.save(dto.toEntity());
@@ -35,7 +36,7 @@ public class CollectServiceImpl implements CollectService {
         Collect collect = collectRepository.findById(dto.getId()).orElseThrow(() -> new Exception("존재하지 않는 글"));
         if(collect.getMember().getId().equals(dto.getMember().getId())){
 
-            if(!StringUtils.hasText(dto.getType())){
+            if(!StringUtils.hasText(String.valueOf(dto.getType()))){
                 dto.setType(collect.getType());
             }
 

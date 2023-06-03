@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.ssang.gtd.config.RestDocsConfig.field;
+import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -26,7 +27,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
 
         mockMvc.perform(
                         get("/api/member/{id}", 1L)
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -59,7 +60,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
 
         mockMvc.perform(
                         get("/api/member")
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(
@@ -148,7 +149,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
 
         mockMvc.perform(
                         put("/api/member")
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(createJson(dto)))
                 .andExpect(status().isOk())
@@ -171,7 +172,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
 
         mockMvc.perform(
                         delete("/api/member/{id}",10L)
-                                .header(HttpHeaders.AUTHORIZATION,"Bearer " + getAccessToken())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(

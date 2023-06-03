@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService{
         long now = System.currentTimeMillis();
 
         // === Refresh Token 유효성 검사 === //
-        // === refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성합니다. === //
+        // === refresh 토큰의 만료시간이 지나지 않았을 경우, 새로운 access 토큰을 생성. === //
         String username = jwtTokenProvider.getAuthentication(accessToken).getName();
         if(!StringUtils.hasText(redisDao.getValues(username))){
             throw new UsernameNotFoundException("유효하지 않은 Refresh Token입니다.");
