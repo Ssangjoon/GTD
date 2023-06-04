@@ -5,11 +5,10 @@ import com.ssang.gtd.oauth2.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Builder
-@AllArgsConstructor
+@Getter
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SocialMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +39,21 @@ public class SocialMember {
         this.role = Role.USER;
     }
 
+    @Builder
+    public SocialMember(Long id, String email, String password, String nickname, String imageUrl, int age, String city, Role role, SocialType socialType, String socialId, Member member) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.imageUrl = imageUrl;
+        this.age = age;
+        this.city = city;
+        this.role = role;
+        this.socialType = socialType;
+        this.socialId = socialId;
+        this.member = member;
+    }
+    public void joinUpdate(Member member){
+        this.member = member;
+    }
 }

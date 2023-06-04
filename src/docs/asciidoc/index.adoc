@@ -14,24 +14,28 @@ GettingThingsDone 프로세스를 구현하는 개인 프로젝트 입니다.
 
 
 1. 로그인(Login), 회원가입(JoinUp)을 제외한 모든 요청에는 AccessToken이 필요 합니다. +
-2. 지정된 TOKEN_HEADER_PREFIX을 토큰과 함께 헤더에 기재하여 요청하여야 인증이 가능합니다.
+2. 지정된 TOKEN_HEADER_PREFIX을 토큰과 함께 헤더에 기재하여 요청하여야 인증이 가능합니다. +
+3. SSO 로그인은 완료 후 별도로 회원가입하지 않은  User의 Role은 `Guest`, 일반 회원가입 User의 Role은 `User` 입니다.
 
 [[Member-API]]
 == Member API
 
 [[Member-생성]]
 === Member joinUp +
-Password는 차후 정규식으로 검증할 예정
 
 operation::member-controller-test/member_create[snippets='http-request,request-fields,http-response']
+
+[[Member-리스트-조회]]
+=== Member list
+operation::member-controller-test/member_list[snippets='http-request,http-response,response-fields']
+[[Member-소셜리스트-조회]]
+=== Member list (Social)
+operation::member-controller-test/member_social_list[snippets='http-request,http-response,response-fields']
 
 [[Member-단일-조회]]
 === Member get
 operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[Member-리스트-조회]]
-=== Member list
-operation::member-controller-test/member_list[snippets='http-request,http-response,response-fields']
 
 [[Member-수정]]
 === Member update

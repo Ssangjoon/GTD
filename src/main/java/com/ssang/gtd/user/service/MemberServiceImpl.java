@@ -1,13 +1,12 @@
 package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.SocialMember;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
-import com.ssang.gtd.oauth2.Role;
+import com.ssang.gtd.oauth2.SocialMemberRepository;
 import com.ssang.gtd.redis.RedisDao;
-import com.ssang.gtd.test.MemberStatus;
-import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dto.member.MemberServiceDto;
@@ -44,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final RedisTemplate redisTemplate;
     private final RedisDao redisDao;
+    private final SocialMemberRepository socialMemberRepository;
 
 
     @Override
@@ -52,21 +52,32 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public List<SocialMember> sociallist() {
+        return socialMemberRepository.findAll();
+    }
+    public List<SocialMember> allMemberList() {
+        List<Member> memberList = memberRepository.findAll();
+        List<SocialMember> socialMemberList = socialMemberRepository.findAll();
+        return socialMemberRepository.findAll();
+    }
+
+    @Override
     public Optional<Member> get(Long id) {
         return memberRepository.findById(id);
     }
 
     public Member post(MemberServiceDto dto)throws Exception {
-        if(memberRepository.findByUserName(dto.getUserName()).isPresent()){
+        String userName = dto.getUserName();
+        String email = dto.getEmail();
+
+        if (memberRepository.existsByUserNameOrEmail(userName, email)) {
             throw new CustomException(ErrorCode.ALREADY_USER);
         }
-        if(memberRepository.findByEmail(dto.getEmail()).isPresent()){
-            throw new CustomException(ErrorCode.ALREADY_USER);
-        }
+
+        Optional<SocialMember> socialMember = socialMemberRepository.findByEmail(email);
+        socialMember.ifPresent(existingSocialMember -> existingSocialMember.joinUpdate(dto.toEntity()));
+
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        dto.setRole(Role.USER);
-        dto.setGender(Gender.MALE);
-        dto.setStatus(MemberStatus.NORMAL);
         return memberRepository.save(dto.toEntity());
     }
 

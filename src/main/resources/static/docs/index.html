@@ -451,10 +451,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#Member-API">1. Member API</a>
 <ul class="sectlevel2">
 <li><a href="#Member-생성">1.1. Member joinUp<br></a></li>
-<li><a href="#Member-단일-조회">1.2. Member get</a></li>
-<li><a href="#Member-리스트-조회">1.3. Member list</a></li>
-<li><a href="#Member-수정">1.4. Member update</a></li>
-<li><a href="#Member-삭제">1.5. Member delete</a></li>
+<li><a href="#Member-소셜리스트-조회">1.2. Social Member list</a></li>
+<li><a href="#Member-단일-조회">1.3. Member get</a></li>
+<li><a href="#Member-리스트-조회">1.4. Member list</a></li>
+<li><a href="#Member-수정">1.5. Member update</a></li>
+<li><a href="#Member-삭제">1.6. Member delete</a></li>
 </ul>
 </li>
 <li><a href="#Login-API">2. Login API</a>
@@ -490,7 +491,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>로그인(Login), 회원가입(JoinUp)을 제외한 모든 요청에는 AccessToken이 필요 합니다.<br></p>
 </li>
 <li>
-<p>지정된 TOKEN_HEADER_PREFIX을 토큰과 함께 헤더에 기재하여 요청하여야 인증이 가능합니다.</p>
+<p>지정된 TOKEN_HEADER_PREFIX을 토큰과 함께 헤더에 기재하여 요청하여야 인증이 가능합니다.<br></p>
+</li>
+<li>
+<p>SSO 로그인은 완료 후 별도로 회원가입하지 않은  User의 Role은 <code>Guest</code>, 일반 회원가입 User의 Role은 <code>User</code> 입니다.</p>
 </li>
 </ol>
 </div>
@@ -501,9 +505,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="Member-생성"><a class="link" href="#Member-생성">1.1. Member joinUp<br></a></h3>
-<div class="paragraph">
-<p>Password는 차후 정규식으로 검증할 예정</p>
-</div>
 <div class="sect3">
 <h4 id="Member-생성_http_request"><a class="link" href="#Member-생성_http_request">1.1.1. HTTP request</a></h4>
 <div class="listingblock">
@@ -612,20 +613,117 @@ Content-Length: 78
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-단일-조회"><a class="link" href="#Member-단일-조회">1.2. Member get</a></h3>
+<h3 id="Member-소셜리스트-조회"><a class="link" href="#Member-소셜리스트-조회">1.2. Social Member list</a></h3>
 <div class="sect3">
-<h4 id="Member-단일-조회_http_request"><a class="link" href="#Member-단일-조회_http_request">1.2.1. HTTP request</a></h4>
+<h4 id="Member-소셜리스트-조회_http_request"><a class="link" href="#Member-소셜리스트-조회_http_request">1.2.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/1 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/scoialMember HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_path_parameters"><a class="link" href="#Member-단일-조회_path_parameters">1.2.2. Path parameters</a></h4>
+<h4 id="Member-소셜리스트-조회_http_response"><a class="link" href="#Member-소셜리스트-조회_http_response">1.2.2. HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 543
+
+[ {
+  "email" : "2f2af3f6-5d2a-4b92-9f14-8969695817a6@socialUser.com",
+  "nickname" : "이상준",
+  "imageurl" : "https://lh3.googleusercontent.com/a/AAcHTtc9AD48F7rsvu9udNXP-27JxfxC3sBsYdxPXZE=s96-c",
+  "age" : 0,
+  "city" : null,
+  "role" : "GUEST",
+  "socialType" : "GOOGLE"
+}, {
+  "email" : "e7d17b73-0253-4915-8f37-c40d23bd7c30@socialUser.com",
+  "nickname" : null,
+  "imageurl" : "https://ssl.pstatic.net/static/pwe/address/img_profile.png",
+  "age" : 0,
+  "city" : null,
+  "role" : "GUEST",
+  "socialType" : "NAVER"
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Member-소셜리스트-조회_response_fields"><a class="link" href="#Member-소셜리스트-조회_response_fields">1.2.3. Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].imageurl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].age</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].role</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].socialType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sns</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Member-단일-조회"><a class="link" href="#Member-단일-조회">1.3. Member get</a></h3>
+<div class="sect3">
+<h4 id="Member-단일-조회_http_request"><a class="link" href="#Member-단일-조회_http_request">1.3.1. HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Member-단일-조회_path_parameters"><a class="link" href="#Member-단일-조회_path_parameters">1.3.2. Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/member/{id}</caption>
 <colgroup>
@@ -647,7 +745,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_http_response"><a class="link" href="#Member-단일-조회_http_response">1.2.3. HTTP response</a></h4>
+<h4 id="Member-단일-조회_http_response"><a class="link" href="#Member-단일-조회_http_response">1.3.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -658,26 +756,25 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 380
+Content-Length: 288
 
 {
-  "createDate" : "2023-06-04T19:52:54.381",
-  "modifiedDate" : "2023-06-04T19:52:54.381",
-  "id" : 1,
-  "email" : "test0@test.com",
-  "password" : "{bcrypt}$2a$10$59t4SCXMUZS9b.PPwnK5y.zwpuxjvV0TElHENrWdEPtlmpxsfJ42.",
-  "userName" : "테스트네임0",
-  "name" : "손석구",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "refreshToken" : null
+  "data" : {
+    "userName" : "테스트네임0",
+    "name" : "손석구",
+    "email" : "test0@test.com",
+    "gender" : "MALE",
+    "role" : "USER",
+    "status" : "NORMAL",
+    "createDate" : "2023-06-04T19:52:54.381",
+    "modifiedDate" : "2023-06-04T19:52:54.381"
+  }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_response_fields"><a class="link" href="#Member-단일-조회_response_fields">1.2.4. Response fields</a></h4>
+<h4 id="Member-단일-조회_response_fields"><a class="link" href="#Member-단일-조회_response_fields">1.3.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -693,84 +790,72 @@ Content-Length: 380
 <td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이름</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>createDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>modifiedDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">수정일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.userName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">유저ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.status</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사용가능계정여부</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.role</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gender</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.gender</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.createDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.modifiedDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정일</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-리스트-조회"><a class="link" href="#Member-리스트-조회">1.3. Member list</a></h3>
+<h3 id="Member-리스트-조회"><a class="link" href="#Member-리스트-조회">1.4. Member list</a></h3>
 <div class="sect3">
-<h4 id="Member-리스트-조회_http_request"><a class="link" href="#Member-리스트-조회_http_request">1.3.1. HTTP request</a></h4>
+<h4 id="Member-리스트-조회_http_request"><a class="link" href="#Member-리스트-조회_http_request">1.4.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-리스트-조회_http_response"><a class="link" href="#Member-리스트-조회_http_response">1.3.2. HTTP response</a></h4>
+<h4 id="Member-리스트-조회_http_response"><a class="link" href="#Member-리스트-조회_http_response">1.4.2. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -781,38 +866,32 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 766
+Content-Length: 512
 
 [ {
-  "createDate" : "2023-06-04T19:52:54.381",
-  "modifiedDate" : "2023-06-04T19:52:54.381",
-  "id" : 1,
-  "email" : "test0@test.com",
-  "password" : "{bcrypt}$2a$10$59t4SCXMUZS9b.PPwnK5y.zwpuxjvV0TElHENrWdEPtlmpxsfJ42.",
   "userName" : "테스트네임0",
   "name" : "손석구",
+  "email" : "test0@test.com",
+  "gender" : "MALE",
   "role" : "USER",
   "status" : "NORMAL",
-  "gender" : "MALE",
-  "refreshToken" : null
+  "createDate" : "2023-06-04T19:52:54.381",
+  "modifiedDate" : "2023-06-04T19:52:54.381"
 }, {
-  "createDate" : "2023-06-04T19:53:03.709",
-  "modifiedDate" : "2023-06-04T19:53:03.709",
-  "id" : 2,
-  "email" : "test1@test.com",
-  "password" : "{bcrypt}$2a$10$bqcGihlPyUwb0bncDQCqg.JG0eiqgqtjEWCQrKOG9FiR0hOnGCElW",
   "userName" : "테스트네임1",
   "name" : "손석구",
+  "email" : "test1@test.com",
+  "gender" : "MALE",
   "role" : "USER",
   "status" : "NORMAL",
-  "gender" : "MALE",
-  "refreshToken" : null
+  "createDate" : "2023-06-04T19:53:03.709",
+  "modifiedDate" : "2023-06-04T19:53:03.709"
 } ]</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-리스트-조회_response_fields"><a class="link" href="#Member-리스트-조회_response_fields">1.3.3. Response fields</a></h4>
+<h4 id="Member-리스트-조회_response_fields"><a class="link" href="#Member-리스트-조회_response_fields">1.4.3. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -828,28 +907,10 @@ Content-Length: 766
 <td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].modifiedDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">수정일</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].userName</code></p></td>
@@ -870,12 +931,6 @@ Content-Length: 766
 <td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].refreshToken</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].gender</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -887,19 +942,31 @@ Content-Length: 766
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].modifiedDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정일</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-수정"><a class="link" href="#Member-수정">1.4. Member update</a></h3>
+<h3 id="Member-수정"><a class="link" href="#Member-수정">1.5. Member update</a></h3>
 <div class="sect3">
-<h4 id="Member-수정_http_request"><a class="link" href="#Member-수정_http_request">1.4.1. HTTP request</a></h4>
+<h4 id="Member-수정_http_request"><a class="link" href="#Member-수정_http_request">1.5.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Content-Length: 148
 Host: localhost:8080
 
@@ -914,7 +981,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_http_response"><a class="link" href="#Member-수정_http_response">1.4.2. HTTP response</a></h4>
+<h4 id="Member-수정_http_response"><a class="link" href="#Member-수정_http_response">1.5.2. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -939,7 +1006,7 @@ Content-Length: 147
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_response_fields"><a class="link" href="#Member-수정_response_fields">1.4.3. Response fields</a></h4>
+<h4 id="Member-수정_response_fields"><a class="link" href="#Member-수정_response_fields">1.5.3. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -983,20 +1050,20 @@ Content-Length: 147
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-삭제"><a class="link" href="#Member-삭제">1.5. Member delete</a></h3>
+<h3 id="Member-삭제"><a class="link" href="#Member-삭제">1.6. Member delete</a></h3>
 <div class="sect3">
-<h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">1.5.1. HTTP request</a></h4>
+<h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">1.6.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/member/2 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-삭제_path_parameters"><a class="link" href="#Member-삭제_path_parameters">1.5.2. Path parameters</a></h4>
+<h4 id="Member-삭제_path_parameters"><a class="link" href="#Member-삭제_path_parameters">1.6.2. Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/member/{id}</caption>
 <colgroup>
@@ -1018,7 +1085,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-삭제_http_response"><a class="link" href="#Member-삭제_http_response">1.5.3. HTTP response</a></h4>
+<h4 id="Member-삭제_http_response"><a class="link" href="#Member-삭제_http_response">1.6.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1099,8 +1166,8 @@ Host: localhost:8080
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=utf-8
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
-refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0ODI4Mzl9.w1Gc1QHlJrfA9AVn2fQq9teAxYjXyY8o1WvDfNZPxbM
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
+refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0OTY1MDR9.I9fc-K7zpx042x9xGs0-3XX2T7H1B-N-eHK4K380S9c
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1110,8 +1177,8 @@ X-Frame-Options: DENY
 Content-Length: 286
 
 {
-  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU",
-  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0ODI4Mzl9.w1Gc1QHlJrfA9AVn2fQq9teAxYjXyY8o1WvDfNZPxbM"
+  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE",
+  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0OTY1MDR9.I9fc-K7zpx042x9xGs0-3XX2T7H1B-N-eHK4K380S9c"
 }</code></pre>
 </div>
 </div>
@@ -1125,7 +1192,7 @@ Content-Length: 286
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/logout HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1167,7 +1234,7 @@ Content-Length: 1
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/refresh HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4
-Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0ODI4Mzl9.w1Gc1QHlJrfA9AVn2fQq9teAxYjXyY8o1WvDfNZPxbM
+Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0OTY1MDR9.I9fc-K7zpx042x9xGs0-3XX2T7H1B-N-eHK4K380S9c
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1177,7 +1244,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4NzgwNDgsImV4cCI6MTY4NTg3ODY0OH0.JX97jgF08mhnsfVjkWParhcP0ijI7NjbrNmjyusSwNw
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4OTE3MTIsImV4cCI6MTY4NTg5MjMxMn0.uwkIEn9H6SmW7Nrxmv7ioimZE5Y_0EhMpSgrsOk_Lps
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
@@ -1188,7 +1255,7 @@ X-Frame-Options: DENY
 Content-Length: 164
 
 {
-  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4NzgwNDgsImV4cCI6MTY4NTg3ODY0OH0.JX97jgF08mhnsfVjkWParhcP0ijI7NjbrNmjyusSwNw",
+  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4OTE3MTIsImV4cCI6MTY4NTg5MjMxMn0.uwkIEn9H6SmW7Nrxmv7ioimZE5Y_0EhMpSgrsOk_Lps",
   "refreshToken" : null
 }</code></pre>
 </div>
@@ -1239,7 +1306,7 @@ Content-Length: 164
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Content-Length: 319
 Host: localhost:8080
 
@@ -1274,11 +1341,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 249
+Content-Length: 250
 
 {
   "data" : {
-    "id" : 6,
+    "id" : 12,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
     "member" : {
@@ -1345,7 +1412,7 @@ Content-Length: 249
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1454,7 +1521,7 @@ Content-Length: 179
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1595,7 +1662,7 @@ Content-Length: 1490
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Content-Length: 359
 Host: localhost:8080
 
@@ -1721,7 +1788,7 @@ Content-Length: 285
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/6 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1771,7 +1838,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -1837,7 +1904,7 @@ Content-Length: 1
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTIzMDR9.sOBDruZXdPgwzf5LMJ7vteJ3-KfIJY1SOguuxsTFJxE
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -1904,7 +1971,7 @@ Content-Length: 1
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-04 02:07:57 +0900
+Last updated 2023-06-05 00:14:34 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

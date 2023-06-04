@@ -31,7 +31,7 @@ public class CollectController {
 
     @GetMapping("/collection")
     public CollectGetDto.CollectGetResponse getList(){
-        return new CollectGetDto.CollectGetResponse(CollectGetDto.CollectGetData.update(collectService.list()));
+        return new CollectGetDto.CollectGetResponse(CollectGetDto.CollectGetData.toList(collectService.list()));
     }
 
     @GetMapping("/collection/{id}")

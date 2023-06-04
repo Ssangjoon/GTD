@@ -28,7 +28,7 @@ public class CollectGetDto {
         private LocalDateTime modifiedDate;
         private LocalDateTime createdDate;
         private MemberResponseDto member;
-        public static List<CollectGetData> update(List<Collect> collectList) {
+        public static List<CollectGetData> toList(List<Collect> collectList) {
             return collectList.stream()
                     .map(CollectGetData::fromCollect)
                     .collect(Collectors.toList());

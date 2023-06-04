@@ -66,16 +66,14 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         parameterWithName("id").description("Member ID")
                                 ),
                                 relaxedResponseFields(
-                                        fieldWithPath("id").description("ID"),
-                                        fieldWithPath("name").description("이름"),
-                                        fieldWithPath("createDate").description("생성일"),
-                                        fieldWithPath("modifiedDate").description("수정일"),
-                                        fieldWithPath("userName").description("유저ID"),
-                                        fieldWithPath("status").description("사용가능계정여부"),
-                                        fieldWithPath("role").description("권한"),
-                                        fieldWithPath("refreshToken").optional().description("refreshToken"),
-                                        fieldWithPath("gender").description("성별"),
-                                        fieldWithPath("email").description("이메일")
+                                        fieldWithPath("data.name").description("이름"),
+                                        fieldWithPath("data.userName").description("유저ID"),
+                                        fieldWithPath("data.status").description("사용가능계정여부"),
+                                        fieldWithPath("data.role").description("권한"),
+                                        fieldWithPath("data.gender").description("성별"),
+                                        fieldWithPath("data.email").description("이메일"),
+                                        fieldWithPath("data.createDate").description("생성일"),
+                                        fieldWithPath("data.modifiedDate").description("수정일")
                                 )
                         )
                 )
@@ -93,16 +91,38 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                 .andDo(
                         restDocs.document(
                                 relaxedResponseFields(
-                                        fieldWithPath("[].id").description("ID"),
                                         fieldWithPath("[].name").description("이름"),
-                                        fieldWithPath("[].createDate").description("생성일"),
-                                        fieldWithPath("[].modifiedDate").description("수정일"),
                                         fieldWithPath("[].userName").description("유저ID"),
                                         fieldWithPath("[].status").description("사용가능계정여부"),
                                         fieldWithPath("[].role").description("권한"),
-                                        fieldWithPath("[].refreshToken").optional().description("refreshToken"),
                                         fieldWithPath("[].gender").description("성별"),
-                                        fieldWithPath("[].email").description("이메일")
+                                        fieldWithPath("[].email").description("이메일"),
+                                        fieldWithPath("[].createDate").description("생성일"),
+                                        fieldWithPath("[].modifiedDate").description("수정일")
+                                )
+                        )
+                )
+        ;
+    }
+
+    @DisplayName("SNS 가입 회원 조회 리스트")
+    @Test
+    public void member_social_list() throws Exception {
+
+        mockMvc.perform(
+                        get("/api/scoialMember")
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                relaxedResponseFields(
+                                        fieldWithPath("[].email").description("이메일"),
+                                        //fieldWithPath("[].nickname").description("닉네임"),
+                                        fieldWithPath("[].imageurl").description("이미지"),
+                                        fieldWithPath("[].age").description("나이"),
+                                        fieldWithPath("[].role").description("권한"),
+                                        fieldWithPath("[].socialType").description("sns")
                                 )
                         )
                 )

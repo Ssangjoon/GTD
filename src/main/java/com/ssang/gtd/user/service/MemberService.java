@@ -1,6 +1,7 @@
 package com.ssang.gtd.user.service;
 
 import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.SocialMember;
 import com.ssang.gtd.user.dto.member.MemberServiceDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 public interface MemberService {
     public List<Member> list();
+    public List<SocialMember> sociallist();
+    public List<SocialMember> allMemberList();
     public Optional<Member> get(Long id);
     public Member post(MemberServiceDto dto) throws Exception;
     public Member put(MemberServiceDto dto) throws Exception;

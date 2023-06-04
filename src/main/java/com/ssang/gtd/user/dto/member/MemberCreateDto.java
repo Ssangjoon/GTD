@@ -3,6 +3,7 @@ package com.ssang.gtd.user.dto.member;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.test.Gender;
+import com.ssang.gtd.test.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,8 @@ public class MemberCreateDto {
             serviceDto.setPassword(this.password);
             serviceDto.setEmail(this.email);
             serviceDto.setGender(this.gender);
-            serviceDto.setRole(this.role);
+            serviceDto.setRole(Role.USER);
+            serviceDto.setStatus(MemberStatus.NORMAL);
             return serviceDto;
         }
 

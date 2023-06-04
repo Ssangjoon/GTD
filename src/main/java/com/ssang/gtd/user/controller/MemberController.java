@@ -1,12 +1,15 @@
 package com.ssang.gtd.user.controller;
 
 import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dto.member.MemberCreateDto.MemberCreateData;
 import com.ssang.gtd.user.dto.member.MemberCreateDto.MemberCreateRequest;
 import com.ssang.gtd.user.dto.member.MemberCreateDto.MemberCreateResponse;
+import com.ssang.gtd.user.dto.member.MemberGetDto;
 import com.ssang.gtd.user.dto.member.MemberUpdateDto.MemberUpdateData;
 import com.ssang.gtd.user.dto.member.MemberUpdateDto.MemberUpdateRequest;
 import com.ssang.gtd.user.dto.member.MemberUpdateDto.MemberUpdateResponse;
+import com.ssang.gtd.user.dto.member.SocialMemberGetDto;
 import com.ssang.gtd.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +24,7 @@ import java.util.Optional;
 public class MemberController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MemberService memberService;
+    private final MemberDao memberDao;
 
     @PostMapping("/joinUp")
     public MemberCreateResponse joinUp(@RequestBody MemberCreateRequest dto) throws Exception {
@@ -39,12 +42,23 @@ public class MemberController {
         memberService.delete(id);
     }
     @GetMapping("/member")
-    public List<Member> getList(){
-        return memberService.list();
+    public List<MemberGetDto.MembertGetData> getList(){
+        return MemberGetDto.MembertGetData.toList(memberService.list());
     }
 
+    @GetMapping("/scoialMember")
+    public List<SocialMemberGetDto.SocialMembertGetData> getSocailList(){
+        return SocialMemberGetDto.SocialMembertGetData.toList(memberService.sociallist());
+    }
+
+//    @GetMapping("/allMemberList")
+//    public List<SocialMember> allMemberList(){
+//        return memberDao.allMemberList();
+//    }
+
     @GetMapping("/member/{id}")
-    public Optional<Member> get(@PathVariable("id") Long id){
-        return memberService.get(id);
+    public MemberGetDto.MembertGetResponse get(@PathVariable("id") Long id){
+        Member member = memberService.get(id).get();
+        return new MemberGetDto.MembertGetResponse(MemberGetDto.MembertGetData.convertToDto(member));
     }
 }
