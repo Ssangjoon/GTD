@@ -1,6 +1,7 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
+import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.user.dto.member.MemberCreateDto;
@@ -23,10 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerTest extends IntegrationRestDocsTests {
     @DisplayName("회원 가입 테스트")
     @Test
-    @Transactional
+    //@Rollback(false)
     public void member_create() throws Exception {
 
-        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", "1q2w3e@@", "test3@test.com", Role.USER, Gender.MALE);
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
 
         //when
         mockMvc.perform(
@@ -54,9 +55,12 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     @DisplayName("회원 조회 단건")
     @Test
     public void member_get() throws Exception {
+        //given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        Member member = saveUser(req.toServiceDto());
 
         mockMvc.perform(
-                        get("/api/member/{id}", 1L)
+                        get("/api/member/{id}", member.getId())
                                 .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -82,6 +86,11 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     @DisplayName("회원 조회 리스트")
     @Test
     public void member_list() throws Exception {
+        //given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        MemberCreateDto.MemberCreateRequest req2 = new MemberCreateDto.MemberCreateRequest("테스트네임4", "이상준", pwd+1, "0"+email, Role.USER, Gender.MALE);
+        saveUser(req.toServiceDto());
+        saveUser(req2.toServiceDto());
 
         mockMvc.perform(
                         get("/api/member")
@@ -108,6 +117,9 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     @DisplayName("SNS 가입 회원 조회 리스트")
     @Test
     public void member_social_list() throws Exception {
+        //given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        saveUser(req.toServiceDto());
 
         mockMvc.perform(
                         get("/api/scoialMember")
@@ -158,9 +170,12 @@ class MemberControllerTest extends IntegrationRestDocsTests {
 
     @DisplayName("회원 수정 테스트")
     @Test
-    @Transactional
+    //@Rollback(false)
     public void member_modify() throws Exception {
+        //given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberUpdateDto.MemberUpdateRequest dto = new MemberUpdateDto.MemberUpdateRequest("수정테스트네임", "손석구", "1q2w3e@@", "test0@test.com", Role.USER);
+        saveUser(req.toServiceDto());
 
         mockMvc.perform(
                         put("/api/member")
@@ -184,9 +199,11 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     @Test
     @Transactional
     public void member_delete() throws Exception {
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        saveUser(req.toServiceDto());
 
         mockMvc.perform(
-                        delete("/api/member/{id}",2L)
+                        delete("/api/member/{id}",1L)
                                 .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

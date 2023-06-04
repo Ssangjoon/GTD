@@ -36,8 +36,8 @@ public class Member extends BaseEntity {
     @Column(name = "gender", nullable = true)
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Column(length = 255, nullable = true)
-    private String refreshToken; // 리프레시 토큰
+//    @Column(length = 255, nullable = true)
+//    private String refreshToken; // 리프레시 토큰
 
 
     public void update(String userName, String name, String email) {
@@ -47,7 +47,7 @@ public class Member extends BaseEntity {
     }
 
     @Builder
-    public Member(Long id, String userName, String name, String password, String email, Role role, MemberStatus status, Gender gender,String refreshToken) {
+    public Member(Long id, String userName, String name, String password, String email, Role role, MemberStatus status, Gender gender) {
         this.id = id;
         this.userName = userName;
         this.name = name;
@@ -56,12 +56,10 @@ public class Member extends BaseEntity {
         this.role = role;
         this.status = status;
         this.gender = gender;
-        this.refreshToken = refreshToken;
     }
 
-    public Member update(String name,String refreshToken) {
+    public Member update(String name) {
         this.name = name;
-        this.refreshToken = refreshToken;
         return this;
     }
 

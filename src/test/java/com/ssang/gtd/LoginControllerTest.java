@@ -1,11 +1,15 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
+import com.ssang.gtd.oauth2.Role;
+import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.user.dto.LoginReq;
+import com.ssang.gtd.user.dto.member.MemberCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.Duration;
 
@@ -15,10 +19,15 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginControllerTest extends IntegrationRestDocsTests {
+
     @DisplayName("로그인")
     @Test
+    @WithMockUser
     public void login() throws Exception {
-        LoginReq login = new LoginReq("test0@test.com","1q2w3e@@");
+        //given
+        LoginReq login = new LoginReq(email,pwd);
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        saveUser(req.toServiceDto());
 
         //when
         mockMvc.perform(
@@ -87,5 +96,6 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                 )
         ;
     }
+
 
 }

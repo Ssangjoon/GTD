@@ -26,12 +26,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Member user = memberRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
-//        return User.builder()
-//                .email(member.getUserName())
-//                .password(member.getPassword())
-//                .roles(String.valueOf(member.getRole()))
-//                .authorities("USER")
-//                .build();
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
