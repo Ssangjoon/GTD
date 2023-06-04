@@ -510,14 +510,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/joinUp HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 168
+Content-Length: 165
 Host: localhost:8080
 
 {
-  "name" : "테스트네임2",
-  "userName" : "테스트네임2",
-  "password" : "12345",
-  "email" : "test@test.com",
+  "name" : "테스트네임3",
+  "userName" : "손석구",
+  "password" : "1q2w3e@@",
+  "email" : "test3@test.com",
   "role" : "USER",
   "gender" : "MALE"
 }</code></pre>
@@ -603,7 +603,7 @@ Content-Length: 78
 
 {
   "data" : {
-    "name" : "테스트네임2",
+    "name" : "테스트네임3",
     "role" : "USER"
   }
 }</code></pre>
@@ -619,7 +619,7 @@ Content-Length: 78
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -658,23 +658,20 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 431
+Content-Length: 380
 
 {
-  "createDate" : "2023-05-25T17:06:38.804",
-  "modifiedDate" : "2023-05-25T17:06:38.804",
+  "createDate" : "2023-06-04T19:52:54.381",
+  "modifiedDate" : "2023-06-04T19:52:54.381",
   "id" : 1,
-  "userName" : "ssangJoon",
-  "name" : "이상준",
-  "password" : "{bcrypt}$2a$10$gk4pdHzLD2pvEveazW5yQOblk5k/XqUcHqGf9M2/X5AZRooU5TVbC",
-  "email" : "mail",
+  "email" : "test0@test.com",
+  "password" : "{bcrypt}$2a$10$59t4SCXMUZS9b.PPwnK5y.zwpuxjvV0TElHENrWdEPtlmpxsfJ42.",
+  "userName" : "테스트네임0",
+  "name" : "손석구",
   "role" : "USER",
   "status" : "NORMAL",
   "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
+  "refreshToken" : null
 }</code></pre>
 </div>
 </div>
@@ -738,28 +735,10 @@ Content-Length: 431
 <td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>socialType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">socialType</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>socialId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">socialId</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imageUrl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">imageUrl</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>gender</code></p></td>
@@ -785,7 +764,7 @@ Content-Length: 431
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -802,158 +781,32 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 4536
+Content-Length: 766
 
 [ {
-  "createDate" : "2023-05-25T17:06:38.804",
-  "modifiedDate" : "2023-05-25T17:06:38.804",
+  "createDate" : "2023-06-04T19:52:54.381",
+  "modifiedDate" : "2023-06-04T19:52:54.381",
   "id" : 1,
-  "userName" : "ssangJoon",
-  "name" : "이상준",
-  "password" : "{bcrypt}$2a$10$gk4pdHzLD2pvEveazW5yQOblk5k/XqUcHqGf9M2/X5AZRooU5TVbC",
-  "email" : "mail",
+  "email" : "test0@test.com",
+  "password" : "{bcrypt}$2a$10$59t4SCXMUZS9b.PPwnK5y.zwpuxjvV0TElHENrWdEPtlmpxsfJ42.",
+  "userName" : "테스트네임0",
+  "name" : "손석구",
   "role" : "USER",
   "status" : "NORMAL",
   "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
+  "refreshToken" : null
 }, {
-  "createDate" : "2023-05-28T21:38:40.149",
-  "modifiedDate" : "2023-05-28T21:38:40.149",
+  "createDate" : "2023-06-04T19:53:03.709",
+  "modifiedDate" : "2023-06-04T19:53:03.709",
   "id" : 2,
-  "userName" : "테스트유저이름",
-  "name" : "테스트이름",
-  "password" : "{bcrypt}$2a$10$XQAVWuN6qMaJ1XPDFy344.Tfz/R8ySSYhTki4tvotrTg3sbGjlBJW",
-  "email" : "test@test.com",
+  "email" : "test1@test.com",
+  "password" : "{bcrypt}$2a$10$bqcGihlPyUwb0bncDQCqg.JG0eiqgqtjEWCQrKOG9FiR0hOnGCElW",
+  "userName" : "테스트네임1",
+  "name" : "손석구",
   "role" : "USER",
   "status" : "NORMAL",
   "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-28T21:44:47.098",
-  "modifiedDate" : "2023-05-28T21:44:47.098",
-  "id" : 3,
-  "userName" : "테스트유저이름1",
-  "name" : "테스트이름1",
-  "password" : "{bcrypt}$2a$10$fEY.1b02JIRjfnQHZDGZrOspSwFxRzTU7jA3kMIcDpJfKTc3te9G2",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-28T21:49:21.269",
-  "modifiedDate" : "2023-05-28T21:49:21.269",
-  "id" : 4,
-  "userName" : "테스트유저이름2",
-  "name" : "테스트이름2",
-  "password" : "{bcrypt}$2a$10$Uyeu6ffXeOJFLoTCN8StjeMkMWYrHNW3cJ81qwoKcsXckMpfck16C",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-28T21:54:16.948",
-  "modifiedDate" : "2023-05-28T21:54:16.948",
-  "id" : 5,
-  "userName" : "테스트유저이름3",
-  "name" : "테스트이름3",
-  "password" : "{bcrypt}$2a$10$ua4oV3Oz4g2w6gke9ZTYJenOm.f4t9HQZHH0OuR6GtN9e9Wb7P.H2",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-28T21:55:48.88",
-  "modifiedDate" : "2023-05-28T21:55:48.88",
-  "id" : 6,
-  "userName" : "테스트유저이름5",
-  "name" : "테스트이름5",
-  "password" : "{bcrypt}$2a$10$5RhGvPblR1jrmDLU093rS.2/lI7ppOoCJw12FMf3r9oI/jrE1pn.G",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-28T22:00:19.57",
-  "modifiedDate" : "2023-05-28T22:00:19.57",
-  "id" : 7,
-  "userName" : "굿데브상준",
-  "name" : "이상준",
-  "password" : "{bcrypt}$2a$10$h0iNrF.pC1nMm2Ywtin/WOgGxfthMWND58e8qbhqlHtHK12le6HGq",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-29T00:30:11.889",
-  "modifiedDate" : "2023-05-29T00:30:11.889",
-  "id" : 8,
-  "userName" : "굿데브상준1",
-  "name" : "이상준1",
-  "password" : "{bcrypt}$2a$10$BhurPqxptT6boDJX3RRcxua38Xw.sugzGDsatqkbsBG5HSezN7Cmq",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-29T00:34:47.65",
-  "modifiedDate" : "2023-05-29T00:34:47.65",
-  "id" : 9,
-  "userName" : "굿데브상준2",
-  "name" : "이상준2",
-  "password" : "{bcrypt}$2a$10$OA2cjbAvb85tu1fVfIPHUuqgvFpfsTEkWeKqqFoal05PzWxljq3Au",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
-}, {
-  "createDate" : "2023-05-29T15:43:21.015",
-  "modifiedDate" : "2023-05-29T15:43:21.015",
-  "id" : 10,
-  "userName" : "굿데브상준3",
-  "name" : "이상준3",
-  "password" : "{bcrypt}$2a$10$wd222mW.y1mEbs0D6DeuxeTtGKDa4CMIw8SmRmR5RhJX7It3TsXnC",
-  "email" : "test@test.com",
-  "role" : "USER",
-  "status" : "NORMAL",
-  "gender" : "MALE",
-  "socialType" : null,
-  "socialId" : null,
-  "refreshToken" : null,
-  "imageUrl" : null
+  "refreshToken" : null
 } ]</code></pre>
 </div>
 </div>
@@ -1017,28 +870,10 @@ Content-Length: 4536
 <td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].socialType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">socialType</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].socialId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">socialId</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].refreshToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].imageUrl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">imageUrl</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].gender</code></p></td>
@@ -1064,15 +899,15 @@ Content-Length: 4536
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
-Content-Length: 144
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Content-Length: 148
 Host: localhost:8080
 
 {
-  "userName" : "테스트유저이름",
-  "name" : "이상준",
-  "password" : "12345",
-  "email" : "test@test.com",
+  "userName" : "수정테스트네임",
+  "name" : "손석구",
+  "password" : "1q2w3e@@",
+  "email" : "test0@test.com",
   "role" : "USER"
 }</code></pre>
 </div>
@@ -1090,13 +925,13 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 146
+Content-Length: 147
 
 {
   "data" : {
-    "userName" : "테스트유저이름",
-    "name" : "이상준",
-    "email" : "test@test.com",
+    "userName" : "수정테스트네임",
+    "name" : "손석구",
+    "email" : "test0@test.com",
     "role" : "USER"
   }
 }</code></pre>
@@ -1153,9 +988,9 @@ Content-Length: 146
 <h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">1.5.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/member/10 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/member/2 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1213,12 +1048,12 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/login HTTP/1.1
 Content-Type: application/json
-Content-Length: 65
+Content-Length: 62
 Host: localhost:8080
 
 {
-  "username" : "테스트유저이름",
-  "password" : "1"
+  "email" : "test0@test.com",
+  "password" : "1q2w3e@@"
 }</code></pre>
 </div>
 </div>
@@ -1242,11 +1077,11 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">userName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
@@ -1264,19 +1099,19 @@ Host: localhost:8080
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=utf-8
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTc5OTU5MX0.f1M0AR--YwBbYkm9J49rQywVOFSA0JGvHNQU3HeetDs
-refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0MDM3OTF9.cH5cLVXp7nFWGXfYR7mP9RodP_Jf49wD-SKbVwE8qDI
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0ODI4Mzl9.w1Gc1QHlJrfA9AVn2fQq9teAxYjXyY8o1WvDfNZPxbM
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 289
+Content-Length: 286
 
 {
-  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTc5OTU5MX0.f1M0AR--YwBbYkm9J49rQywVOFSA0JGvHNQU3HeetDs",
-  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0MDM3OTF9.cH5cLVXp7nFWGXfYR7mP9RodP_Jf49wD-SKbVwE8qDI"
+  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU",
+  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0ODI4Mzl9.w1Gc1QHlJrfA9AVn2fQq9teAxYjXyY8o1WvDfNZPxbM"
 }</code></pre>
 </div>
 </div>
@@ -1290,7 +1125,7 @@ Content-Length: 289
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/logout HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1332,7 +1167,7 @@ Content-Length: 1
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/refresh HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4
-Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0MDM3OTF9.cH5cLVXp7nFWGXfYR7mP9RodP_Jf49wD-SKbVwE8qDI
+Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY0ODI4Mzl9.w1Gc1QHlJrfA9AVn2fQq9teAxYjXyY8o1WvDfNZPxbM
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1342,7 +1177,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU3OTg5OTksImV4cCI6MTY4NTc5OTU5OX0.NLZR2dHjxjRVlKsfZBF0GSGXZPNoLlqzX-TrqO5f-qA
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4NzgwNDgsImV4cCI6MTY4NTg3ODY0OH0.JX97jgF08mhnsfVjkWParhcP0ijI7NjbrNmjyusSwNw
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
@@ -1353,7 +1188,7 @@ X-Frame-Options: DENY
 Content-Length: 164
 
 {
-  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU3OTg5OTksImV4cCI6MTY4NTc5OTU5OX0.NLZR2dHjxjRVlKsfZBF0GSGXZPNoLlqzX-TrqO5f-qA",
+  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4NzgwNDgsImV4cCI6MTY4NTg3ODY0OH0.JX97jgF08mhnsfVjkWParhcP0ijI7NjbrNmjyusSwNw",
   "refreshToken" : null
 }</code></pre>
 </div>
@@ -1404,8 +1239,8 @@ Content-Length: 164
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
-Content-Length: 393
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Content-Length: 319
 Host: localhost:8080
 
 {
@@ -1414,17 +1249,14 @@ Host: localhost:8080
     "createDate" : null,
     "modifiedDate" : null,
     "id" : 1,
+    "email" : null,
+    "password" : null,
     "userName" : null,
     "name" : null,
-    "password" : null,
-    "email" : null,
     "role" : null,
     "status" : null,
     "gender" : null,
-    "socialType" : null,
-    "socialId" : null,
-    "refreshToken" : null,
-    "imageUrl" : null
+    "refreshToken" : null
   }
 }</code></pre>
 </div>
@@ -1442,13 +1274,13 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 242
+Content-Length: 249
 
 {
   "data" : {
-    "id" : 62,
+    "id" : 6,
     "content" : "디폴트 타입 테스트",
-    "type" : null,
+    "type" : "COLLECTION",
     "member" : {
       "id" : 1,
       "userName" : null,
@@ -1491,7 +1323,7 @@ Content-Length: 242
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
 </tr>
@@ -1511,9 +1343,9 @@ Content-Length: 242
 <h4 id="Collect-단일-조회_http_request"><a class="link" href="#Collect-단일-조회_http_request">3.2.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/51 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1552,14 +1384,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 180
+Content-Length: 179
 
 {
-  "createDate" : "2023-06-03T19:14:38.196",
-  "modifiedDate" : "2023-06-03T19:14:38.196",
-  "id" : 51,
-  "content" : "디폴트 타입 테스트",
-  "type" : "COLLECTION"
+  "createDate" : "2023-06-04T20:15:43.233",
+  "modifiedDate" : "2023-06-04T20:23:05.363",
+  "id" : 1,
+  "content" : "사이드 프로젝트",
+  "type" : "MAT_COLLECTION"
 }</code></pre>
 </div>
 </div>
@@ -1622,7 +1454,7 @@ Content-Length: 180
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1639,72 +1471,59 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1824
+Content-Length: 1490
 
 {
   "data" : [ {
-    "id" : 6,
+    "id" : 1,
     "content" : "사이드 프로젝트",
     "type" : "MAT_COLLECTION",
-    "modifiedDate" : "2023-06-03T22:16:31.667",
-    "createdDate" : "2023-05-31T11:04:06.383",
-    "member" : {
-      "id" : 3,
-      "userName" : "테스트유저이름1",
-      "name" : "테스트이름1",
-      "email" : "test@test.com",
-      "gender" : "MALE"
-    }
-  }, {
-    "id" : 14,
-    "content" : "hi",
-    "type" : "COLLECTION",
-    "modifiedDate" : "2023-05-31T22:34:26.59",
-    "createdDate" : "2023-05-31T22:34:26.59",
-    "member" : {
-      "id" : 3,
-      "userName" : "테스트유저이름1",
-      "name" : "테스트이름1",
-      "email" : "test@test.com",
-      "gender" : "MALE"
-    }
-  }, {
-    "id" : 49,
-    "content" : "사이드 프로젝트 마무리하기",
-    "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-03T19:05:53.811",
-    "createdDate" : "2023-06-03T19:05:53.811",
+    "modifiedDate" : "2023-06-04T20:23:05.363",
+    "createdDate" : "2023-06-04T20:15:43.233",
     "member" : {
       "id" : 1,
-      "userName" : "ssangJoon",
-      "name" : "이상준",
-      "email" : "mail",
+      "userName" : "테스트네임0",
+      "name" : "손석구",
+      "email" : "test0@test.com",
       "gender" : "MALE"
     }
   }, {
-    "id" : 50,
-    "content" : "사이드 프로젝트 마무리하기",
+    "id" : 2,
+    "content" : "사이드 프로젝트 하기",
     "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-03T19:13:19.597",
-    "createdDate" : "2023-06-03T19:13:19.597",
+    "modifiedDate" : "2023-06-04T20:16:02.95",
+    "createdDate" : "2023-06-04T20:16:02.95",
     "member" : {
       "id" : 1,
-      "userName" : "ssangJoon",
-      "name" : "이상준",
-      "email" : "mail",
+      "userName" : "테스트네임0",
+      "name" : "손석구",
+      "email" : "test0@test.com",
       "gender" : "MALE"
     }
   }, {
-    "id" : 51,
-    "content" : "디폴트 타입 테스트",
+    "id" : 3,
+    "content" : "사이드 프로젝트 하기",
     "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-03T19:14:38.196",
-    "createdDate" : "2023-06-03T19:14:38.196",
+    "modifiedDate" : "2023-06-04T20:16:05.264",
+    "createdDate" : "2023-06-04T20:16:05.264",
     "member" : {
       "id" : 1,
-      "userName" : "ssangJoon",
-      "name" : "이상준",
-      "email" : "mail",
+      "userName" : "테스트네임0",
+      "name" : "손석구",
+      "email" : "test0@test.com",
+      "gender" : "MALE"
+    }
+  }, {
+    "id" : 4,
+    "content" : "사이드 프로젝트 하기",
+    "type" : "COLLECTION",
+    "modifiedDate" : "2023-06-04T20:16:06.707",
+    "createdDate" : "2023-06-04T20:16:06.707",
+    "member" : {
+      "id" : 1,
+      "userName" : "테스트네임0",
+      "name" : "손석구",
+      "email" : "test0@test.com",
       "gender" : "MALE"
     }
   } ]
@@ -1776,28 +1595,25 @@ Content-Length: 1824
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
-Content-Length: 433
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Content-Length: 359
 Host: localhost:8080
 
 {
-  "id" : 6,
+  "id" : 1,
   "content" : "사이드 프로젝트 수정하기",
   "member" : {
     "createDate" : null,
     "modifiedDate" : null,
-    "id" : 3,
+    "id" : 1,
+    "email" : null,
+    "password" : null,
     "userName" : null,
     "name" : null,
-    "password" : null,
-    "email" : null,
     "role" : null,
     "status" : null,
     "gender" : null,
-    "socialType" : null,
-    "socialId" : null,
-    "refreshToken" : null,
-    "imageUrl" : null
+    "refreshToken" : null
   },
   "type" : null
 }</code></pre>
@@ -1816,18 +1632,18 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 297
+Content-Length: 285
 
 {
   "data" : {
-    "id" : 6,
+    "id" : 1,
     "content" : "사이드 프로젝트 수정하기",
     "type" : null,
     "member" : {
-      "id" : 3,
-      "userName" : "테스트유저이름1",
-      "name" : "테스트이름1",
-      "email" : "test@test.com",
+      "id" : 1,
+      "userName" : "테스트네임0",
+      "name" : "손석구",
+      "email" : "test0@test.com",
       "gender" : "MALE"
     }
   }
@@ -1905,7 +1721,7 @@ Content-Length: 297
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/6 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1953,46 +1769,62 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="MatCol-create_http_request"><a class="link" href="#MatCol-create_http_request">3.6.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/6 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
-Host: localhost:8080</code></pre>
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=matcol; filename=matcol
+Content-Type: application/json
+
+{"goal":"파일 업로드","content":"업로드","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":1,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":1,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null,"refreshToken":null}}
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="MatCol-create_path_parameters"><a class="link" href="#MatCol-create_path_parameters">3.6.2. Path parameters</a></h4>
+<h4 id="MatCol-create_request_parts"><a class="link" href="#MatCol-create_request_parts">3.6.2. Request parts</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/collection/{id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Part</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Member ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>matcol</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="MatCol-create_http_response"><a class="link" href="#MatCol-create_http_response">3.6.3. HTTP response</a></h4>
+<h4 id="MatCol-create_path_parameters"><a class="link" href="#MatCol-create_path_parameters">3.6.3. Path parameters</a></h4>
+<div class="paragraph">
+<p>Snippet path-parameters not found for operation::things-controller-test/material</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="MatCol-create_http_response"><a class="link" href="#MatCol-create_http_response">3.6.4. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY</code></pre>
+X-Frame-Options: DENY
+Content-Length: 1
+
+1</code></pre>
 </div>
 </div>
 </div>
@@ -2003,31 +1835,46 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="MatCol-fileUpload-create_http_request"><a class="link" href="#MatCol-fileUpload-create_http_request">3.7.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/6 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQxIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2ODU3OTk1OTF9.0urz7c5dZEw0PtY5DGR-cKuAw7xqvVs_a3r9cHBpwEQ
-Host: localhost:8080</code></pre>
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4Nzg2Mzl9.4xHyclTNmQaH2Q7bGabq90JOU3qscpCTVZKbBZkp_EU
+Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=files; filename=imagefile.png
+Content-Type: image/png
+
+&lt;&lt;png data&gt;&gt;
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=matcol; filename=matcol
+Content-Type: application/json
+
+{"goal":"파일 업로드","content":"업로드","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":1,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":1,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null,"refreshToken":null}}
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="MatCol-fileUpload-create_path_parameters"><a class="link" href="#MatCol-fileUpload-create_path_parameters">3.7.2. Path parameters</a></h4>
+<h4 id="MatCol-fileUpload-create_request_parts"><a class="link" href="#MatCol-fileUpload-create_request_parts">3.7.2. Request parts</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/collection/{id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Part</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Member ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>files</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">파일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>matcol</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.</p></td>
 </tr>
 </tbody>
 </table>
@@ -2037,12 +1884,16 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY</code></pre>
+X-Frame-Options: DENY
+Content-Length: 1
+
+1</code></pre>
 </div>
 </div>
 </div>
@@ -2053,7 +1904,7 @@ X-Frame-Options: DENY</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-03 22:22:52 +0900
+Last updated 2023-06-04 02:07:57 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

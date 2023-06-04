@@ -9,4 +9,8 @@ public class ViewController {
     public String loginPage(){
         return "login";
     }
+    @GetMapping("/oauth2/sign-up")
+    public String ouath2UserLoginPage(){
+        return "login";
+    }
 }

@@ -60,6 +60,9 @@ public class MemberServiceImpl implements MemberService{
         if(memberRepository.findByUserName(dto.getUserName()).isPresent()){
             throw new CustomException(ErrorCode.ALREADY_USER);
         }
+        if(memberRepository.findByEmail(dto.getEmail()).isPresent()){
+            throw new CustomException(ErrorCode.ALREADY_USER);
+        }
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         dto.setRole(Role.USER);
         dto.setGender(Gender.MALE);
@@ -70,7 +73,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public Member put(MemberServiceDto dto)throws Exception {
-        Member member = memberRepository.findByUserName(dto.getUserName()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
+        Member member = memberRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
         member.update(dto.getUserName(), dto.getName(), dto.getEmail());
         return member;
     }

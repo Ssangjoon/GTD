@@ -63,7 +63,7 @@ public class LoginController {
         try {
 
             LoginReq login = om.readValue(request.getInputStream(), LoginReq.class);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(),login.getPassword());
 
             System.out.println(authenticationManager.authenticate(authenticationToken));
             return tokenProvider.createToken(authenticationManager.authenticate(authenticationToken));

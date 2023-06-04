@@ -7,6 +7,9 @@ import java.util.Optional;
 
 public interface SocialMemberRepository extends JpaRepository<SocialMember, Long> {
 
+    Optional<SocialMember> findByEmail(String email);
+
+    Optional<SocialMember> findByNickname(String nickname);
 
     /**
      * 소셜 타입과 소셜의 식별값으로 회원 찾는 메소드

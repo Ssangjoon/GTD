@@ -108,7 +108,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
         // excludePath에 해당하는 요청이라면 토큰 검사하지 않음
         log.info("shouldNotFilter 실행");
         String path = request.getRequestURI();
-        String[] excludePath = {"/api/login","/api/joinUp","/api/refresh","/api/oauth/token","/docs","/index"};
+        String[] excludePath = {"/api/login","/api/joinUp","/api/refresh","/api/oauth/token","/docs","/index","/login"};
 
         return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }

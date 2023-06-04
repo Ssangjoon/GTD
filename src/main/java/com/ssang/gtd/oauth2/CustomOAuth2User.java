@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * DefaultOAuth2User를 상속하고, email과 role 필드를 추가로 가진다.
+ * OAuth2UserService에서 사용할 OAuth2User 객체를 커스텀한 클래스
  */
 @Getter
 public class CustomOAuth2User extends DefaultOAuth2User {

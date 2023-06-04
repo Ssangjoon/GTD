@@ -21,6 +21,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // optional과 커스텀해서 넣은 constraints를 명시해서 테스트를 작성
 class MemberControllerTest extends IntegrationRestDocsTests {
+    @DisplayName("회원 가입 테스트")
+    @Test
+    @Transactional
+    public void member_create() throws Exception {
+
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", "1q2w3e@@", "test3@test.com", Role.USER, Gender.MALE);
+
+        //when
+        mockMvc.perform(
+                        post("/api/joinUp")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(createJson(req)))
+                .andExpect(status().isOk())
+                //then
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("email").description("이메일").attributes(field("constraints", "길이 30 이하")),
+                                        fieldWithPath("name").description("이름"),
+                                        fieldWithPath("userName").description("유저ID"),
+                                        fieldWithPath("password").description("비밀번호"),
+                                        fieldWithPath("role").description("권한"),
+                                        fieldWithPath("gender").description("성별")
+                                        //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
+                                )
+                        )
+                )
+        ;
+    }
+
     @DisplayName("회원 조회 단건")
     @Test
     public void member_get() throws Exception {
@@ -43,10 +73,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("userName").description("유저ID"),
                                         fieldWithPath("status").description("사용가능계정여부"),
                                         fieldWithPath("role").description("권한"),
-                                        fieldWithPath("socialType").optional().description("socialType"),
-                                        fieldWithPath("socialId").optional().description("socialId"),
                                         fieldWithPath("refreshToken").optional().description("refreshToken"),
-                                        fieldWithPath("imageUrl").optional().description("imageUrl"),
                                         fieldWithPath("gender").description("성별"),
                                         fieldWithPath("email").description("이메일")
                                 )
@@ -73,10 +100,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("[].userName").description("유저ID"),
                                         fieldWithPath("[].status").description("사용가능계정여부"),
                                         fieldWithPath("[].role").description("권한"),
-                                        fieldWithPath("[].socialType").optional().description("socialType"),
-                                        fieldWithPath("[].socialId").optional().description("socialId"),
                                         fieldWithPath("[].refreshToken").optional().description("refreshToken"),
-                                        fieldWithPath("[].imageUrl").optional().description("imageUrl"),
                                         fieldWithPath("[].gender").description("성별"),
                                         fieldWithPath("[].email").description("이메일")
                                 )
@@ -85,35 +109,6 @@ class MemberControllerTest extends IntegrationRestDocsTests {
         ;
     }
 
-    @DisplayName("회원 가입 테스트")
-    @Test
-    @Transactional
-    public void member_create() throws Exception {
-
-        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임2", "테스트네임2", "12345", "test@test.com", Role.USER, Gender.MALE);
-
-        //when
-        mockMvc.perform(
-                        post("/api/joinUp")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(createJson(req)))
-                .andExpect(status().isOk())
-                //then
-                .andDo(
-                        restDocs.document(
-                                requestFields(
-                                        fieldWithPath("email").description("이메일").attributes(field("constraints", "길이 30 이하")),
-                                        fieldWithPath("name").description("이름"),
-                                        fieldWithPath("userName").description("유저ID"),
-                                        fieldWithPath("password").description("비밀번호"),
-                                        fieldWithPath("role").description("권한"),
-                                        fieldWithPath("gender").description("성별")
-                                        //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
-                                )
-                        )
-                )
-        ;
-    }
 
 //    @Test
 //    public void member_page_test() throws Exception {
@@ -145,7 +140,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     @Test
     @Transactional
     public void member_modify() throws Exception {
-        MemberUpdateDto.MemberUpdateRequest dto = new MemberUpdateDto.MemberUpdateRequest("테스트유저이름", "이상준", "12345", "test@test.com", Role.USER);
+        MemberUpdateDto.MemberUpdateRequest dto = new MemberUpdateDto.MemberUpdateRequest("수정테스트네임", "손석구", "1q2w3e@@", "test0@test.com", Role.USER);
 
         mockMvc.perform(
                         put("/api/member")
@@ -171,7 +166,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
     public void member_delete() throws Exception {
 
         mockMvc.perform(
-                        delete("/api/member/{id}",10L)
+                        delete("/api/member/{id}",2L)
                                 .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

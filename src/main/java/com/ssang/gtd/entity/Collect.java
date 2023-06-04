@@ -23,7 +23,7 @@ public class Collect extends BaseEntity {
 
     @Column(length = 50, nullable = false)
     @Convert(converter = BoardTypeConverter.class)
-    private BoardType type = BoardType.COLLECTION;
+    private BoardType type;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,7 +42,6 @@ public class Collect extends BaseEntity {
         this.content = content;
         this.type = type;
     }
-
 
 
 }

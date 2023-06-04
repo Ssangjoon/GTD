@@ -1,6 +1,5 @@
 package com.ssang.gtd.user.service;
 
-import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberRepository;
@@ -39,8 +38,8 @@ public class AccountServiceImpl implements AccountService{
     @Override
     @Transactional
     public void updateRefreshToken(String username, String refreshToken) {
-        Member member = memberRepository.findByUserName(username).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
-        member.updateRefreshToken(refreshToken);
+//        Member member = memberRepository.findByUserName(username).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+//        member.updateRefreshToken(refreshToken);
     }
 
     @Override

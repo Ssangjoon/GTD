@@ -33,7 +33,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         try {
 
             LoginReq login = om.readValue(request.getInputStream(), LoginReq.class);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(),login.getPassword());
 
             return authenticationManager.authenticate(authenticationToken);
 

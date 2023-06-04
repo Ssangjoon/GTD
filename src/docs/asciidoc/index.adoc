@@ -92,11 +92,11 @@ operation::things-controller-test/collect_delete[snippets='http-request,path-par
 
 [[MatCol-create]]
 === MatCol create
-operation::things-controller-test/collect_delete[snippets='http-request,path-parameters,http-response']
+operation::things-controller-test/material[snippets='http-request,request-parts,path-parameters,http-response']
 
 [[MatCol-fileUpload-create]]
 === MatCol create & fileUpload
-operation::things-controller-test/collect_delete[snippets='http-request,path-parameters,http-response']
+operation::things-controller-test/material_file[snippets='http-request,request-parts,http-response']
 
 
 //[snippets='http-request,path-parameters,http-response,response-fields']

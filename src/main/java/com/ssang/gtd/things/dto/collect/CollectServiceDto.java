@@ -19,6 +19,7 @@ public class CollectServiceDto {
         return Collect.builder()
                 .content(content)
                 .member(member)
+                .type(BoardType.COLLECTION)
                 .build();
     }
 }

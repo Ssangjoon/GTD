@@ -1,5 +1,6 @@
 package com.ssang.gtd.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssang.gtd.jwt.JwtAccessDeniedHandler;
 import com.ssang.gtd.jwt.JwtAuthenticationEntryPoint;
 import com.ssang.gtd.oauth2.CustomOAuth2UserService;
@@ -37,6 +38,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,7 +47,6 @@ public class SecurityConfig {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
-
 
         http
                 .httpBasic().disable()
@@ -61,14 +62,14 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST,"/api/joinUp","/api/refresh").permitAll()
-                .requestMatchers("/","/api/login","/api/oauth/token","/swagger-ui").permitAll()
+                .requestMatchers("/login","/api/login","/api/oauth/token","/swagger-ui").permitAll()
                 .requestMatchers("/docs/**").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 //.anyRequest().permitAll()
                 .anyRequest().authenticated()
 
                 .and()
-                .oauth2Login()
+                .oauth2Login()// httpSecurity의 OAuth2LoginConfigurer를 반환하여 OAuth로그인 관련 기능 사용 가능
                 .successHandler(oAuth2LoginSuccessHandler)
                 .failureHandler(oAuth2LoginFailureHandler)
                 .userInfoEndpoint().userService(customOAuth2UserService);

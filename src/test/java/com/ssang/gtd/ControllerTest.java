@@ -40,7 +40,7 @@ public class ControllerTest {
         return objectMapper.writeValueAsString(dto);
     }
     protected String getAccessToken() throws Exception {
-        LoginReq login = new LoginReq("테스트유저이름1","12345");
+        LoginReq login = new LoginReq("test0@test.com","1q2w3e@@");
 
         ResultActions perform = mockMvc.perform(post("/api/oauth/token").content(createJson(login)));
 

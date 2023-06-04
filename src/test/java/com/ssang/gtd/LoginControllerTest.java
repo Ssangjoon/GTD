@@ -18,7 +18,7 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
     @DisplayName("로그인")
     @Test
     public void login() throws Exception {
-        LoginReq login = new LoginReq("테스트유저이름","1");
+        LoginReq login = new LoginReq("test0@test.com","1q2w3e@@");
 
         //when
         mockMvc.perform(
@@ -31,7 +31,7 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("username").description("userName"),
+                                        fieldWithPath("email").description("email"),
                                         fieldWithPath("password").description("password")
                                 )
                         )

@@ -18,7 +18,7 @@ public class MemberServiceDto {
     private String email;
     private Role role;
     private Gender gender;
-    private String refreshToken;
+//    private String refreshToken;
     private MemberStatus status;
 
     public Member toEntity(){

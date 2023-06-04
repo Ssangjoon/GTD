@@ -2,6 +2,10 @@ package com.ssang.gtd.oauth2.oauthUser;
 
 import java.util.Map;
 
+/**
+ * 소셜 타입별로 유저 정보를 가지는 추상 클래스
+ */
+
 public abstract class OAuth2UserInfo {
 
     protected Map<String, Object> attributes;

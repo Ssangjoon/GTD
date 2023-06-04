@@ -1,14 +1,9 @@
 package com.ssang.gtd.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.exception.CustomException;
-import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.user.dao.MemberRepository;
 import io.jsonwebtoken.Jwts;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,7 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.ssang.gtd.jwt.JwtConstants.*;
+import static com.ssang.gtd.jwt.JwtConstants.ACCESS_TOKEN_HEADER;
+import static com.ssang.gtd.jwt.JwtConstants.REFRESH_TOKEN_HEADER;
 
 @Service
 @Getter
@@ -30,44 +26,7 @@ public class JwtService {
     private String secretKey;
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public Member getMemberByRefreshToken(String token){
-        return memberRepository.findByRefreshToken(token)
-                .orElseThrow(() -> new CustomException(ErrorCode.JWT_REFRESH_EXPRIRED));
-    }
-    @Transactional
-    public void setRefreshToken(String username,String refreshJwt){
-        memberRepository.findByUserName(username)
-                .ifPresent(member -> member.updateRefreshToken(refreshJwt));
-    }
-    @Transactional
-    public void removeRefreshToken(String token){
-        memberRepository.findByRefreshToken(token)
-                .ifPresent(t -> t.updateRefreshToken(null));
-    }
-    public void logout(HttpServletRequest request){
-        try{
-            checkHeaderValid(request);
-            String refreshJwtToken = request
-                    .getHeader(REFRESH_TOKEN_HEADER)
-                    .replace(TOKEN_HEADER_PREFIX, "");
-            removeRefreshToken(refreshJwtToken);
-        } catch (Exception e){
-            throw new CustomException(ErrorCode.JWT_REFRESH_NOT_VALID);
-        }
-    }
-    public void checkHeaderValid(HttpServletRequest request){
-        String accessJwt = request.getHeader(ACCESS_TOKEN_HEADER);
-        String refreshJwt = request.getHeader(REFRESH_TOKEN_HEADER);
-        if(accessJwt == null){
-            throw new CustomException(ErrorCode.JWT_ACCESS_NOT_VALID);
-        } else if(refreshJwt == null){
-            throw new CustomException(ErrorCode.JWT_REFRESH_NOT_VALID);
-        }
-    }
-    /**
-     * AccessToken + RefreshToken 헤더에 실어서 보내기
-     */
+
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
         response.setStatus(HttpServletResponse.SC_OK);
         if(accessToken != null){
