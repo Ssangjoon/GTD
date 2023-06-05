@@ -14,37 +14,8 @@ GettingThingsDone 프로세스를 구현하는 개인 프로젝트 입니다.
 
 
 1. 로그인(Login), 회원가입(JoinUp)을 제외한 모든 요청에는 AccessToken이 필요 합니다. +
-2. 지정된 TOKEN_HEADER_PREFIX을 토큰과 함께 헤더에 기재하여 요청하여야 인증이 가능합니다. +
-3. SSO 로그인은 완료 후 별도로 회원가입하지 않은  User의 Role은 `Guest`, 일반 회원가입 User의 Role은 `User` 입니다.
-
-[[Member-API]]
-== Member API
-
-[[Member-생성]]
-=== Member joinUp +
-
-operation::member-controller-test/member_create[snippets='http-request,request-fields,http-response']
-
-[[Member-리스트-조회]]
-=== Member list
-operation::member-controller-test/member_list[snippets='http-request,http-response,response-fields']
-[[Member-소셜리스트-조회]]
-=== Member list (Social)
-operation::member-controller-test/member_social_list[snippets='http-request,http-response,response-fields']
-
-[[Member-단일-조회]]
-=== Member get
-operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']
-
-
-[[Member-수정]]
-=== Member update
-operation::member-controller-test/member_modify[snippets='http-request,http-response,response-fields']
-
-[[Member-삭제]]
-=== Member delete
-operation::member-controller-test/member_delete[snippets='http-request,path-parameters,http-response']
-
+2. 요청시 인증타입과 Access Token를 함께 헤더에 담아 보냅니다. +
+3. SSO 로그인은 완료 후 일반 회원가입 페이지로 이동되며, 이때 가입하지 않는다면 User의 Role은 `Guest`, 일반 회원가입 이후 User의 Role은 `User` 입니다.
 
 
 [[Login-API]]
@@ -52,21 +23,53 @@ operation::member-controller-test/member_delete[snippets='http-request,path-para
 
 [[Login]]
 === Login +
-Access Token과 Refresh Token을 발행합니다.
+Access Token과 Refresh Token을 발행합니다. +
+(Access Token : 10분, Refresh Token : 14일 (2주))
 
 operation::login-controller-test/login[snippets='http-request,request-fields,http-response']
 
 [[Logout]]
-=== Logout
-operation::login-controller-test/logout[snippets='http-request,request-fields,http-response']
+=== Logout +
+Redis를 통해 토큰을 블랙리스트로 등록합니다.
+
+operation::login-controller-test/logout[snippets='http-request,http-response']
 
 [[Refresh]]
 === Refresh
-Access Token 만료 시 Refresh Token과 함께 request header에 담아 재요청합니다.
+Access Token 만료 시 Refresh Token과 함께 request header에 담아 재요청합니다. +
+리프레시 토큰은 남은 만료 기간을 계산하고 5초 미만이라면 재발급합니다.
 
 operation::login-controller-test/refresh[snippets='http-request,http-response,response-fields']
 
 
+
+
+[[Member-API]]
+== Member API
+
+[[Member-생성]]
+=== Member create +
+operation::member-controller-test/member_create[snippets='http-request,request-fields,http-response']
+
+[[Member-리스트-조회]]
+=== Member list
+operation::member-controller-test/member_list[snippets='http-request,http-response,response-fields']
+
+[[Member-소셜리스트-조회]]
+=== Member list (Social Login User)
+operation::member-controller-test/member_social_list[snippets='http-request,http-response,response-fields']
+
+[[Member-단일-조회]]
+=== Member get
+operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Member-수정]]
+=== Member update
+operation::member-controller-test/member_modify[snippets='http-request,request-fields,http-response,response-fields']
+
+[[Member-삭제]]
+=== Member delete
+operation::member-controller-test/member_delete[snippets='http-request,path-parameters,http-response']
 
 
 
@@ -75,7 +78,7 @@ operation::login-controller-test/refresh[snippets='http-request,http-response,re
 
 [[Collect-등록]]
 === Collect create
-operation::things-controller-test/collect_post[snippets='http-request,http-response,response-fields']
+operation::things-controller-test/collect_post[snippets='http-request,request-fields,http-response,response-fields']
 
 [[Collect-단일-조회]]
 === Collect get
@@ -87,7 +90,7 @@ operation::things-controller-test/collect_list[snippets='http-request,http-respo
 
 [[Collect-수정]]
 === Collect update
-operation::things-controller-test/collect_put[snippets='http-request,http-response,response-fields']
+operation::things-controller-test/collect_put[snippets='http-request,request-fields,http-response,response-fields']
 
 [[Collect-삭제]]
 === Collect delete
@@ -95,8 +98,9 @@ operation::things-controller-test/collect_delete[snippets='http-request,path-par
 
 
 [[MatCol-create]]
-=== MatCol create
-operation::things-controller-test/material[snippets='http-request,request-parts,path-parameters,http-response']
+=== MatCol create +
+
+operation::things-controller-test/material[snippets='http-request,request-parts,http-response']
 
 [[MatCol-fileUpload-create]]
 === MatCol create & fileUpload

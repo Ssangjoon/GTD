@@ -23,6 +23,7 @@ public class MemberCreateDto {
         private Role role;
         private Gender gender;
 
+
         public MemberServiceDto toServiceDto(){
             MemberServiceDto serviceDto = new MemberServiceDto();
             serviceDto.setName(this.name);

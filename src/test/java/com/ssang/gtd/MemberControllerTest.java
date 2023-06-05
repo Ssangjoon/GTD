@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ssang.gtd.config.RestDocsConfig.field;
 import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -39,12 +38,12 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("email").description("이메일").attributes(field("constraints", "길이 30 이하")),
+                                        fieldWithPath("email").description("이메일"),//.attributes(field("constraints", "길이 30 이하")),
                                         fieldWithPath("name").description("이름"),
                                         fieldWithPath("userName").description("유저ID"),
                                         fieldWithPath("password").description("비밀번호"),
-                                        fieldWithPath("role").description("권한"),
-                                        fieldWithPath("gender").description("성별")
+                                        fieldWithPath("role").optional().description("권한"),
+                                        fieldWithPath("gender").optional().description("성별")
                                         //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
                                 )
                         )
@@ -74,7 +73,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("data.userName").description("유저ID"),
                                         fieldWithPath("data.status").description("사용가능계정여부"),
                                         fieldWithPath("data.role").description("권한"),
-                                        fieldWithPath("data.gender").description("성별"),
+                                        fieldWithPath("data.gender").optional().description("성별"),
                                         fieldWithPath("data.email").description("이메일"),
                                         fieldWithPath("data.createDate").description("생성일"),
                                         fieldWithPath("data.modifiedDate").description("수정일")
@@ -104,7 +103,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("[].userName").description("유저ID"),
                                         fieldWithPath("[].status").description("사용가능계정여부"),
                                         fieldWithPath("[].role").description("권한"),
-                                        fieldWithPath("[].gender").description("성별"),
+                                        fieldWithPath("[].gender").optional().description("성별"),
                                         fieldWithPath("[].email").description("이메일"),
                                         fieldWithPath("[].createDate").description("생성일"),
                                         fieldWithPath("[].modifiedDate").description("수정일")
@@ -131,8 +130,8 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                 relaxedResponseFields(
                                         fieldWithPath("[].email").description("이메일"),
                                         //fieldWithPath("[].nickname").description("닉네임"),
-                                        fieldWithPath("[].imageurl").description("이미지"),
-                                        fieldWithPath("[].age").description("나이"),
+                                        fieldWithPath("[].imageurl").optional().description("이미지"),
+                                        fieldWithPath("[].age").optional().description("나이"),
                                         fieldWithPath("[].role").description("권한"),
                                         fieldWithPath("[].socialType").description("sns")
                                 )
@@ -185,6 +184,14 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
+                                requestFields(
+                                        fieldWithPath("email").description("이메일"),//.attributes(field("constraints", "길이 30 이하")),
+                                        fieldWithPath("name").optional().description("이름"),
+                                        fieldWithPath("userName").optional().description("유저ID"),
+                                        fieldWithPath("password").description("비밀번호"),
+                                        fieldWithPath("role").optional().description("권한")
+                                        //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
+                                ),
                                 relaxedResponseFields(
                                         fieldWithPath("data.userName").description("유저ID"),
                                         fieldWithPath("data.name").description("이름"),

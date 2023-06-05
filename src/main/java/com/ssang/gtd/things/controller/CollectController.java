@@ -59,7 +59,7 @@ public class CollectController {
     }
 
     @PostMapping("/material")
-    public int post(@RequestPart(value = "matcol")  MatColCreateRequest dto,
+    public int post(@RequestPart(value = "materialCollection")  MatColCreateRequest dto,
                     @RequestPart(value = "files", required = false) List<MultipartFile> files) throws JsonProcessingException {
         try {
             return matCollectService.post(dto.toServiceDto(),files);

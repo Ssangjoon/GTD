@@ -42,6 +42,10 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
+                                relaxedRequestFields(
+                                        fieldWithPath("content").description("내용"),
+                                        fieldWithPath("member.id").description("작성자")
+                                ),
                                 relaxedResponseFields(
                                         //subsectionWithPath("data").description("info of collect"),
                                         fieldWithPath("data.id").description("게시글 번호"),
@@ -131,14 +135,18 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
+                                relaxedRequestFields(
+                                        fieldWithPath("id").description("게시글 번호"),
+                                        fieldWithPath("content").description("수정 내용"),
+                                        fieldWithPath("member.id").description("작성자"),
+                                        fieldWithPath("type").optional().description("타입")
+                                ),
                                 relaxedResponseFields(
                                         subsectionWithPath("data").description("info of collect"),
                                         fieldWithPath("data.id").description("게시글 번호"),
                                         fieldWithPath("data.content").description("내용"),
                                         fieldWithPath("data.type").description("타입"),
-                                        fieldWithPath("data.member.id").description("ID"),
-                                        fieldWithPath("data.member.name").description("이름"),
-                                        fieldWithPath("data.member.userName").description("유저ID")
+                                        fieldWithPath("data.member.id").description("ID")
                                 )
                         )
                 )
@@ -181,20 +189,20 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
 
         Member member = Member.builder().id(userId).build();
         Collect collect = Collect.builder().id(collectId).content("사이드 프로젝트").type(MAT_COLLECTION).build();
-        MatColCreateDto.MatColCreateRequest test = new MatColCreateDto.MatColCreateRequest("파일 업로드", "업로드", null,collect,member);
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("목표 세우기", "차근 차근 하나씩", null,collect,member);
+        String dtoJson = createJson(createRequestreq);
 
-        String dtoJson = createJson(test);
-        MockMultipartFile matcol = new MockMultipartFile("matcol", "matcol", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile materialCollection = new MockMultipartFile("materialCollection", "materialCollection", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
 
         mockMvc.perform(
                         multipart("/api/material")
-                                .file(matcol)
+                                .file(materialCollection)
                                 .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken()))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
                                 requestParts(
-                                        partWithName("matcol").description(".")
+                                        partWithName("materialCollection").description("목표, 절차, 날짜 등을 기재한다")
                                 )
                         )
                 )
@@ -214,10 +222,10 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
 
         Member member = Member.builder().id(userId).build();
         Collect collect = Collect.builder().id(collectId).content("사이드 프로젝트").type(MAT_COLLECTION).build();
-        MatColCreateDto.MatColCreateRequest test = new MatColCreateDto.MatColCreateRequest("파일 업로드", "업로드", null,collect,member);
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member);
+        String dtoJson = createJson(createRequestreq);
 
-        String dtoJson = createJson(test);
-        MockMultipartFile matcol = new MockMultipartFile("matcol", "matcol", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile materialCollection = new MockMultipartFile("materialCollection", "materialCollection", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
 
         MockMultipartFile files = new MockMultipartFile(
                 "files",
@@ -228,14 +236,15 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
         mockMvc.perform(
                         multipart("/api/material")
                                 .file(files)
-                                .file(matcol)
-                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken()))
+                                .file(materialCollection)
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
+                                .content(dtoJson))
                 .andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
                                 requestParts(
                                         partWithName("files").description("파일"),
-                                        partWithName("matcol").description(".")
+                                        partWithName("materialCollection").description("목표, 절차, 날짜 등을 기재한다")
                                 )
                         )
                 )

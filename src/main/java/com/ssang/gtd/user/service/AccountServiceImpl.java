@@ -78,6 +78,7 @@ public class AccountServiceImpl implements AccountService{
         // === 현재시간과 Refresh Token 만료날짜를 통해 남은 만료기간 계산 === //
         long refreshExpireTime = claims.getBody().getExpiration().getTime();
         long diffMin  = (refreshExpireTime - now) / 1000 / 60;
+        logger.info("diffMin ===> {}" ,diffMin);
 
         if(diffMin < 5){
             String newRefreshToken = jwtTokenProvider.generateRefreshToken();

@@ -51,7 +51,10 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .csrf().disable()
+                .cors().disable()
+                .headers().frameOptions().disable()
 
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAtuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)

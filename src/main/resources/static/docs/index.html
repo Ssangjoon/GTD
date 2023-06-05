@@ -448,21 +448,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#Member-API">1. Member API</a>
+<li><a href="#Login-API">1. Login API</a>
 <ul class="sectlevel2">
-<li><a href="#Member-생성">1.1. Member joinUp<br></a></li>
-<li><a href="#Member-리스트-조회">1.2. Member list</a></li>
-<li><a href="#Member-소셜리스트-조회">1.3. Member list (Social)</a></li>
-<li><a href="#Member-단일-조회">1.4. Member get</a></li>
-<li><a href="#Member-수정">1.5. Member update</a></li>
-<li><a href="#Member-삭제">1.6. Member delete</a></li>
+<li><a href="#Login">1.1. Login<br></a></li>
+<li><a href="#Logout">1.2. Logout<br></a></li>
+<li><a href="#Refresh">1.3. Refresh</a></li>
 </ul>
 </li>
-<li><a href="#Login-API">2. Login API</a>
+<li><a href="#Member-API">2. Member API</a>
 <ul class="sectlevel2">
-<li><a href="#Login">2.1. Login<br></a></li>
-<li><a href="#Logout">2.2. Logout</a></li>
-<li><a href="#Refresh">2.3. Refresh</a></li>
+<li><a href="#Member-생성">2.1. Member create<br></a></li>
+<li><a href="#Member-리스트-조회">2.2. Member list</a></li>
+<li><a href="#Member-소셜리스트-조회">2.3. Member list (Social Login User)</a></li>
+<li><a href="#Member-단일-조회">2.4. Member get</a></li>
+<li><a href="#Member-수정">2.5. Member update</a></li>
+<li><a href="#Member-삭제">2.6. Member delete</a></li>
 </ul>
 </li>
 <li><a href="#Things-API">3. Things API</a>
@@ -472,7 +472,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#Collect-조회">3.3. Collect list</a></li>
 <li><a href="#Collect-수정">3.4. Collect update</a></li>
 <li><a href="#Collect-삭제">3.5. Collect delete</a></li>
-<li><a href="#MatCol-create">3.6. MatCol create</a></li>
+<li><a href="#MatCol-create">3.6. MatCol create<br></a></li>
 <li><a href="#MatCol-fileUpload-create">3.7. MatCol create &amp; fileUpload</a></li>
 </ul>
 </li>
@@ -491,42 +491,42 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>로그인(Login), 회원가입(JoinUp)을 제외한 모든 요청에는 AccessToken이 필요 합니다.<br></p>
 </li>
 <li>
-<p>지정된 TOKEN_HEADER_PREFIX을 토큰과 함께 헤더에 기재하여 요청하여야 인증이 가능합니다.<br></p>
+<p>요청시 인증타입과 Access Token를 함께 헤더에 담아 보냅니다.<br></p>
 </li>
 <li>
-<p>SSO 로그인은 완료 후 별도로 회원가입하지 않은  User의 Role은 <code>Guest</code>, 일반 회원가입 User의 Role은 <code>User</code> 입니다.</p>
+<p>SSO 로그인은 완료 후 일반 회원가입 페이지로 이동되며, 이때 가입하지 않는다면 User의 Role은 <code>Guest</code>, 일반 회원가입 이후 User의 Role은 <code>User</code> 입니다.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Member-API"><a class="link" href="#Member-API">1. Member API</a></h2>
+<h2 id="Login-API"><a class="link" href="#Login-API">1. Login API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="Member-생성"><a class="link" href="#Member-생성">1.1. Member joinUp<br></a></h3>
+<h3 id="Login"><a class="link" href="#Login">1.1. Login<br></a></h3>
+<div class="paragraph">
+<p>Access Token과 Refresh Token을 발행합니다.<br>
+(Access Token : 10분, Refresh Token : 14일 (2주))</p>
+</div>
 <div class="sect3">
-<h4 id="Member-생성_http_request"><a class="link" href="#Member-생성_http_request">1.1.1. HTTP request</a></h4>
+<h4 id="Login_http_request"><a class="link" href="#Login_http_request">1.1.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/joinUp HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 165
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/login HTTP/1.1
+Content-Type: application/json
+Content-Length: 62
 Host: localhost:8080
 
 {
-  "name" : "테스트네임3",
-  "userName" : "손석구",
-  "password" : "1q2w3e@@",
   "email" : "test0@test.com",
-  "role" : "USER",
-  "gender" : "MALE"
+  "password" : "1q2w3e@@"
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-생성_request_fields"><a class="link" href="#Member-생성_request_fields">1.1.2. Request fields</a></h4>
+<h4 id="Login_request_fields"><a class="link" href="#Login_request_fields">1.1.2. Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -547,7 +547,196 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 30 이하</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Login_http_response"><a class="link" href="#Login_http_response">1.1.3. HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=utf-8
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NjI0OTJ9.8T-1lwIv18_mw7vS1Cr7UrhnWOOZF20iQVGVcfMLU90
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 286
+
+{
+  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE",
+  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NjI0OTJ9.8T-1lwIv18_mw7vS1Cr7UrhnWOOZF20iQVGVcfMLU90"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Logout"><a class="link" href="#Logout">1.2. Logout<br></a></h3>
+<div class="paragraph">
+<p>Redis를 통해 토큰을 블랙리스트로 등록합니다.</p>
+</div>
+<div class="sect3">
+<h4 id="Logout_http_request"><a class="link" href="#Logout_http_request">1.2.1. HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/logout HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Logout_http_response"><a class="link" href="#Logout_http_response">1.2.2. HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Refresh"><a class="link" href="#Refresh">1.3. Refresh</a></h3>
+<div class="paragraph">
+<p>Access Token 만료 시 Refresh Token과 함께 request header에 담아 재요청합니다.<br>
+리프레시 토큰은 남은 만료 기간을 계산하고 5초 미만이라면 재발급합니다.</p>
+</div>
+<div class="sect3">
+<h4 id="Refresh_http_request"><a class="link" href="#Refresh_http_request">1.3.1. HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/refresh HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4
+Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NjI0OTJ9.8T-1lwIv18_mw7vS1Cr7UrhnWOOZF20iQVGVcfMLU90
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Refresh_http_response"><a class="link" href="#Refresh_http_response">1.3.2. HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU5NTc2OTQsImV4cCI6MTY4NTk1ODI5NH0.Qhm1SHp-Eri4e0kDtBaFRYB2xL8Fy4RbP5a8O5L1NgM
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 164
+
+{
+  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU5NTc2OTQsImV4cCI6MTY4NTk1ODI5NH0.Qhm1SHp-Eri4e0kDtBaFRYB2xL8Fy4RbP5a8O5L1NgM",
+  "refreshToken" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Refresh_response_fields"><a class="link" href="#Refresh_response_fields">1.3.3. Response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Member-API"><a class="link" href="#Member-API">2. Member API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="Member-생성"><a class="link" href="#Member-생성">2.1. Member create<br></a></h3>
+<div class="sect3">
+<h4 id="Member-생성_http_request"><a class="link" href="#Member-생성_http_request">2.1.1. HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/joinUp HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 165
+Host: localhost:8080
+
+{
+  "name" : "테스트네임3",
+  "userName" : "손석구",
+  "password" : "1q2w3e@@",
+  "email" : "test0@test.com",
+  "role" : "USER",
+  "gender" : "MALE"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="Member-생성_request_fields"><a class="link" href="#Member-생성_request_fields">2.1.2. Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
 <tr>
@@ -574,14 +763,14 @@ Host: localhost:8080
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>gender</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
 </tr>
@@ -589,7 +778,7 @@ Host: localhost:8080
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-생성_http_response"><a class="link" href="#Member-생성_http_response">1.1.3. HTTP response</a></h4>
+<h4 id="Member-생성_http_response"><a class="link" href="#Member-생성_http_response">2.1.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -613,20 +802,20 @@ Content-Length: 78
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-리스트-조회"><a class="link" href="#Member-리스트-조회">1.2. Member list</a></h3>
+<h3 id="Member-리스트-조회"><a class="link" href="#Member-리스트-조회">2.2. Member list</a></h3>
 <div class="sect3">
-<h4 id="Member-리스트-조회_http_request"><a class="link" href="#Member-리스트-조회_http_request">1.2.1. HTTP request</a></h4>
+<h4 id="Member-리스트-조회_http_request"><a class="link" href="#Member-리스트-조회_http_request">2.2.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-리스트-조회_http_response"><a class="link" href="#Member-리스트-조회_http_response">1.2.2. HTTP response</a></h4>
+<h4 id="Member-리스트-조회_http_response"><a class="link" href="#Member-리스트-조회_http_response">2.2.2. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -646,8 +835,8 @@ Content-Length: 529
   "gender" : "MALE",
   "role" : "USER",
   "status" : "NORMAL",
-  "createDate" : "2023-06-05T02:08:56.5346883",
-  "modifiedDate" : "2023-06-05T02:08:56.5346883"
+  "createDate" : "2023-06-05T18:34:56.1534826",
+  "modifiedDate" : "2023-06-05T18:34:56.1534826"
 }, {
   "userName" : "이상준",
   "name" : "테스트네임4",
@@ -655,14 +844,14 @@ Content-Length: 529
   "gender" : "MALE",
   "role" : "USER",
   "status" : "NORMAL",
-  "createDate" : "2023-06-05T02:08:56.5915251",
-  "modifiedDate" : "2023-06-05T02:08:56.5915251"
+  "createDate" : "2023-06-05T18:34:56.2166399",
+  "modifiedDate" : "2023-06-05T18:34:56.2166399"
 } ]</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-리스트-조회_response_fields"><a class="link" href="#Member-리스트-조회_response_fields">1.2.3. Response fields</a></h4>
+<h4 id="Member-리스트-조회_response_fields"><a class="link" href="#Member-리스트-조회_response_fields">2.2.3. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -704,7 +893,7 @@ Content-Length: 529
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].gender</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
 </tr>
 <tr>
@@ -730,20 +919,20 @@ Content-Length: 529
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-소셜리스트-조회"><a class="link" href="#Member-소셜리스트-조회">1.3. Member list (Social)</a></h3>
+<h3 id="Member-소셜리스트-조회"><a class="link" href="#Member-소셜리스트-조회">2.3. Member list (Social Login User)</a></h3>
 <div class="sect3">
-<h4 id="Member-소셜리스트-조회_http_request"><a class="link" href="#Member-소셜리스트-조회_http_request">1.3.1. HTTP request</a></h4>
+<h4 id="Member-소셜리스트-조회_http_request"><a class="link" href="#Member-소셜리스트-조회_http_request">2.3.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/scoialMember HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-소셜리스트-조회_http_response"><a class="link" href="#Member-소셜리스트-조회_http_response">1.3.2. HTTP response</a></h4>
+<h4 id="Member-소셜리스트-조회_http_response"><a class="link" href="#Member-소셜리스트-조회_http_response">2.3.2. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -777,7 +966,7 @@ Content-Length: 543
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-소셜리스트-조회_response_fields"><a class="link" href="#Member-소셜리스트-조회_response_fields">1.3.3. Response fields</a></h4>
+<h4 id="Member-소셜리스트-조회_response_fields"><a class="link" href="#Member-소셜리스트-조회_response_fields">2.3.3. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -801,13 +990,13 @@ Content-Length: 543
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].imageurl</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이미지</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].age</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">나이</p></td>
 </tr>
 <tr>
@@ -827,20 +1016,20 @@ Content-Length: 543
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-단일-조회"><a class="link" href="#Member-단일-조회">1.4. Member get</a></h3>
+<h3 id="Member-단일-조회"><a class="link" href="#Member-단일-조회">2.4. Member get</a></h3>
 <div class="sect3">
-<h4 id="Member-단일-조회_http_request"><a class="link" href="#Member-단일-조회_http_request">1.4.1. HTTP request</a></h4>
+<h4 id="Member-단일-조회_http_request"><a class="link" href="#Member-단일-조회_http_request">2.4.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/29 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/135 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_path_parameters"><a class="link" href="#Member-단일-조회_path_parameters">1.4.2. Path parameters</a></h4>
+<h4 id="Member-단일-조회_path_parameters"><a class="link" href="#Member-단일-조회_path_parameters">2.4.2. Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/member/{id}</caption>
 <colgroup>
@@ -862,7 +1051,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_http_response"><a class="link" href="#Member-단일-조회_http_response">1.4.3. HTTP response</a></h4>
+<h4 id="Member-단일-조회_http_response"><a class="link" href="#Member-단일-조회_http_response">2.4.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -883,15 +1072,15 @@ Content-Length: 296
     "gender" : "MALE",
     "role" : "USER",
     "status" : "NORMAL",
-    "createDate" : "2023-06-05T02:08:56.3034641",
-    "modifiedDate" : "2023-06-05T02:08:56.3034641"
+    "createDate" : "2023-06-05T18:34:55.9216062",
+    "modifiedDate" : "2023-06-05T18:34:55.9216062"
   }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_response_fields"><a class="link" href="#Member-단일-조회_response_fields">1.4.4. Response fields</a></h4>
+<h4 id="Member-단일-조회_response_fields"><a class="link" href="#Member-단일-조회_response_fields">2.4.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -933,7 +1122,7 @@ Content-Length: 296
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.gender</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
 </tr>
 <tr>
@@ -959,14 +1148,14 @@ Content-Length: 296
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-수정"><a class="link" href="#Member-수정">1.5. Member update</a></h3>
+<h3 id="Member-수정"><a class="link" href="#Member-수정">2.5. Member update</a></h3>
 <div class="sect3">
-<h4 id="Member-수정_http_request"><a class="link" href="#Member-수정_http_request">1.5.1. HTTP request</a></h4>
+<h4 id="Member-수정_http_request"><a class="link" href="#Member-수정_http_request">2.5.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Content-Length: 148
 Host: localhost:8080
 
@@ -981,7 +1170,63 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_http_response"><a class="link" href="#Member-수정_http_response">1.5.2. HTTP response</a></h4>
+<h4 id="Member-수정_request_fields"><a class="link" href="#Member-수정_request_fields">2.5.2. Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">유저ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비밀번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Member-수정_http_response"><a class="link" href="#Member-수정_http_response">2.5.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1006,7 +1251,7 @@ Content-Length: 147
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_response_fields"><a class="link" href="#Member-수정_response_fields">1.5.3. Response fields</a></h4>
+<h4 id="Member-수정_response_fields"><a class="link" href="#Member-수정_response_fields">2.5.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1050,20 +1295,20 @@ Content-Length: 147
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-삭제"><a class="link" href="#Member-삭제">1.6. Member delete</a></h3>
+<h3 id="Member-삭제"><a class="link" href="#Member-삭제">2.6. Member delete</a></h3>
 <div class="sect3">
-<h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">1.6.1. HTTP request</a></h4>
+<h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">2.6.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/member/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-삭제_path_parameters"><a class="link" href="#Member-삭제_path_parameters">1.6.2. Path parameters</a></h4>
+<h4 id="Member-삭제_path_parameters"><a class="link" href="#Member-삭제_path_parameters">2.6.2. Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/member/{id}</caption>
 <colgroup>
@@ -1085,7 +1330,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-삭제_http_response"><a class="link" href="#Member-삭제_http_response">1.6.3. HTTP response</a></h4>
+<h4 id="Member-삭제_http_response"><a class="link" href="#Member-삭제_http_response">2.6.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1102,31 +1347,40 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Login-API"><a class="link" href="#Login-API">2. Login API</a></h2>
+<h2 id="Things-API"><a class="link" href="#Things-API">3. Things API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="Login"><a class="link" href="#Login">2.1. Login<br></a></h3>
-<div class="paragraph">
-<p>Access Token과 Refresh Token을 발행합니다.</p>
-</div>
+<h3 id="Collect-등록"><a class="link" href="#Collect-등록">3.1. Collect create</a></h3>
 <div class="sect3">
-<h4 id="Login_http_request"><a class="link" href="#Login_http_request">2.1.1. HTTP request</a></h4>
+<h4 id="Collect-등록_http_request"><a class="link" href="#Collect-등록_http_request">3.1.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/login HTTP/1.1
-Content-Type: application/json
-Content-Length: 62
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/collection HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Content-Length: 293
 Host: localhost:8080
 
 {
-  "email" : "test0@test.com",
-  "password" : "1q2w3e@@"
+  "content" : "디폴트 타입 테스트",
+  "member" : {
+    "createDate" : null,
+    "modifiedDate" : null,
+    "id" : 142,
+    "email" : null,
+    "password" : null,
+    "userName" : null,
+    "name" : null,
+    "role" : null,
+    "status" : null,
+    "gender" : null
+  }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Login_request_fields"><a class="link" href="#Login_request_fields">2.1.2. Request fields</a></h4>
+<h4 id="Collect-등록_request_fields"><a class="link" href="#Collect-등록_request_fields">3.1.2. Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -1144,188 +1398,24 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>member.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">작성자</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Login_http_response"><a class="link" href="#Login_http_response">2.1.3. HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=utf-8
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
-refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1MDMzMzN9.N9S0drN3V5SEGoPp-IxbUWe_yGlP69mJ0-tKmFKOA6Q
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 0
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 286
-
-{
-  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0",
-  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1MDMzMzN9.N9S0drN3V5SEGoPp-IxbUWe_yGlP69mJ0-tKmFKOA6Q"
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Logout"><a class="link" href="#Logout">2.2. Logout</a></h3>
-<div class="sect3">
-<h4 id="Logout_http_request"><a class="link" href="#Logout_http_request">2.2.1. HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/logout HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Logout_request_fields"><a class="link" href="#Logout_request_fields">2.2.2. Request fields</a></h4>
-<div class="paragraph">
-<p>Snippet request-fields not found for operation::login-controller-test/logout</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Logout_http_response"><a class="link" href="#Logout_http_response">2.2.3. HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 0
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Refresh"><a class="link" href="#Refresh">2.3. Refresh</a></h3>
-<div class="paragraph">
-<p>Access Token 만료 시 Refresh Token과 함께 request header에 담아 재요청합니다.</p>
-</div>
-<div class="sect3">
-<h4 id="Refresh_http_request"><a class="link" href="#Refresh_http_request">2.3.1. HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/refresh HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4
-Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1MDMzMzN9.N9S0drN3V5SEGoPp-IxbUWe_yGlP69mJ0-tKmFKOA6Q
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Refresh_http_response"><a class="link" href="#Refresh_http_response">2.3.2. HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4OTg1MzUsImV4cCI6MTY4NTg5OTEzNX0.iUA8GF98wqHmuwf0UufEG7UbiI6qdZ_CgZ8gmlrbYxQ
-Content-Type: application/json;charset=UTF-8
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 0
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 164
-
-{
-  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU4OTg1MzUsImV4cCI6MTY4NTg5OTEzNX0.iUA8GF98wqHmuwf0UufEG7UbiI6qdZ_CgZ8gmlrbYxQ",
-  "refreshToken" : null
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Refresh_response_fields"><a class="link" href="#Refresh_response_fields">2.3.3. Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Things-API"><a class="link" href="#Things-API">3. Things API</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="Collect-등록"><a class="link" href="#Collect-등록">3.1. Collect create</a></h3>
-<div class="sect3">
-<h4 id="Collect-등록_http_request"><a class="link" href="#Collect-등록_http_request">3.1.1. HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/collection HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
-Content-Length: 292
-Host: localhost:8080
-
-{
-  "content" : "디폴트 타입 테스트",
-  "member" : {
-    "createDate" : null,
-    "modifiedDate" : null,
-    "id" : 36,
-    "email" : null,
-    "password" : null,
-    "userName" : null,
-    "name" : null,
-    "role" : null,
-    "status" : null,
-    "gender" : null
-  }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Collect-등록_http_response"><a class="link" href="#Collect-등록_http_response">3.1.2. HTTP response</a></h4>
+<h4 id="Collect-등록_http_response"><a class="link" href="#Collect-등록_http_response">3.1.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1336,15 +1426,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 251
+Content-Length: 252
 
 {
   "data" : {
-    "id" : 17,
+    "id" : 82,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
     "member" : {
-      "id" : 36,
+      "id" : 142,
       "userName" : null,
       "name" : null,
       "email" : null,
@@ -1356,7 +1446,7 @@ Content-Length: 251
 </div>
 </div>
 <div class="sect3">
-<h4 id="Collect-등록_response_fields"><a class="link" href="#Collect-등록_response_fields">3.1.3. Response fields</a></h4>
+<h4 id="Collect-등록_response_fields"><a class="link" href="#Collect-등록_response_fields">3.1.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1405,9 +1495,9 @@ Content-Length: 251
 <h4 id="Collect-단일-조회_http_request"><a class="link" href="#Collect-단일-조회_http_request">3.2.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/18 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/83 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1449,9 +1539,9 @@ X-Frame-Options: DENY
 Content-Length: 188
 
 {
-  "createDate" : "2023-06-05T02:08:57.9401343",
-  "modifiedDate" : "2023-06-05T02:08:57.9401343",
-  "id" : 18,
+  "createDate" : "2023-06-05T18:34:57.6074705",
+  "modifiedDate" : "2023-06-05T18:34:57.6074705",
+  "id" : 83,
   "content" : "디폴트 타입 테스트",
   "type" : "COLLECTION"
 }</code></pre>
@@ -1516,7 +1606,7 @@ Content-Length: 188
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1533,30 +1623,30 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 701
+Content-Length: 703
 
 {
   "data" : [ {
-    "id" : 15,
+    "id" : 80,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-05T02:08:57.5142412",
-    "createdDate" : "2023-06-05T02:08:57.5142412",
+    "modifiedDate" : "2023-06-05T18:34:57.1531706",
+    "createdDate" : "2023-06-05T18:34:57.1531706",
     "member" : {
-      "id" : 35,
+      "id" : 141,
       "userName" : null,
       "name" : null,
       "email" : null,
       "gender" : null
     }
   }, {
-    "id" : 16,
+    "id" : 81,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-05T02:08:57.5165145",
-    "createdDate" : "2023-06-05T02:08:57.5165145",
+    "modifiedDate" : "2023-06-05T18:34:57.1544565",
+    "createdDate" : "2023-06-05T18:34:57.1544565",
     "member" : {
-      "id" : 35,
+      "id" : 141,
       "userName" : null,
       "name" : null,
       "email" : null,
@@ -1631,17 +1721,17 @@ Content-Length: 701
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
-Content-Length: 333
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Content-Length: 334
 Host: localhost:8080
 
 {
-  "id" : 19,
+  "id" : 84,
   "content" : "사이드 프로젝트 수정하기",
   "member" : {
     "createDate" : null,
     "modifiedDate" : null,
-    "id" : 38,
+    "id" : 144,
     "email" : null,
     "password" : null,
     "userName" : null,
@@ -1656,7 +1746,56 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="Collect-수정_http_response"><a class="link" href="#Collect-수정_http_response">3.4.2. HTTP response</a></h4>
+<h4 id="Collect-수정_request_fields"><a class="link" href="#Collect-수정_request_fields">3.4.2. Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>member.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">작성자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="Collect-수정_http_response"><a class="link" href="#Collect-수정_http_response">3.4.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1667,15 +1806,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 252
+Content-Length: 253
 
 {
   "data" : {
-    "id" : 19,
+    "id" : 84,
     "content" : "사이드 프로젝트 수정하기",
     "type" : null,
     "member" : {
-      "id" : 38,
+      "id" : 144,
       "userName" : null,
       "name" : null,
       "email" : null,
@@ -1687,7 +1826,7 @@ Content-Length: 252
 </div>
 </div>
 <div class="sect3">
-<h4 id="Collect-수정_response_fields"><a class="link" href="#Collect-수정_response_fields">3.4.3. Response fields</a></h4>
+<h4 id="Collect-수정_response_fields"><a class="link" href="#Collect-수정_response_fields">3.4.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1732,18 +1871,6 @@ Content-Length: 252
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.member.name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.member.userName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">유저ID</p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1754,9 +1881,9 @@ Content-Length: 252
 <h4 id="Collect-삭제_http_request"><a class="link" href="#Collect-삭제_http_request">3.5.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/13 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/78 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1799,21 +1926,21 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="MatCol-create"><a class="link" href="#MatCol-create">3.6. MatCol create</a></h3>
+<h3 id="MatCol-create"><a class="link" href="#MatCol-create">3.6. MatCol create<br></a></h3>
 <div class="sect3">
 <h4 id="MatCol-create_http_request"><a class="link" href="#MatCol-create_http_request">3.6.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=matcol; filename=matcol
+Content-Disposition: form-data; name=materialCollection; filename=materialCollection
 Content-Type: application/json
 
-{"goal":"파일 업로드","content":"업로드","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":14,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":34,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null}}
+{"goal":"목표 세우기","content":"차근 차근 하나씩","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":79,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":140,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null}}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1833,20 +1960,14 @@ Content-Type: application/json
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>matcol</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>materialCollection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">목표, 절차, 날짜 등을 기재한다</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="MatCol-create_path_parameters"><a class="link" href="#MatCol-create_path_parameters">3.6.3. Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::things-controller-test/material</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="MatCol-create_http_response"><a class="link" href="#MatCol-create_http_response">3.6.4. HTTP response</a></h4>
+<h4 id="MatCol-create_http_response"><a class="link" href="#MatCol-create_http_response">3.6.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1872,20 +1993,34 @@ Content-Length: 1
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU4OTkxMzN9.-GIeiZWIn6eTSeLDnY4S8ngkW7F9ZcdQ2uA1A4uH-v0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Content-Length: 509
 Host: localhost:8080
 
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=files; filename=imagefile.png
-Content-Type: image/png
-
-&lt;&lt;png data&gt;&gt;
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=matcol; filename=matcol
-Content-Type: application/json
-
-{"goal":"파일 업로드","content":"업로드","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":12,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":32,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null}}
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+{
+  "goal" : "파일 업로드",
+  "content" : "차근 차근 하나씩",
+  "goalDt" : null,
+  "collect" : {
+    "createDate" : null,
+    "modifiedDate" : null,
+    "id" : 77,
+    "content" : "사이드 프로젝트",
+    "type" : "MAT_COLLECTION"
+  },
+  "member" : {
+    "createDate" : null,
+    "modifiedDate" : null,
+    "id" : 138,
+    "email" : null,
+    "password" : null,
+    "userName" : null,
+    "name" : null,
+    "role" : null,
+    "status" : null,
+    "gender" : null
+  }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1908,8 +2043,8 @@ Content-Type: application/json
 <td class="tableblock halign-left valign-top"><p class="tableblock">파일</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>matcol</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>materialCollection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">목표, 절차, 날짜 등을 기재한다</p></td>
 </tr>
 </tbody>
 </table>
@@ -1939,7 +2074,7 @@ Content-Length: 1
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-05 00:20:33 +0900
+Last updated 2023-06-05 18:34:37 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
