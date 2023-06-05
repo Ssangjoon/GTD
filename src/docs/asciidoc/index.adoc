@@ -55,10 +55,6 @@ operation::member-controller-test/member_create[snippets='http-request,request-f
 === Member list
 operation::member-controller-test/member_list[snippets='http-request,http-response,response-fields']
 
-[[Member-소셜리스트-조회]]
-=== Member list (Social Login User)
-operation::member-controller-test/member_social_list[snippets='http-request,http-response,response-fields']
-
 [[Member-단일-조회]]
 === Member get
 operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']

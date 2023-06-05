@@ -1,5 +1,6 @@
 package com.ssang.gtd.user.service;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssang.gtd.entity.Member;
 import com.ssang.gtd.entity.SocialMember;
 import com.ssang.gtd.exception.CustomException;
@@ -44,7 +45,7 @@ public class MemberServiceImpl implements MemberService{
     private final RedisTemplate redisTemplate;
     private final RedisDao redisDao;
     private final SocialMemberRepository socialMemberRepository;
-
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public List<Member> list() {
@@ -58,6 +59,7 @@ public class MemberServiceImpl implements MemberService{
     public List<SocialMember> allMemberList() {
         List<Member> memberList = memberRepository.findAll();
         List<SocialMember> socialMemberList = socialMemberRepository.findAll();
+
         return socialMemberRepository.findAll();
     }
 

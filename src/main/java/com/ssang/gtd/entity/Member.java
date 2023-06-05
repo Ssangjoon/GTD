@@ -36,9 +36,9 @@ public class Member extends BaseEntity {
     @Column(name = "gender", nullable = true)
     @Enumerated(EnumType.STRING)
     private Gender gender;
-//    @Column(length = 255, nullable = true)
-//    private String refreshToken; // 리프레시 토큰
 
+    @Embedded
+    private SocialGuest socialGuest;
 
     public void update(String userName, String name, String email) {
         this.userName = userName;
@@ -46,16 +46,18 @@ public class Member extends BaseEntity {
         this.email = email;
     }
 
+
     @Builder
-    public Member(Long id, String userName, String name, String password, String email, Role role, MemberStatus status, Gender gender) {
+    public Member(Long id, String email, String password, String userName, String name, Role role, MemberStatus status, Gender gender, SocialGuest socialGuest) {
         this.id = id;
+        this.email = email;
+        this.password = password;
         this.userName = userName;
         this.name = name;
-        this.password = password;
-        this.email = email;
         this.role = role;
         this.status = status;
         this.gender = gender;
+        this.socialGuest = socialGuest;
     }
 
     public Member update(String name) {

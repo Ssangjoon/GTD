@@ -459,10 +459,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#Member-생성">2.1. Member create<br></a></li>
 <li><a href="#Member-리스트-조회">2.2. Member list</a></li>
-<li><a href="#Member-소셜리스트-조회">2.3. Member list (Social Login User)</a></li>
-<li><a href="#Member-단일-조회">2.4. Member get</a></li>
-<li><a href="#Member-수정">2.5. Member update</a></li>
-<li><a href="#Member-삭제">2.6. Member delete</a></li>
+<li><a href="#Member-단일-조회">2.3. Member get</a></li>
+<li><a href="#Member-수정">2.4. Member update</a></li>
+<li><a href="#Member-삭제">2.5. Member delete</a></li>
 </ul>
 </li>
 <li><a href="#Things-API">3. Things API</a>
@@ -566,19 +565,18 @@ Host: localhost:8080
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=utf-8
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
-refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NjI0OTJ9.8T-1lwIv18_mw7vS1Cr7UrhnWOOZF20iQVGVcfMLU90
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
+refresh_token: eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NzgyMTR9.1itfyUfJY9yj4ASpBZxDpdM61d-pe8adg4JeEYdC0uI
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 286
 
 {
-  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE",
-  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NjI0OTJ9.8T-1lwIv18_mw7vS1Cr7UrhnWOOZF20iQVGVcfMLU90"
+  "access_token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg",
+  "refresh_token" : "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NzgyMTR9.1itfyUfJY9yj4ASpBZxDpdM61d-pe8adg4JeEYdC0uI"
 }</code></pre>
 </div>
 </div>
@@ -609,8 +607,7 @@ X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
+Expires: 0</code></pre>
 </div>
 </div>
 </div>
@@ -628,7 +625,7 @@ X-Frame-Options: DENY</code></pre>
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/refresh HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLthYzsiqTtirjsnKDsoIDsnbTrpoQiLCJhdXRoIjoiVVNFUiIsImV4cCI6MTY4NTYyNDEyMH0.lIwyXdtPo3VsqCPn3W5vs28Lcg-W1puIjDbFphltoY4
-Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NjI0OTJ9.8T-1lwIv18_mw7vS1Cr7UrhnWOOZF20iQVGVcfMLU90
+Authorization-refresh: Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODY1NzgyMTR9.1itfyUfJY9yj4ASpBZxDpdM61d-pe8adg4JeEYdC0uI
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -638,18 +635,17 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU5NTc2OTQsImV4cCI6MTY4NTk1ODI5NH0.Qhm1SHp-Eri4e0kDtBaFRYB2xL8Fy4RbP5a8O5L1NgM
+access_token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU5NzM0MjUsImV4cCI6MTY4NTk3NDAyNX0.FKNyd_WInZVa2vCnKQMecKZUvQMWyecefHRPIKCGSmU
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 164
 
 {
-  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU5NTc2OTQsImV4cCI6MTY4NTk1ODI5NH0.Qhm1SHp-Eri4e0kDtBaFRYB2xL8Fy4RbP5a8O5L1NgM",
+  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODU5NzM0MjUsImV4cCI6MTY4NTk3NDAyNX0.FKNyd_WInZVa2vCnKQMecKZUvQMWyecefHRPIKCGSmU",
   "refreshToken" : null
 }</code></pre>
 </div>
@@ -788,7 +784,6 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 78
 
 {
@@ -809,7 +804,7 @@ Content-Length: 78
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -825,7 +820,6 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 529
 
 [ {
@@ -835,8 +829,8 @@ Content-Length: 529
   "gender" : "MALE",
   "role" : "USER",
   "status" : "NORMAL",
-  "createDate" : "2023-06-05T18:34:56.1534826",
-  "modifiedDate" : "2023-06-05T18:34:56.1534826"
+  "createDate" : "2023-06-05T22:57:03.0087383",
+  "modifiedDate" : "2023-06-05T22:57:03.0087383"
 }, {
   "userName" : "이상준",
   "name" : "테스트네임4",
@@ -844,8 +838,8 @@ Content-Length: 529
   "gender" : "MALE",
   "role" : "USER",
   "status" : "NORMAL",
-  "createDate" : "2023-06-05T18:34:56.2166399",
-  "modifiedDate" : "2023-06-05T18:34:56.2166399"
+  "createDate" : "2023-06-05T22:57:03.1055252",
+  "modifiedDate" : "2023-06-05T22:57:03.1055252"
 } ]</code></pre>
 </div>
 </div>
@@ -919,117 +913,20 @@ Content-Length: 529
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-소셜리스트-조회"><a class="link" href="#Member-소셜리스트-조회">2.3. Member list (Social Login User)</a></h3>
+<h3 id="Member-단일-조회"><a class="link" href="#Member-단일-조회">2.3. Member get</a></h3>
 <div class="sect3">
-<h4 id="Member-소셜리스트-조회_http_request"><a class="link" href="#Member-소셜리스트-조회_http_request">2.3.1. HTTP request</a></h4>
+<h4 id="Member-단일-조회_http_request"><a class="link" href="#Member-단일-조회_http_request">2.3.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/scoialMember HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/19 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-소셜리스트-조회_http_response"><a class="link" href="#Member-소셜리스트-조회_http_response">2.3.2. HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 0
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 543
-
-[ {
-  "email" : "8c40af5c-f768-4b73-aea7-ddfa09c66742@socialUser.com",
-  "nickname" : null,
-  "imageurl" : "https://ssl.pstatic.net/static/pwe/address/img_profile.png",
-  "age" : 0,
-  "city" : null,
-  "role" : "GUEST",
-  "socialType" : "NAVER"
-}, {
-  "email" : "0f330d36-ab34-40af-8c1c-831feb09c799@socialUser.com",
-  "nickname" : "이상준",
-  "imageurl" : "https://lh3.googleusercontent.com/a/AAcHTtc9AD48F7rsvu9udNXP-27JxfxC3sBsYdxPXZE=s96-c",
-  "age" : 0,
-  "city" : null,
-  "role" : "GUEST",
-  "socialType" : "GOOGLE"
-} ]</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Member-소셜리스트-조회_response_fields"><a class="link" href="#Member-소셜리스트-조회_response_fields">2.3.3. Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].email</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].imageurl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이미지</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].age</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">나이</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].role</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">권한</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].socialType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sns</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Member-단일-조회"><a class="link" href="#Member-단일-조회">2.4. Member get</a></h3>
-<div class="sect3">
-<h4 id="Member-단일-조회_http_request"><a class="link" href="#Member-단일-조회_http_request">2.4.1. HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/member/135 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Member-단일-조회_path_parameters"><a class="link" href="#Member-단일-조회_path_parameters">2.4.2. Path parameters</a></h4>
+<h4 id="Member-단일-조회_path_parameters"><a class="link" href="#Member-단일-조회_path_parameters">2.3.2. Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/member/{id}</caption>
 <colgroup>
@@ -1051,7 +948,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_http_response"><a class="link" href="#Member-단일-조회_http_response">2.4.3. HTTP response</a></h4>
+<h4 id="Member-단일-조회_http_response"><a class="link" href="#Member-단일-조회_http_response">2.3.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1061,7 +958,6 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 296
 
 {
@@ -1072,15 +968,15 @@ Content-Length: 296
     "gender" : "MALE",
     "role" : "USER",
     "status" : "NORMAL",
-    "createDate" : "2023-06-05T18:34:55.9216062",
-    "modifiedDate" : "2023-06-05T18:34:55.9216062"
+    "createDate" : "2023-06-05T22:57:02.5219825",
+    "modifiedDate" : "2023-06-05T22:57:02.5219825"
   }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-단일-조회_response_fields"><a class="link" href="#Member-단일-조회_response_fields">2.4.4. Response fields</a></h4>
+<h4 id="Member-단일-조회_response_fields"><a class="link" href="#Member-단일-조회_response_fields">2.3.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1148,14 +1044,14 @@ Content-Length: 296
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-수정"><a class="link" href="#Member-수정">2.5. Member update</a></h3>
+<h3 id="Member-수정"><a class="link" href="#Member-수정">2.4. Member update</a></h3>
 <div class="sect3">
-<h4 id="Member-수정_http_request"><a class="link" href="#Member-수정_http_request">2.5.1. HTTP request</a></h4>
+<h4 id="Member-수정_http_request"><a class="link" href="#Member-수정_http_request">2.4.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Content-Length: 148
 Host: localhost:8080
 
@@ -1170,7 +1066,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_request_fields"><a class="link" href="#Member-수정_request_fields">2.5.2. Request fields</a></h4>
+<h4 id="Member-수정_request_fields"><a class="link" href="#Member-수정_request_fields">2.4.2. Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -1226,7 +1122,7 @@ Host: localhost:8080
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_http_response"><a class="link" href="#Member-수정_http_response">2.5.3. HTTP response</a></h4>
+<h4 id="Member-수정_http_response"><a class="link" href="#Member-수정_http_response">2.4.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1236,7 +1132,6 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 147
 
 {
@@ -1251,7 +1146,7 @@ Content-Length: 147
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-수정_response_fields"><a class="link" href="#Member-수정_response_fields">2.5.4. Response fields</a></h4>
+<h4 id="Member-수정_response_fields"><a class="link" href="#Member-수정_response_fields">2.4.4. Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1295,20 +1190,20 @@ Content-Length: 147
 </div>
 </div>
 <div class="sect2">
-<h3 id="Member-삭제"><a class="link" href="#Member-삭제">2.6. Member delete</a></h3>
+<h3 id="Member-삭제"><a class="link" href="#Member-삭제">2.5. Member delete</a></h3>
 <div class="sect3">
-<h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">2.6.1. HTTP request</a></h4>
+<h4 id="Member-삭제_http_request"><a class="link" href="#Member-삭제_http_request">2.5.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/member/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Member-삭제_path_parameters"><a class="link" href="#Member-삭제_path_parameters">2.6.2. Path parameters</a></h4>
+<h4 id="Member-삭제_path_parameters"><a class="link" href="#Member-삭제_path_parameters">2.5.2. Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/member/{id}</caption>
 <colgroup>
@@ -1330,7 +1225,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="Member-삭제_http_response"><a class="link" href="#Member-삭제_http_response">2.6.3. HTTP response</a></h4>
+<h4 id="Member-삭제_http_response"><a class="link" href="#Member-삭제_http_response">2.5.3. HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1338,8 +1233,7 @@ X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
+Expires: 0</code></pre>
 </div>
 </div>
 </div>
@@ -1357,8 +1251,8 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
-Content-Length: 293
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
+Content-Length: 319
 Host: localhost:8080
 
 {
@@ -1366,14 +1260,15 @@ Host: localhost:8080
   "member" : {
     "createDate" : null,
     "modifiedDate" : null,
-    "id" : 142,
+    "id" : 27,
     "email" : null,
     "password" : null,
     "userName" : null,
     "name" : null,
     "role" : null,
     "status" : null,
-    "gender" : null
+    "gender" : null,
+    "socialGuest" : null
   }
 }</code></pre>
 </div>
@@ -1425,16 +1320,15 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
-Content-Length: 252
+Content-Length: 251
 
 {
   "data" : {
-    "id" : 82,
+    "id" : 14,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
     "member" : {
-      "id" : 142,
+      "id" : 27,
       "userName" : null,
       "name" : null,
       "email" : null,
@@ -1495,9 +1389,9 @@ Content-Length: 252
 <h4 id="Collect-단일-조회_http_request"><a class="link" href="#Collect-단일-조회_http_request">3.2.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/83 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection/15 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1535,13 +1429,12 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 188
 
 {
-  "createDate" : "2023-06-05T18:34:57.6074705",
-  "modifiedDate" : "2023-06-05T18:34:57.6074705",
-  "id" : 83,
+  "createDate" : "2023-06-05T22:57:07.8791607",
+  "modifiedDate" : "2023-06-05T22:57:07.8791607",
+  "id" : 15,
   "content" : "디폴트 타입 테스트",
   "type" : "COLLECTION"
 }</code></pre>
@@ -1606,7 +1499,7 @@ Content-Length: 188
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1622,31 +1515,30 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
-Content-Length: 703
+Content-Length: 701
 
 {
   "data" : [ {
-    "id" : 80,
+    "id" : 12,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-05T18:34:57.1531706",
-    "createdDate" : "2023-06-05T18:34:57.1531706",
+    "modifiedDate" : "2023-06-05T22:57:07.1193061",
+    "createdDate" : "2023-06-05T22:57:07.1193061",
     "member" : {
-      "id" : 141,
+      "id" : 26,
       "userName" : null,
       "name" : null,
       "email" : null,
       "gender" : null
     }
   }, {
-    "id" : 81,
+    "id" : 13,
     "content" : "디폴트 타입 테스트",
     "type" : "COLLECTION",
-    "modifiedDate" : "2023-06-05T18:34:57.1544565",
-    "createdDate" : "2023-06-05T18:34:57.1544565",
+    "modifiedDate" : "2023-06-05T22:57:07.1233205",
+    "createdDate" : "2023-06-05T22:57:07.1233205",
     "member" : {
-      "id" : 141,
+      "id" : 26,
       "userName" : null,
       "name" : null,
       "email" : null,
@@ -1721,24 +1613,25 @@ Content-Length: 703
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PUT /api/collection HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
-Content-Length: 334
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
+Content-Length: 360
 Host: localhost:8080
 
 {
-  "id" : 84,
+  "id" : 16,
   "content" : "사이드 프로젝트 수정하기",
   "member" : {
     "createDate" : null,
     "modifiedDate" : null,
-    "id" : 144,
+    "id" : 29,
     "email" : null,
     "password" : null,
     "userName" : null,
     "name" : null,
     "role" : null,
     "status" : null,
-    "gender" : null
+    "gender" : null,
+    "socialGuest" : null
   },
   "type" : null
 }</code></pre>
@@ -1805,16 +1698,15 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
-Content-Length: 253
+Content-Length: 252
 
 {
   "data" : {
-    "id" : 84,
+    "id" : 16,
     "content" : "사이드 프로젝트 수정하기",
     "type" : null,
     "member" : {
-      "id" : 144,
+      "id" : 29,
       "userName" : null,
       "name" : null,
       "email" : null,
@@ -1881,9 +1773,9 @@ Content-Length: 253
 <h4 id="Collect-삭제_http_request"><a class="link" href="#Collect-삭제_http_request">3.5.1. HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/78 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/collection/10 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1919,8 +1811,7 @@ X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
+Expires: 0</code></pre>
 </div>
 </div>
 </div>
@@ -1933,14 +1824,14 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=materialCollection; filename=materialCollection
 Content-Type: application/json
 
-{"goal":"목표 세우기","content":"차근 차근 하나씩","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":79,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":140,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null}}
+{"goal":"목표 세우기","content":"차근 차근 하나씩","goalDt":null,"collect":{"createDate":null,"modifiedDate":null,"id":11,"content":"사이드 프로젝트","type":"MAT_COLLECTION"},"member":{"createDate":null,"modifiedDate":null,"id":25,"email":null,"password":null,"userName":null,"name":null,"role":null,"status":null,"gender":null,"socialGuest":null}}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1977,7 +1868,6 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 1
 
 1</code></pre>
@@ -1993,8 +1883,8 @@ Content-Length: 1
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/material HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NTgyOTJ9.PzGSczpi9T3n5aB_oN5pVksEefjnmS4I8Zu6aNkP3UE
-Content-Length: 509
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MEB0ZXN0LmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODU5NzQwMTR9.06ogjAIOyhYzOtplZXWVjEMbM55puyW4OP10eXP_fzg
+Content-Length: 534
 Host: localhost:8080
 
 {
@@ -2004,21 +1894,22 @@ Host: localhost:8080
   "collect" : {
     "createDate" : null,
     "modifiedDate" : null,
-    "id" : 77,
+    "id" : 9,
     "content" : "사이드 프로젝트",
     "type" : "MAT_COLLECTION"
   },
   "member" : {
     "createDate" : null,
     "modifiedDate" : null,
-    "id" : 138,
+    "id" : 23,
     "email" : null,
     "password" : null,
     "userName" : null,
     "name" : null,
     "role" : null,
     "status" : null,
-    "gender" : null
+    "gender" : null,
+    "socialGuest" : null
   }
 }</code></pre>
 </div>
@@ -2060,7 +1951,6 @@ X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
 Content-Length: 1
 
 1</code></pre>
@@ -2074,7 +1964,7 @@ Content-Length: 1
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-05 18:34:37 +0900
+Last updated 2023-06-05 22:56:43 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

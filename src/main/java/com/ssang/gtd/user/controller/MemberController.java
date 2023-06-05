@@ -51,10 +51,10 @@ public class MemberController {
         return SocialMemberGetDto.SocialMembertGetData.toList(memberService.sociallist());
     }
 
-//    @GetMapping("/allMemberList")
-//    public List<SocialMember> allMemberList(){
-//        return memberDao.allMemberList();
-//    }
+    @GetMapping("/allMemberList")
+    public Object allMemberList(){
+        return memberService.allMemberList();
+    }
 
     @GetMapping("/member/{id}")
     public MemberGetDto.MembertGetResponse get(@PathVariable("id") Long id){

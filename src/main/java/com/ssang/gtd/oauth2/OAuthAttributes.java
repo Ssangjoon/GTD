@@ -1,6 +1,7 @@
 package com.ssang.gtd.oauth2;
 
-import com.ssang.gtd.entity.SocialMember;
+import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.SocialGuest;
 import com.ssang.gtd.oauth2.oauthUser.GoogleOAuth2UserInfo;
 import com.ssang.gtd.oauth2.oauthUser.KakaoOAuth2UserInfo;
 import com.ssang.gtd.oauth2.oauthUser.NaverOAuth2UserInfo;
@@ -73,13 +74,16 @@ public class OAuthAttributes {
      * email에는 UUID로 중복 없는 랜덤 값 생성 role은 GUEST로 설정
      * (email은 JWT Token을 발급하기 위한 용도뿐이므로 UUID를 사용하여 임의로 설정.)
      */
-    public SocialMember toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
-        return SocialMember.builder()
+    public Member toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
+        SocialGuest socialMember = SocialGuest.builder()
                 .socialType(socialType)
                 .socialId(oauth2UserInfo.getId())
-                .email(UUID.randomUUID() + "@socialUser.com")
                 .nickname(oauth2UserInfo.getNickname())
-                .imageUrl(oauth2UserInfo.getImageUrl())
+                .profileImg(oauth2UserInfo.getImageUrl())
+                .build();
+        return Member.builder()
+                .socialGuest(socialMember)
+                .email(UUID.randomUUID() + "@socialUser.com")
                 .role(Role.GUEST)
                 .build();
     }

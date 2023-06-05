@@ -113,33 +113,6 @@ class MemberControllerTest extends IntegrationRestDocsTests {
         ;
     }
 
-    @DisplayName("SNS 가입 회원 조회 리스트")
-    @Test
-    public void member_social_list() throws Exception {
-        //given
-        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        saveUser(req.toServiceDto());
-
-        mockMvc.perform(
-                        get("/api/scoialMember")
-                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
-                                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(
-                        restDocs.document(
-                                relaxedResponseFields(
-                                        fieldWithPath("[].email").description("이메일"),
-                                        //fieldWithPath("[].nickname").description("닉네임"),
-                                        fieldWithPath("[].imageurl").optional().description("이미지"),
-                                        fieldWithPath("[].age").optional().description("나이"),
-                                        fieldWithPath("[].role").description("권한"),
-                                        fieldWithPath("[].socialType").description("sns")
-                                )
-                        )
-                )
-        ;
-    }
-
 
 //    @Test
 //    public void member_page_test() throws Exception {
