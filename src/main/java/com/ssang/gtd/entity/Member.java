@@ -19,7 +19,7 @@ public abstract class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 50, nullable = true)
+    @Column(length = 100, nullable = true)
     private String email;
     @Column(length = 100, nullable = true)
     private String password;

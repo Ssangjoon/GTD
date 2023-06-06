@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
@@ -76,7 +77,10 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("data.gender").optional().description("성별"),
                                         fieldWithPath("data.email").description("이메일"),
                                         fieldWithPath("data.createDate").description("생성일"),
-                                        fieldWithPath("data.modifiedDate").description("수정일")
+                                        fieldWithPath("data.modifiedDate").description("수정일"),
+                                        fieldWithPath("data.nickname").description("소셜 닉네임"),
+                                        fieldWithPath("data.profileImg").description("소셜 프로필 이미지"),
+                                        fieldWithPath("data.socialType").description("소셜 유형")
                                 )
                         )
                 )
@@ -99,14 +103,18 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                 .andDo(
                         restDocs.document(
                                 relaxedResponseFields(
-                                        fieldWithPath("[].name").description("이름"),
-                                        fieldWithPath("[].userName").description("유저ID"),
-                                        fieldWithPath("[].status").description("사용가능계정여부"),
-                                        fieldWithPath("[].role").description("권한"),
+                                        subsectionWithPath("[]").type(JsonFieldType.ARRAY).description("info of member"),
+                                        fieldWithPath("[].name").optional().description("이름"),
+                                        fieldWithPath("[].userName").optional().description("유저ID"),
+                                        fieldWithPath("[].status").optional().description("사용가능계정여부"),
+                                        fieldWithPath("[].role").optional().description("권한"),
                                         fieldWithPath("[].gender").optional().description("성별"),
-                                        fieldWithPath("[].email").description("이메일"),
+                                        fieldWithPath("[].email").optional().description("이메일"),
                                         fieldWithPath("[].createDate").description("생성일"),
-                                        fieldWithPath("[].modifiedDate").description("수정일")
+                                        fieldWithPath("[].modifiedDate").description("수정일"),
+                                        fieldWithPath("[].nickname").optional().description("소셜 닉네임"),
+                                        fieldWithPath("[].profileImg").optional().description("소셜 프로필 이미지"),
+                                        fieldWithPath("[].socialType").optional().description("소셜 유형")
                                 )
                         )
                 )

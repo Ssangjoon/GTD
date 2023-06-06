@@ -2,6 +2,7 @@ package com.ssang.gtd.user.dto.member;
 
 import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.oauth2.Role;
+import com.ssang.gtd.oauth2.SocialType;
 import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.test.MemberStatus;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,10 @@ public class MemberGetDto {
         private MemberStatus status;
         private LocalDateTime createDate;
         private LocalDateTime modifiedDate;
+        private String nickname;
+        private String profileImg;
+        private SocialType socialType;
+        private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
         public static List<MembertGetData> toList(List<MemberSocial> memberList){
             return memberList.stream()
                     .map(MembertGetData::convertToDto)
@@ -46,7 +51,11 @@ public class MemberGetDto {
                     member.getRole(),
                     member.getStatus(),
                     member.getCreateDate(),
-                    member.getModifiedDate()
+                    member.getModifiedDate(),
+                    member.getNickname(),
+                    member.getProfileImg(),
+                    member.getSocialType(),
+                    member.getSocialId()
             );
         }
 
