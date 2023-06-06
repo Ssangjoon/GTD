@@ -1,10 +1,11 @@
 package com.ssang.gtd.oauth2;
 
-import com.ssang.gtd.entity.SocialMember;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.jwt.JwtService;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberRepository;
+import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,8 +27,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final JwtService jwtService;
     private final TokenProvider tokenProvider;
-    private final MemberRepository userRepository;
-    private final SocialMemberRepository socialmemberRepository;
+    private final MemberRepository memberRepository;
+    private final MemberSocialTypeRepository memberSocialTypeRepository;
     private final RedisDao redisDao;
 
     @Override
@@ -43,7 +44,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 response.sendRedirect("oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
 
                 jwtService.sendAccessAndRefreshToken(response,accessToken,null);
-                SocialMember findUser = socialmemberRepository.findByEmail(oAuth2User.getEmail())
+                MemberSocial findUser = memberSocialTypeRepository.findByEmail(oAuth2User.getEmail())
                                 .orElseThrow(() -> new IllegalArgumentException("이메일에 해당하는 유저가 없습니다."));
                 findUser.authorizeUser();
             } else {

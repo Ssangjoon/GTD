@@ -1,9 +1,6 @@
 package com.ssang.gtd.things.service;
 
-import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.FileEntity;
-import com.ssang.gtd.entity.MatCol;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.*;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.things.dao.CollectDao;
@@ -49,7 +46,7 @@ public class MatCollectServiceImpl implements MatCollectService {
     public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
 
         Collect collect = dto.getCollect();
-        Member member = dto.getMember();
+        MemberSocial member = dto.getMember();
         Collect oldCollect = collectRepository.findById(collect.getId()).orElseThrow(() -> new CustomException(ErrorCode.CAN_NOT_FOUND_BY_ID));
 
         if(member.getId().equals(oldCollect.getMember().getId())){

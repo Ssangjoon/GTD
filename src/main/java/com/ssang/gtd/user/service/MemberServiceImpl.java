@@ -1,15 +1,16 @@
 package com.ssang.gtd.user.service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.entity.SocialMember;
+import com.ssang.gtd.entity.MemberDetail;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
-import com.ssang.gtd.oauth2.SocialMemberRepository;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberDao;
+import com.ssang.gtd.user.dao.MemberDetialRepository;
 import com.ssang.gtd.user.dao.MemberRepository;
+import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
 import com.ssang.gtd.user.dto.member.MemberServiceDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -42,51 +43,41 @@ public class MemberServiceImpl implements MemberService{
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
+    private final MemberSocialTypeRepository memberSocialTypeRepository;
+    private final MemberDetialRepository memberDetialRepository;
     private final RedisTemplate redisTemplate;
     private final RedisDao redisDao;
-    private final SocialMemberRepository socialMemberRepository;
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Member> list() {
-        return memberRepository.findAll();
+    public List<MemberSocial> list() {
+        return memberSocialTypeRepository.findAll();
     }
+
 
     @Override
-    public List<SocialMember> sociallist() {
-        return socialMemberRepository.findAll();
-    }
-    public List<SocialMember> allMemberList() {
-        List<Member> memberList = memberRepository.findAll();
-        List<SocialMember> socialMemberList = socialMemberRepository.findAll();
+    public Optional<MemberSocial> get(Long id) {
 
-        return socialMemberRepository.findAll();
+        return memberSocialTypeRepository.findById(id);
     }
 
-    @Override
-    public Optional<Member> get(Long id) {
-        return memberRepository.findById(id);
-    }
-
-    public Member post(MemberServiceDto dto)throws Exception {
+    public MemberDetail post(MemberServiceDto dto)throws Exception {
         String userName = dto.getUserName();
         String email = dto.getEmail();
 
-        if (memberRepository.existsByUserNameOrEmail(userName, email)) {
+        // TODO : email, username 중복 검사, 비밀번호 검사
+        if (memberSocialTypeRepository.existsByUserNameOrEmail(userName, email)) {
             throw new CustomException(ErrorCode.ALREADY_USER);
         }
 
-        Optional<SocialMember> socialMember = socialMemberRepository.findByEmail(email);
-        socialMember.ifPresent(existingSocialMember -> existingSocialMember.joinUpdate(dto.toEntity()));
-
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        return memberRepository.save(dto.toEntity());
+        return memberDetialRepository.save(dto.toMemberEntity());
     }
 
     @Override
     @Transactional
-    public Member put(MemberServiceDto dto)throws Exception {
-        Member member = memberRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
+    public MemberSocial put(MemberServiceDto dto)throws Exception {
+        MemberSocial member = memberSocialTypeRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new Exception("존재하지 않는 회원"));
         member.update(dto.getUserName(), dto.getName(), dto.getEmail());
         return member;
     }

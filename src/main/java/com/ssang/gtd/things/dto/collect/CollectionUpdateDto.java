@@ -1,7 +1,7 @@
 package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.things.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class CollectionUpdateDto {
     public static class CollectUpdateRequest{
         private Long id;
         private String content;
-        private Member member;
+        private MemberSocial member;
         private BoardType type;
 
         public CollectServiceDto toServiceDto(){

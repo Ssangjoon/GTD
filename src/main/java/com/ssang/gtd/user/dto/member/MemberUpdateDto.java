@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.dto.member;
 
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.oauth2.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,7 +47,7 @@ public class MemberUpdateDto {
         private String email;
         private Role role;
 
-        public static MemberUpdateData update(Member member) {
+        public static MemberUpdateData update(MemberSocial member) {
             return new MemberUpdateData(member.getUserName(), member.getName(), member.getEmail(), member.getRole());
         }
     }

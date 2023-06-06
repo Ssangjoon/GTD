@@ -28,10 +28,10 @@ public class Collect extends BaseEntity {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId", nullable = false)
-    private Member member;
+    private MemberSocial member;
 
     @Builder
-    public Collect(Long id, String content, BoardType type, Member member) {
+    public Collect(Long id, String content, BoardType type, MemberSocial member) {
         this.id = id;
         this.content = content;
         this.type = type;

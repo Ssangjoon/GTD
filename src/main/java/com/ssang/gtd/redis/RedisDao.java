@@ -14,7 +14,6 @@ import java.util.List;
 public class RedisDao {
     private final RedisTemplate<String, String> redisTemplate;
 
-    // TODO : 코드 이해하기
     public void setValues(String key, String data) {
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         values.set(key, data);

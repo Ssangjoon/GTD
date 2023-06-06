@@ -2,7 +2,7 @@ package com.ssang.gtd.things.dto.matcol;
 
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.MatCol;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberSocial;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class MatColCreateDto {
         private String content;
         private Date goalDt;
         private Collect collect;
-        private Member member;
+        private MemberSocial member;
 
         public MatColServiceDto toServiceDto(){
             MatColServiceDto serviceDto = new MatColServiceDto();
@@ -40,7 +40,7 @@ public class MatColCreateDto {
         private String goal;
         private String content;
         private Date goalDt;
-        private Member member;
+        private MemberSocial member;
         private Collect collect;
         public static MatColServiceDto initMatColCreateRequest(MatColServiceDto dto, Collect collect){
             MatColServiceDto matColServiceDto = new MatColServiceDto();

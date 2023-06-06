@@ -3,12 +3,14 @@ package com.ssang.gtd;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberDetail;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.things.dao.CollectRepository;
 import com.ssang.gtd.things.dto.collect.CollectServiceDto;
+import com.ssang.gtd.user.dao.MemberDetialRepository;
 import com.ssang.gtd.user.dao.MemberRepository;
+import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
 import com.ssang.gtd.user.dto.LoginReq;
 import com.ssang.gtd.user.dto.member.MemberServiceDto;
 import com.ssang.gtd.user.service.MemberService;
@@ -48,6 +50,10 @@ public class ControllerTest {
     protected AuthenticationManager authenticationManager;
     @Autowired
     protected PasswordEncoder passwordEncoder;
+    @Autowired
+    protected MemberSocialTypeRepository memberSocialTypeRepository;
+    @Autowired
+    protected MemberDetialRepository memberDetialRepository;
     protected String email= "test0@test.com";
     protected String pwd = "1q2w3e@@";
 
@@ -62,9 +68,9 @@ public class ControllerTest {
         return perform.andReturn().getResponse().getContentAsString();
     }
 
-    public Member saveUser(MemberServiceDto dto){
+    public MemberDetail saveUser(MemberServiceDto dto){
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        return memberRepository.save(dto.toEntity());
+        return memberDetialRepository.save(dto.toMemberEntity());
     }
     public Collect saveCollect(CollectServiceDto dto){
         return collectRepository.save(dto.toEntity());

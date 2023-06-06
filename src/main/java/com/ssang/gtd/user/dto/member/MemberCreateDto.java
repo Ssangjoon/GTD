@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.dto.member;
 
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberDetail;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.test.MemberStatus;
@@ -53,7 +53,7 @@ public class MemberCreateDto {
         private String name;
         private Role role;
 
-        public static MemberCreateData create(Member member) {
+        public static MemberCreateData create(MemberDetail member) {
             return new MemberCreateData(member.getName(), member.getRole());
         }
     }

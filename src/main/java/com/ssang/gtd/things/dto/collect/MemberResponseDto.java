@@ -1,6 +1,6 @@
 package com.ssang.gtd.things.dto.collect;
 
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberDetail;
 import com.ssang.gtd.test.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class MemberResponseDto {
     private String name;
     private String email;
     private Gender gender;
-    public static MemberResponseDto convertToDto(Member member) {
+    public static MemberResponseDto convertToDto(MemberDetail member) {
         return new MemberResponseDto(
                 member.getId(),
                 member.getUserName(),

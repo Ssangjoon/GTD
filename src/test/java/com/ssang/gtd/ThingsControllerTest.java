@@ -2,7 +2,7 @@ package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto;
@@ -32,7 +32,8 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void collect_post() throws Exception {
         //given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(saveUser(req.toServiceDto()).getId()).build());
+
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(saveUser(req.toServiceDto()).getId()));
 
         mockMvc.perform(
                         post("/api/collection")
@@ -63,7 +64,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void collect_get() throws Exception {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(saveUser(req.toServiceDto()).getId()).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(saveUser(req.toServiceDto()).getId()));
         Long id = saveCollect(dto.toServiceDto()).getId();
 
         mockMvc.perform(
@@ -92,7 +93,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void collect_list() throws Exception {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(saveUser(req.toServiceDto()).getId()).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(saveUser(req.toServiceDto()).getId()));
         saveCollect(dto.toServiceDto());
         saveCollect(dto.toServiceDto());
 
@@ -123,9 +124,10 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         Long userId = saveUser(req.toServiceDto()).getId();
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(userId).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(userId));
+        Long collectId = saveCollect(dto.toServiceDto()).getId();
 
-        CollectionUpdateDto.CollectUpdateRequest updateDto = new CollectionUpdateDto.CollectUpdateRequest(saveCollect(dto.toServiceDto()).getId(),"사이드 프로젝트 수정하기",Member.builder().id(userId).build(),null);
+        CollectionUpdateDto.CollectUpdateRequest updateDto = new CollectionUpdateDto.CollectUpdateRequest(collectId,"사이드 프로젝트 수정하기",new MemberSocial(userId),null);
 
         mockMvc.perform(
                         put("/api/collection")
@@ -159,7 +161,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void collect_delete() throws Exception {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(saveUser(req.toServiceDto()).getId()).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(saveUser(req.toServiceDto()).getId()));
         Long id = saveCollect(dto.toServiceDto()).getId();
 
         mockMvc.perform(
@@ -183,13 +185,13 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         Long userId = saveUser(req.toServiceDto()).getId();
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(userId).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(userId));
         Long collectId = saveCollect(dto.toServiceDto()).getId();
 
 
-        Member member = Member.builder().id(userId).build();
+        MemberSocial member = new MemberSocial(userId);
         Collect collect = Collect.builder().id(collectId).content("사이드 프로젝트").type(MAT_COLLECTION).build();
-        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("목표 세우기", "차근 차근 하나씩", null,collect,member);
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member);
         String dtoJson = createJson(createRequestreq);
 
         MockMultipartFile materialCollection = new MockMultipartFile("materialCollection", "materialCollection", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
@@ -216,11 +218,11 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         Long userId = saveUser(req.toServiceDto()).getId();
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", Member.builder().id(userId).build());
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(userId));
         Long collectId = saveCollect(dto.toServiceDto()).getId();
 
 
-        Member member = Member.builder().id(userId).build();
+        MemberSocial member = new MemberSocial(userId);
         Collect collect = Collect.builder().id(collectId).content("사이드 프로젝트").type(MAT_COLLECTION).build();
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member);
         String dtoJson = createJson(createRequestreq);

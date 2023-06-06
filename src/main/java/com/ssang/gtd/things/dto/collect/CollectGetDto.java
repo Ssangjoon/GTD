@@ -1,7 +1,7 @@
 package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberDetail;
 import com.ssang.gtd.things.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,7 +35,7 @@ public class CollectGetDto {
         }
 
         public static CollectGetData fromCollect(Collect collect) {
-            Member member = collect.getMember();
+            MemberDetail member = collect.getMember();
             return new CollectGetData(
                     collect.getId(),
                     collect.getContent(),

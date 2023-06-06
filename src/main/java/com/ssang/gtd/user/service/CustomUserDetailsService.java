@@ -1,7 +1,8 @@
 package com.ssang.gtd.user.service;
 
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberDetail;
 import com.ssang.gtd.user.dao.MemberDao;
+import com.ssang.gtd.user.dao.MemberDetialRepository;
 import com.ssang.gtd.user.dao.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,11 +21,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MemberDao memberDao;
     private final MemberRepository memberRepository;
+    private final MemberDetialRepository memberDetialRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Member user = memberRepository.findByEmail(userName)
+        MemberDetail user = memberDetialRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다."));
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())

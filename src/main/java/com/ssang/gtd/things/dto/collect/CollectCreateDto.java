@@ -1,7 +1,7 @@
 package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.things.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class CollectCreateDto {
     @NoArgsConstructor
     public static class CollectCreateRequest{
         private String content;
-        private Member member;
+        private MemberSocial member;
 
         public CollectServiceDto toServiceDto(){
             CollectServiceDto serviceDto = new CollectServiceDto();

@@ -1,6 +1,6 @@
 package com.ssang.gtd.user.dto.member;
 
-import com.ssang.gtd.entity.Member;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.oauth2.Role;
 import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.test.MemberStatus;
@@ -32,12 +32,12 @@ public class MemberGetDto {
         private MemberStatus status;
         private LocalDateTime createDate;
         private LocalDateTime modifiedDate;
-        public static List<MembertGetData> toList(List<Member> memberList){
+        public static List<MembertGetData> toList(List<MemberSocial> memberList){
             return memberList.stream()
                     .map(MembertGetData::convertToDto)
                     .collect(Collectors.toList());
         }
-        public static MembertGetData convertToDto(Member member) {
+        public static MembertGetData convertToDto(MemberSocial member) {
             return new MembertGetData(
                     member.getUserName(),
                     member.getName(),
