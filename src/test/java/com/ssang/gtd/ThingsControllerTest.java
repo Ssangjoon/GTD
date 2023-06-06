@@ -142,7 +142,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("id").description("게시글 번호"),
                                         fieldWithPath("content").description("수정 내용"),
                                         fieldWithPath("member.id").description("작성자"),
-                                        fieldWithPath("type").optional().description("타입")
+                                        fieldWithPath("type").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.BOARD_TYPE))
                                 ),
                                 relaxedResponseFields(
                                         subsectionWithPath("data").description("info of collect"),
