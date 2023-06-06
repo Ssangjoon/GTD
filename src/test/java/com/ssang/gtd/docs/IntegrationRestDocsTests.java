@@ -26,8 +26,6 @@ public class IntegrationRestDocsTests extends ControllerTest {
     @Autowired
     protected RestDocumentationResultHandler restDocs;
 
-//    @Autowired
-//    protected CustomAuthenticationFilter customAuthenticationFilter;
 
     @BeforeEach
     void setUp(final WebApplicationContext context,

@@ -1,0 +1,3 @@
+
+[[member-gender]]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-sex.adoc[]

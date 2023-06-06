@@ -211,7 +211,7 @@ application.properties
 application-oauth.yml
 
 ## test
-common/
+utils/common/
 page/
 VO/
 AdminAuthinterceptor.java

@@ -1,0 +1,3 @@
+
+[[member-role]]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-role.adoc[]

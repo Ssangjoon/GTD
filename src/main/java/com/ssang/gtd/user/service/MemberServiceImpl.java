@@ -1,13 +1,11 @@
 package com.ssang.gtd.user.service;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssang.gtd.entity.MemberDetail;
 import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.exception.CustomException;
 import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.redis.RedisDao;
-import com.ssang.gtd.user.dao.MemberDao;
 import com.ssang.gtd.user.dao.MemberDetialRepository;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
@@ -16,10 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,16 +34,12 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class MemberServiceImpl implements MemberService{
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final MemberDao memberDao;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final MemberSocialTypeRepository memberSocialTypeRepository;
     private final MemberDetialRepository memberDetialRepository;
-    private final RedisTemplate redisTemplate;
     private final RedisDao redisDao;
-    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public List<MemberSocial> list() {

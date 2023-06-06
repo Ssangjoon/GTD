@@ -1,9 +1,11 @@
 package com.ssang.gtd.things.service;
 
-import com.ssang.gtd.entity.*;
-import com.ssang.gtd.exception.ErrorCode;
+import com.ssang.gtd.entity.Collect;
+import com.ssang.gtd.entity.FileEntity;
+import com.ssang.gtd.entity.MatCol;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.exception.CustomException;
-import com.ssang.gtd.things.dao.CollectDao;
+import com.ssang.gtd.exception.ErrorCode;
 import com.ssang.gtd.things.dao.CollectRepository;
 import com.ssang.gtd.things.dao.MatCollectDao;
 import com.ssang.gtd.things.dao.MatCollectRepository;
@@ -28,9 +30,7 @@ import static com.ssang.gtd.utils.enums.BoardType.MAT_COLLECTION;
 public class MatCollectServiceImpl implements MatCollectService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MatCollectDao matCollectDao;
-    private final CollectDao collectDao;
     private final FileServiceImpl fileService;
-    private final CollectService collectService;
     private final MatCollectRepository matCollectRepository;
     private final CollectRepository collectRepository;
     private final FileRepository fileRepository;

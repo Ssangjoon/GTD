@@ -1,0 +1,2 @@
+[[board-type]]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-boardType.adoc[]
