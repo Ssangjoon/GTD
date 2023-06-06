@@ -1,7 +1,7 @@
 package com.ssang.gtd.entity;
 
 
-import com.ssang.gtd.test.Gender;
+import com.ssang.gtd.utils.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

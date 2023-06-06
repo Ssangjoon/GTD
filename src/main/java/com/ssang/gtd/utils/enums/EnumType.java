@@ -1,4 +1,4 @@
-package com.ssang.gtd.test;
+package com.ssang.gtd.utils.enums;
 
 public interface EnumType {
     String getName();

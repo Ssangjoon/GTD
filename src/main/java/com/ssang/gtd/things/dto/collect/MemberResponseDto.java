@@ -1,7 +1,7 @@
 package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.MemberDetail;
-import com.ssang.gtd.test.Gender;
+import com.ssang.gtd.utils.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,8 @@
 package com.ssang.gtd.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssang.gtd.things.BoardType;
-import com.ssang.gtd.things.BoardTypeConverter;
+import com.ssang.gtd.utils.enums.BoardType;
+import com.ssang.gtd.utils.enums.BoardTypeConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

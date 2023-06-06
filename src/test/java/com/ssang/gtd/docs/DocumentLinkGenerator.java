@@ -16,7 +16,9 @@ public interface DocumentLinkGenerator {
     @RequiredArgsConstructor
     enum DocUrl {
         MEMBER_STATUS("member-status", "상태"),
-        MEMBER_SEX("sex","성별")
+        MEMBER_SEX("gender","성별"),
+        BOARD_TYPE("board-type","게시판 유형"),
+        ROLE("role","고객 권한 상태")
         ;
 
         private final String pageId;

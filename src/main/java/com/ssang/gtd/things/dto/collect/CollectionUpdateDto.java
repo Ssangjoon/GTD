@@ -2,7 +2,7 @@ package com.ssang.gtd.things.dto.collect;
 
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.MemberSocial;
-import com.ssang.gtd.things.BoardType;
+import com.ssang.gtd.utils.enums.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

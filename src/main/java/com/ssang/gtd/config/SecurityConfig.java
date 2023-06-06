@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST,"/api/joinUp","/api/refresh").permitAll()
-                .requestMatchers("/login","/api/login","/api/oauth/token","/swagger-ui").permitAll()
+                .requestMatchers("/login","/api/login","/api/oauth/token","/swagger-ui","/test/enums").permitAll()
                 .requestMatchers("/docs/**").permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 //.anyRequest().permitAll()

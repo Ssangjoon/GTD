@@ -1,14 +1,15 @@
 package com.ssang.gtd;
 
+import com.ssang.gtd.docs.DocumentLinkGenerator;
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
 import com.ssang.gtd.entity.Collect;
 import com.ssang.gtd.entity.MemberSocial;
-import com.ssang.gtd.oauth2.Role;
-import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.things.dto.collect.CollectCreateDto;
 import com.ssang.gtd.things.dto.collect.CollectionUpdateDto;
 import com.ssang.gtd.things.dto.matcol.MatColCreateDto;
 import com.ssang.gtd.user.dto.member.MemberCreateDto;
+import com.ssang.gtd.utils.enums.Gender;
+import com.ssang.gtd.utils.enums.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +19,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.nio.charset.StandardCharsets;
 
 import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
-import static com.ssang.gtd.things.BoardType.MAT_COLLECTION;
+import static com.ssang.gtd.utils.enums.BoardType.MAT_COLLECTION;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -51,7 +52,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                         //subsectionWithPath("data").description("info of collect"),
                                         fieldWithPath("data.id").description("게시글 번호"),
                                         fieldWithPath("data.content").description("내용"),
-                                        fieldWithPath("data.type").optional().description("타입"),
+                                        fieldWithPath("data.type").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.BOARD_TYPE)),
                                         fieldWithPath("data.member.id").description("ID")
                                 )
                         )
@@ -82,7 +83,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("modifiedDate").description("수정일"),
                                         fieldWithPath("id").description("게시글 번호"),
                                         fieldWithPath("content").description("내용"),
-                                        fieldWithPath("type").description("타입")
+                                        fieldWithPath("type").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.BOARD_TYPE))
                                 )
                         )
                 )
@@ -107,7 +108,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                 relaxedResponseFields(
                                         fieldWithPath("data[].id").description("게시글 번호"),
                                         fieldWithPath("data[].content").description("내용"),
-                                        fieldWithPath("data[].type").description("타입"),
+                                        fieldWithPath("data[].type").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.BOARD_TYPE)),
                                         fieldWithPath("data[].modifiedDate").description("수정일"),
                                         fieldWithPath("data[].createdDate").description("작성일"),
                                         fieldWithPath("data[].member.id").description("고객 번호")
@@ -147,7 +148,7 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                                         subsectionWithPath("data").description("info of collect"),
                                         fieldWithPath("data.id").description("게시글 번호"),
                                         fieldWithPath("data.content").description("내용"),
-                                        fieldWithPath("data.type").description("타입"),
+                                        fieldWithPath("data.type").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.BOARD_TYPE)),
                                         fieldWithPath("data.member.id").description("ID")
                                 )
                         )

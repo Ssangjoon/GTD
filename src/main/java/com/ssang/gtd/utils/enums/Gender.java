@@ -1,12 +1,14 @@
-package com.ssang.gtd.test;
+package com.ssang.gtd.utils.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
-public enum MemberStatus implements EnumType {
-    LOCK("일시 정지"),
-    NORMAL("정상"),
-    BAN("영구 정지");
+@Getter
+public enum Gender implements EnumType {
+    MALE("남자"),
+    FEMALE("여자")
+    ;
 
     private final String description;
 

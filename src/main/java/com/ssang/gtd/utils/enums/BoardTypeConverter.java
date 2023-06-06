@@ -1,4 +1,4 @@
-package com.ssang.gtd.things;
+package com.ssang.gtd.utils.enums;
 
 import jakarta.persistence.AttributeConverter;
 

@@ -1,8 +1,8 @@
 package com.ssang.gtd.entity;
 
-import com.ssang.gtd.oauth2.Role;
-import com.ssang.gtd.test.Gender;
-import com.ssang.gtd.test.MemberStatus;
+import com.ssang.gtd.utils.enums.Role;
+import com.ssang.gtd.utils.enums.Gender;
+import com.ssang.gtd.utils.enums.MemberStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

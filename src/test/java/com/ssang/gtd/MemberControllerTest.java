@@ -1,11 +1,12 @@
 package com.ssang.gtd;
 
+import com.ssang.gtd.docs.DocumentLinkGenerator;
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
 import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.oauth2.Role;
-import com.ssang.gtd.test.Gender;
 import com.ssang.gtd.user.dto.member.MemberCreateDto;
 import com.ssang.gtd.user.dto.member.MemberUpdateDto;
+import com.ssang.gtd.utils.enums.Gender;
+import com.ssang.gtd.utils.enums.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -72,9 +73,9 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                 relaxedResponseFields(
                                         fieldWithPath("data.name").description("이름"),
                                         fieldWithPath("data.userName").description("유저ID"),
-                                        fieldWithPath("data.status").description("사용가능계정여부"),
-                                        fieldWithPath("data.role").description("권한"),
-                                        fieldWithPath("data.gender").optional().description("성별"),
+                                        fieldWithPath("data.status").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS)),
+                                        fieldWithPath("data.role").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ROLE)),
+                                        fieldWithPath("data.gender").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_SEX)),
                                         fieldWithPath("data.email").description("이메일"),
                                         fieldWithPath("data.createDate").description("생성일"),
                                         fieldWithPath("data.modifiedDate").description("수정일"),
@@ -106,9 +107,9 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         subsectionWithPath("[]").type(JsonFieldType.ARRAY).description("info of member"),
                                         fieldWithPath("[].name").optional().description("이름"),
                                         fieldWithPath("[].userName").optional().description("유저ID"),
-                                        fieldWithPath("[].status").optional().description("사용가능계정여부"),
-                                        fieldWithPath("[].role").optional().description("권한"),
-                                        fieldWithPath("[].gender").optional().description("성별"),
+                                        fieldWithPath("[].status").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS)),
+                                        fieldWithPath("[].role").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ROLE)),
+                                        fieldWithPath("[].gender").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_SEX)),
                                         fieldWithPath("[].email").optional().description("이메일"),
                                         fieldWithPath("[].createDate").description("생성일"),
                                         fieldWithPath("[].modifiedDate").description("수정일"),
@@ -177,7 +178,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("data.userName").description("유저ID"),
                                         fieldWithPath("data.name").description("이름"),
                                         fieldWithPath("data.email").description("이메일"),
-                                        fieldWithPath("data.role").description("권한")
+                                        fieldWithPath("data.role").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ROLE))
                                 )
                         )
                 )

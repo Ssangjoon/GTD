@@ -1,5 +1,6 @@
 package com.ssang.gtd.oauth2;
 
+import com.ssang.gtd.utils.enums.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;

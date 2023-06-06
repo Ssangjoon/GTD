@@ -445,28 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="overview-host">Host</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">환경</th>
-<th class="tableblock halign-left valign-top">Host</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Beta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>beta-backtony.github.io</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Production</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>backtony.github.io</code></p></td>
-</tr>
-</tbody>
-</table>
+
 </div>
 <div class="sect2">
 <h3 id="overview-http-status-codes">HTTP status codes</h3>
@@ -513,15 +492,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="overview-error-response">HTTP Error Response</h3>
 <div class="sect3">
 <h4 id="overview-error-response_http_response">HTTP response</h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::common-doc-controller-test/error-sample</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=utf-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 218
+
+{
+  "headers" : { },
+  "body" : {
+    "status" : 401,
+    "code" : "UNAUTORIZED",
+    "message" : "토큰 정보가 유효하지 않습니다."
+  },
+  "statusCode" : "UNAUTHORIZED",
+  "statusCodeValue" : 401
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="overview-error-response_response_fields">Response fields</h4>
-<div class="paragraph">
-<p>Snippet response-fields not found for operation::common-doc-controller-test/error-sample</p>
-</div>
+
 </div>
 </div>
 </div>
@@ -530,7 +527,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-29 00:27:04 +0900
+Last updated 2023-06-06 16:34:21 +0900
 </div>
 </div>
 </body>

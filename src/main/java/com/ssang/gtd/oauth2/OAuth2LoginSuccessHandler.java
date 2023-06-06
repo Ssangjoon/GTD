@@ -6,6 +6,7 @@ import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
+import com.ssang.gtd.utils.enums.Role;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

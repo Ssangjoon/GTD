@@ -1,8 +1,10 @@
 package com.ssang.gtd.docs;
 
-import com.ssang.gtd.test.EnumType;
-import com.ssang.gtd.test.MemberStatus;
-import com.ssang.gtd.test.Gender;
+import com.ssang.gtd.utils.enums.Role;
+import com.ssang.gtd.utils.enums.EnumType;
+import com.ssang.gtd.utils.enums.MemberStatus;
+import com.ssang.gtd.utils.enums.Gender;
+import com.ssang.gtd.utils.enums.BoardType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -22,6 +24,7 @@ public class CommonDocController {
 
     @PostMapping("/error")
     public void errorSample(@RequestBody @Valid SampleRequest dto) {
+
     }
 
     @Getter
@@ -44,11 +47,15 @@ public class CommonDocController {
         // 문서화 하고 싶은 -> EnumDocs 클래스에 담긴 모든 Enum 값 생성
         Map<String, String> memberStatus = getDocs(MemberStatus.values());
         Map<String, String> sex = getDocs(Gender.values());
+        Map<String, String> role = getDocs(Role.values());
+        Map<String, String> boardType = getDocs(BoardType.values());
 
         // 전부 담아서 반환 -> 테스트에서는 이걸 꺼내 해석하여 조각을 만들면 된다.
         return ApiResponseDto.of(EnumDocs.builder()
                 .memberStatus(memberStatus)
-                .Sex(sex)
+                .gender(sex)
+                .role(role)
+                .boardType(boardType)
                 .build()
         );
 

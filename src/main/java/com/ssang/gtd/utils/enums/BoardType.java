@@ -1,9 +1,9 @@
-package com.ssang.gtd.things;
+package com.ssang.gtd.utils.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum BoardType {
+public enum BoardType implements EnumType {
     COLLECTION("collection","해결을 요구하는 모든 일들을 모은다.")
     ,MAT_COLLECTION("matCollection","목표와 구체적 행동을 기재하여 구체화 시킨다.")
     ,IMMEDIATELY("immediately","즉시 실행 및 해결이 가능한 일들.")
@@ -22,4 +22,14 @@ public enum BoardType {
 
     private String type;
     private String info;
+
+    @Override
+    public String getDescription() {
+        return this.info;
+    }
+
+    @Override
+    public String getName() {
+        return this.name();
+    }
 }

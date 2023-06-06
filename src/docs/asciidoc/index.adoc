@@ -3,20 +3,14 @@ SsangJoon (GTD)
 :sectnums:
 :doctype: book
 :toc: left
-//:icons: font
-:source-highlighter: prettify
+:icons: font
+:source-highlighter: highlightjs
 :toclevels: 2
 :toc-title: Table of Contents
 :sectlinks:
 :docinfo: shared-head
 
 GettingThingsDone 프로세스를 구현하는 개인 프로젝트 입니다.
-
-
-1. 로그인(Login), 회원가입(JoinUp)을 제외한 모든 요청에는 AccessToken이 필요 합니다. +
-2. 요청시 인증타입과 Access Token를 함께 헤더에 담아 보냅니다. +
-3. SSO 로그인은 완료 후 일반 회원가입 페이지로 이동되며, 이때 가입하지 않는다면 User의 Role은 `Guest`, 일반 회원가입 이후 User의 Role은 `User` 입니다.
-
 
 [[Login-API]]
 == Login API
@@ -103,4 +97,3 @@ operation::things-controller-test/material[snippets='http-request,request-parts,
 operation::things-controller-test/material_file[snippets='http-request,request-parts,http-response']
 
 
-//[snippets='http-request,path-parameters,http-response,response-fields']
