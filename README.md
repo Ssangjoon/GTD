@@ -4,6 +4,12 @@
 - 자세한 설명은
     - [https://unmarred-heliotrope-856.notion.site/Getting-Things-Done-47665b10853d488580f723f6f96c80d9?pvs=4](https://www.notion.so/47665b10853d488580f723f6f96c80d9?pvs=21)
 
+# 개요
+
+- Project Name : GTD(Getting Things Done)
+- 개인 프로젝트
+- 개발 기간 : 2023.04.15 ~ ing
+
 ## 이슈 정리 블로그 (정리 중)
 
 [https://ssangjoon.github.io/categories/개인프로젝트/](https://ssangjoon.github.io/categories/%EA%B0%9C%EC%9D%B8%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/)
@@ -17,13 +23,7 @@
 
 https://ssangjoon.github.io/GTD/src/main/resources/static/docs/index.html
 
-# 개요
 
-- Project Name : GTD(Getting Things Done)
-- 개인 프로젝트
-- 개발 기간 : 2023.04.15 ~ ing
-
- 
 
 ## 개발환경
 
