@@ -44,8 +44,8 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("name").description("이름"),
                                         fieldWithPath("userName").description("유저ID"),
                                         fieldWithPath("password").description("비밀번호"),
-                                        fieldWithPath("role").optional().description("권한"),
-                                        fieldWithPath("gender").optional().description("성별")
+                                        fieldWithPath("role").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ROLE)),
+                                        fieldWithPath("gender").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_SEX))
                                         //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
                                 )
                         )
@@ -171,7 +171,7 @@ class MemberControllerTest extends IntegrationRestDocsTests {
                                         fieldWithPath("name").optional().description("이름"),
                                         fieldWithPath("userName").optional().description("유저ID"),
                                         fieldWithPath("password").description("비밀번호"),
-                                        fieldWithPath("role").optional().description("권한")
+                                        fieldWithPath("role").optional().description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ROLE))
                                         //fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
                                 ),
                                 relaxedResponseFields(

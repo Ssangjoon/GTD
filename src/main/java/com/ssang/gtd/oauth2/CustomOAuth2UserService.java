@@ -73,7 +73,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
      * 생성된 Member 객체를 DB에 저장 : socialType, socialId, email, role 값만 있는 상태
      */
     private MemberSocial saveUser(OAuthAttributes attributes, SocialType socialType) {
+
         MemberSocial createdUser = attributes.toEntity(socialType, attributes.getOauth2UserInfo());
+
         return memberSocialTypeRepository.save(createdUser);
     }
 }

@@ -75,7 +75,6 @@ public class OAuthAttributes {
      * email에는 UUID로 중복 없는 랜덤 값 생성 role은 GUEST로 설정
      * (email은 JWT Token을 발급하기 위한 용도뿐이므로 UUID를 사용하여 임의로 설정.)
      */
-
     public MemberSocial toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
         MemberSocial socialMember = new MemberSocial(
                 UUID.randomUUID() + "@socialUser.com",

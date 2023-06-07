@@ -15,6 +15,7 @@ public enum ErrorCode {
     , CAN_NOT_FOUND_BY_ID(HttpStatus.NOT_FOUND, "해당 ID로 조회 가능한 데이터가 없습니다.")
     , DIFFRENT_WRITER(HttpStatus.CONFLICT, "작성자가 아닙니다.")
     , ALREADY_USER(HttpStatus.CONFLICT, "이미 존재하는 회원입니다.")
+    , ALREADY_SOCIAL_USER(HttpStatus.CONFLICT, "이미 존재하는 소셜 로그인 회원입니다.")
     , CONFLICT(HttpStatus.CONFLICT, "데이터가 충돌되었습니다.")
     ;
 
