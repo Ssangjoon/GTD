@@ -2,7 +2,7 @@
 
 - Getting Things Done은 효율적인 일 처리를 위한 실전 프로세스 입니다.
 - 자세한 설명은
-    - https://unmarred-heliotrope-856.notion.site/Getting-Things-Done-47665b10853d488580f723f6f96c80d9
+    - https://unmarred-heliotrope-856.notion.site/Getting-Things-Done-7e15383e26a147a9b3cbe03cf37cffb3?pvs=4
 
 # 개요
 
