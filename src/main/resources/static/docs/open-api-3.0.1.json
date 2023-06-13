@@ -1,0 +1,95 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "THT API 문서",
+    "description" : "Spring REST Docs with SwaggerUI.",
+    "version" : "0.0.1"
+  },
+  "servers" : [ {
+    "url" : "http://tht-talk.store"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/api/member" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "관심사 목록 리스트 조회",
+        "description" : "관심사 목록 리스트 조회",
+        "operationId" : "interest-docs",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-member-1397237516"
+                },
+                "examples" : {
+                  "interest-docs" : {
+                    "value" : "[ {\r\n  \"userName\" : \"손석구\",\r\n  \"name\" : \"테스트네임3\",\r\n  \"email\" : \"test0@test.com\",\r\n  \"gender\" : \"MALE\",\r\n  \"role\" : \"USER\",\r\n  \"status\" : \"NORMAL\",\r\n  \"createDate\" : \"2023-06-13T21:55:54.2797249\",\r\n  \"modifiedDate\" : \"2023-06-13T21:55:54.2797249\",\r\n  \"nickname\" : null,\r\n  \"profileImg\" : null,\r\n  \"socialType\" : null,\r\n  \"socialId\" : null\r\n}, {\r\n  \"userName\" : \"이상준\",\r\n  \"name\" : \"테스트네임4\",\r\n  \"email\" : \"0test0@test.com\",\r\n  \"gender\" : \"MALE\",\r\n  \"role\" : \"USER\",\r\n  \"status\" : \"NORMAL\",\r\n  \"createDate\" : \"2023-06-13T21:55:54.3354661\",\r\n  \"modifiedDate\" : \"2023-06-13T21:55:54.3354661\",\r\n  \"nickname\" : null,\r\n  \"profileImg\" : null,\r\n  \"socialType\" : null,\r\n  \"socialId\" : null\r\n} ]"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuthJWT" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "api-member-1397237516" : {
+        "type" : "array",
+        "description" : "info of member",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "role" : {
+              "type" : "string",
+              "description" : "link:common/role.html[고객 권한 상태 코드,role=\"popup\"]"
+            },
+            "gender" : {
+              "type" : "string",
+              "description" : "link:common/gender.html[성별 코드,role=\"popup\"]"
+            },
+            "modifiedDate" : {
+              "type" : "string",
+              "description" : "수정일"
+            },
+            "name" : {
+              "type" : "string",
+              "description" : "이름"
+            },
+            "userName" : {
+              "type" : "string",
+              "description" : "유저ID"
+            },
+            "email" : {
+              "type" : "string",
+              "description" : "이메일"
+            },
+            "createDate" : {
+              "type" : "string",
+              "description" : "생성일"
+            },
+            "status" : {
+              "type" : "string",
+              "description" : "link:common/member-status.html[상태 코드,role=\"popup\"]"
+            }
+          },
+          "description" : "info of member"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuthJWT" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}
