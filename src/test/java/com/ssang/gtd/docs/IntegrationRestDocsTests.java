@@ -29,9 +29,9 @@ public class IntegrationRestDocsTests extends ControllerTest {
 
     @BeforeEach
     void setUp(final WebApplicationContext context,
-               final RestDocumentationContextProvider provider) {
+               final RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .apply(MockMvcRestDocumentation.documentationConfiguration(provider))  // rest docs 설정 주입
+                .apply(MockMvcRestDocumentation.documentationConfiguration(restDocumentation))  // rest docs 설정 주입
                 .alwaysDo(MockMvcResultHandlers.print()) // andDo(print()) 코드 포함
                 .alwaysDo(restDocs) // pretty 패턴과 문서 디렉토리 명 정해준것 적용
                 .apply(springSecurity())

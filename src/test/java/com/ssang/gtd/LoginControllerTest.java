@@ -45,6 +45,59 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 )
                         )
                 )
+                //OAS 3.0 - Swagger
+//                .andDo(MockMvcRestDocumentationWrapper.document("put-v1-complete-order",
+//                        getDocumentRequest(),
+//                        getDocumentResponse(),
+//                        resource(ResourceSnippetParameters.builder()
+//                                .pathParameters(
+//                                        parameterDescriptor
+//                                )
+//                                .responseFields(
+//                                        responseFieldDescription
+//                                )
+//                                .build()))
+//                  )
+        ;
+    }
+    @DisplayName("로그인 스웨거ui 테스트")
+    @Test
+    @WithMockUser
+    public void loginTest() throws Exception {
+        //given
+        LoginReq login = new LoginReq(email,pwd);
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        saveUser(req.toServiceDto());
+
+        //when
+        mockMvc.perform(
+                        post("/api/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(createJson(login))
+                    )
+                .andExpect(status().isOk())
+                //then
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("email").description("email"),
+                                        fieldWithPath("password").description("password")
+                                )
+                        )
+                )
+                //OAS 3.0 - Swagger
+//                .andDo(MockMvcRestDocumentationWrapper.document("put-v1-complete-order",
+//                        getDocumentRequest(),
+//                        getDocumentResponse(),
+//                        resource(ResourceSnippetParameters.builder()
+//                                .pathParameters(
+//                                        parameterDescriptor
+//                                )
+//                                .responseFields(
+//                                        responseFieldDescription
+//                                )
+//                                .build()))
+//                  )
         ;
     }
     @DisplayName("로그아웃")

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Getter
-@ToString(exclude = {"member","collect"})
+@ToString(exclude = {"collect"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MatCol extends BaseEntity {
     @Id
@@ -20,10 +20,10 @@ public class MatCol extends BaseEntity {
     private String content;
     @Temporal(TemporalType.DATE)
     private Date goalDt;
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userId")
-    private Member member;
+//    @JsonIgnore
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="userId")
+//    private Member member;
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collectId")
@@ -34,7 +34,6 @@ public class MatCol extends BaseEntity {
         this.goal = goal;
         this.content = content;
         this.goalDt = goalDt;
-        this.member = member;
         this.collect = collect;
     }
 }
