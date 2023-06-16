@@ -1,6 +1,5 @@
 package com.ssang.gtd.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +19,6 @@ public class FileEntity extends BaseEntity{
     private String saved_file_name;
     @Column(length = 50, nullable = false)
     private long file_size;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="matcolId")
     private MatCol matcol;

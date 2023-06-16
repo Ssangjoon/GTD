@@ -67,6 +67,10 @@ public class CollectController {
             throw new RuntimeException(e);
         }
     }
+//    @PostMapping("/material/type")
+//    public int modifiedType(@RequestBody MatColUpdateDto.MatColUpdateRequest dto) throws JsonProcessingException {
+//        return 1;
+//    }
 
    /* @PostMapping("/material")
     public int post(@RequestBody MatColDto dto){

@@ -1,6 +1,5 @@
 package com.ssang.gtd.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssang.gtd.utils.enums.BoardType;
 import com.ssang.gtd.utils.enums.BoardTypeConverter;
 import jakarta.persistence.*;
@@ -25,7 +24,6 @@ public class Collect extends BaseEntity {
     @Convert(converter = BoardTypeConverter.class)
     private BoardType type;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId", nullable = false)
     private MemberSocial member;

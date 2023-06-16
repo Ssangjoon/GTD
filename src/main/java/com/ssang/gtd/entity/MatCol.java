@@ -1,10 +1,11 @@
 package com.ssang.gtd.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,20 +21,19 @@ public class MatCol extends BaseEntity {
     private String content;
     @Temporal(TemporalType.DATE)
     private LocalDate goalDt;
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="userId")
-//    private Member member;
-    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collectId")
     Collect collect;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> steps = new ArrayList<>();
+
     @Builder
-    public MatCol(Long id, String goal, String content, LocalDate goalDt, Member member, Collect collect) {
+    public MatCol(Long id, String goal, String content, LocalDate goalDt, Member member, Collect collect, List<String> steps) {
         this.id = id;
         this.goal = goal;
         this.content = content;
         this.goalDt = goalDt;
         this.collect = collect;
+        this.steps = steps;
     }
 }

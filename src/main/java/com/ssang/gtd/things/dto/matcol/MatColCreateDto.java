@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class MatColCreateDto {
     @Getter
@@ -21,6 +22,7 @@ public class MatColCreateDto {
         private LocalDate goalDt;
         private Collect collect;
         private MemberSocial member;
+        private List<String> steps;
 
         public MatColServiceDto toServiceDto(){
             MatColServiceDto serviceDto = new MatColServiceDto();
@@ -29,6 +31,7 @@ public class MatColCreateDto {
             serviceDto.setGoalDt(this.goalDt);
             serviceDto.setCollect(this.collect);
             serviceDto.setMember(this.member);
+            serviceDto.setSteps(this.steps);
             return serviceDto;
         }
     }
@@ -40,8 +43,9 @@ public class MatColCreateDto {
         private String goal;
         private String content;
         private LocalDate goalDt;
-        private MemberSocial member;
         private Collect collect;
+        private MemberSocial member;
+        private List<String> steps;
         public static MatColServiceDto initMatColCreateRequest(MatColServiceDto dto, Collect collect){
             MatColServiceDto matColServiceDto = new MatColServiceDto();
             matColServiceDto.goal = dto.goal;
@@ -49,6 +53,7 @@ public class MatColCreateDto {
             matColServiceDto.goalDt = dto.goalDt;
             matColServiceDto.member = dto.member;
             matColServiceDto.collect = collect;
+            matColServiceDto.steps = dto.steps;
             return matColServiceDto;
         }
         public MatCol toEntity(){
@@ -59,6 +64,7 @@ public class MatColCreateDto {
                     .member(member)
                     .content(content)
                     .collect(collect)
+                    .steps(steps)
                     .build();
         }
     }
