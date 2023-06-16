@@ -3,11 +3,14 @@ package com.ssang.gtd;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssang.gtd.entity.Collect;
-import com.ssang.gtd.entity.MemberDetail;
+import com.ssang.gtd.entity.MatCol;
+import com.ssang.gtd.entity.MemberSocial;
 import com.ssang.gtd.jwt.TokenProvider;
 import com.ssang.gtd.redis.RedisDao;
 import com.ssang.gtd.things.dao.CollectRepository;
+import com.ssang.gtd.things.dao.MatCollectRepository;
 import com.ssang.gtd.things.dto.collect.CollectServiceDto;
+import com.ssang.gtd.things.dto.matcol.MatColCreateDto;
 import com.ssang.gtd.user.dao.MemberDetialRepository;
 import com.ssang.gtd.user.dao.MemberRepository;
 import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
@@ -41,6 +44,8 @@ public class ControllerTest {
     @Autowired
     protected CollectRepository collectRepository;
     @Autowired
+    protected MatCollectRepository matCollectRepository;
+    @Autowired
     protected MemberService memberService;
     @Autowired
     protected RedisDao redisDao;
@@ -68,11 +73,14 @@ public class ControllerTest {
         return perform.andReturn().getResponse().getContentAsString();
     }
 
-    public MemberDetail saveUser(MemberServiceDto dto){
+    public MemberSocial saveUser(MemberServiceDto dto){
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         return memberDetialRepository.save(dto.toMemberEntity());
     }
     public Collect saveCollect(CollectServiceDto dto){
         return collectRepository.save(dto.toEntity());
+    }
+    public MatCol saveMatCol(MatColCreateDto.MatColServiceDto dto){
+        return matCollectRepository.save(dto.toEntity());
     }
 }

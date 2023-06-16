@@ -33,20 +33,25 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation(
+		'org.springframework.boot:spring-boot-starter-thymeleaf',
+		'org.springframework.boot:spring-boot-starter-web',
+		'org.springframework.boot:spring-boot-starter-data-jpa',
+		'org.springframework.boot:spring-boot-starter-data-redis',
 
-	implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+		'org.mariadb.jdbc:mariadb-java-client:3.0.3',
+		'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1',
+		'org.springframework.boot:spring-boot-starter-jdbc',
+		'org.springframework.boot:spring-boot-starter-validation',
+		'org.springframework.boot:spring-boot-starter-aop',
 
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-
-	//security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+		//security
+		'org.springframework.boot:spring-boot-starter-security',
+		//oauth2
+		'org.springframework.boot:spring-boot-starter-oauth2-client',
+		'org.springframework.boot:spring-boot-starter-oauth2-resource-server',
+		'com.auth0:java-jwt:3.19.2'
+	)
 
 	//jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
@@ -54,10 +59,6 @@ dependencies {
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 	implementation 'com.auth0:java-jwt:4.2.1'
 
-	//oauth2
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-	implementation 'com.auth0:java-jwt:3.19.2'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'

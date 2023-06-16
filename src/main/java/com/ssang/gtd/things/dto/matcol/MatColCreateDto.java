@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class MatColCreateDto {
     @Getter
@@ -18,7 +18,7 @@ public class MatColCreateDto {
     public static class MatColCreateRequest{
         private String goal;
         private String content;
-        private Date goalDt;
+        private LocalDate goalDt;
         private Collect collect;
         private MemberSocial member;
 
@@ -39,7 +39,7 @@ public class MatColCreateDto {
         private Long id;
         private String goal;
         private String content;
-        private Date goalDt;
+        private LocalDate goalDt;
         private MemberSocial member;
         private Collect collect;
         public static MatColServiceDto initMatColCreateRequest(MatColServiceDto dto, Collect collect){

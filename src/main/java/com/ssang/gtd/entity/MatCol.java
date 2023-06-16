@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
-@ToString(exclude = {"collect"})
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MatCol extends BaseEntity {
     @Id
@@ -19,7 +19,7 @@ public class MatCol extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String content;
     @Temporal(TemporalType.DATE)
-    private Date goalDt;
+    private LocalDate goalDt;
 //    @JsonIgnore
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name="userId")
@@ -29,7 +29,7 @@ public class MatCol extends BaseEntity {
     @JoinColumn(name = "collectId")
     Collect collect;
     @Builder
-    public MatCol(Long id, String goal, String content, Date goalDt, Member member, Collect collect) {
+    public MatCol(Long id, String goal, String content, LocalDate goalDt, Member member, Collect collect) {
         this.id = id;
         this.goal = goal;
         this.content = content;

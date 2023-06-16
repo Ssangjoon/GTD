@@ -17,9 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
-import static com.ssang.gtd.utils.enums.BoardType.MAT_COLLECTION;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -185,13 +185,11 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void material() throws Exception {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        Long userId = saveUser(req.toServiceDto()).getId();
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(userId));
-        Long collectId = saveCollect(dto.toServiceDto()).getId();
+        MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
+        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
 
 
-        MemberSocial member = new MemberSocial(userId);
-        Collect collect = Collect.builder().id(collectId).content("사이드 프로젝트").type(MAT_COLLECTION).build();
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member);
         String dtoJson = createJson(createRequestreq);
 
@@ -218,13 +216,11 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
     public void material_file() throws Exception {
         // given
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
-        Long userId = saveUser(req.toServiceDto()).getId();
-        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(userId));
-        Long collectId = saveCollect(dto.toServiceDto()).getId();
+        MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
+        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
 
 
-        MemberSocial member = new MemberSocial(userId);
-        Collect collect = Collect.builder().id(collectId).content("사이드 프로젝트").type(MAT_COLLECTION).build();
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member);
         String dtoJson = createJson(createRequestreq);
 
@@ -253,4 +249,57 @@ public class ThingsControllerTest extends IntegrationRestDocsTests {
                 )
         ;
     }
+
+    @DisplayName("MAT_COLLECTION(목표일 등록)")
+    //@Rollback(false)
+    @Test
+    public void material_calender() throws Exception {
+        // given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
+        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", LocalDate.of(2023,7,1),collect,member);
+        String dtoJson = createJson(createRequestreq);
+
+        MockMultipartFile materialCollection = new MockMultipartFile("materialCollection", "materialCollection", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
+//
+//        MockMultipartFile files = new MockMultipartFile(
+//                "files",
+//                "imagefile.png",
+//                "image/png",
+//                "<<png data>>".getBytes());
+
+        mockMvc.perform(
+                        multipart("/api/material")
+//                                .file(files)
+                                .file(materialCollection)
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
+                                .content(dtoJson))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParts(
+//                                        partWithName("files").description("파일")
+                                        partWithName("materialCollection").description("목표, 절차, 날짜 등을 기재한다")
+                                )
+                        )
+                )
+        ;
+    }
+    @DisplayName("MAT_COLLECTION (유형 변경)")
+    //@Rollback(false)
+    @Test
+    public void material_type() throws Exception {
+        // given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
+        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member);
+        Long MatCollectId = saveMatCol(createRequestreq.toServiceDto()).getId(); // 테스트 구체화 목록 생성
+
+
+    }
+
 }
