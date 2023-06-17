@@ -1,10 +1,10 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
-import com.ssang.gtd.utils.enums.Role;
-import com.ssang.gtd.utils.enums.Gender;
-import com.ssang.gtd.user.dto.LoginReq;
-import com.ssang.gtd.user.dto.member.MemberCreateDto;
+import com.ssang.gtd.global.utils.enums.Role;
+import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.domain.user.dto.LoginReq;
+import com.ssang.gtd.domain.user.dto.member.MemberCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.Duration;
 
-import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
+import static com.ssang.gtd.global.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

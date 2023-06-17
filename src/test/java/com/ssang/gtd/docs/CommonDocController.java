@@ -1,10 +1,10 @@
 package com.ssang.gtd.docs;
 
-import com.ssang.gtd.utils.enums.Role;
-import com.ssang.gtd.utils.enums.EnumType;
-import com.ssang.gtd.utils.enums.MemberStatus;
-import com.ssang.gtd.utils.enums.Gender;
-import com.ssang.gtd.utils.enums.BoardType;
+import com.ssang.gtd.global.utils.enums.Role;
+import com.ssang.gtd.global.utils.enums.EnumType;
+import com.ssang.gtd.global.utils.enums.MemberStatus;
+import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.global.utils.enums.BoardType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,7 +1,7 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.DocumentLinkGenerator;
-import com.ssang.gtd.user.dao.MemberSocialTypeRepository;
+import com.ssang.gtd.domain.user.dao.MemberSocialTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

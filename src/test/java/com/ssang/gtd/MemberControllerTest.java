@@ -2,11 +2,11 @@ package com.ssang.gtd;
 
 import com.ssang.gtd.docs.DocumentLinkGenerator;
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
-import com.ssang.gtd.entity.Member;
-import com.ssang.gtd.user.dto.member.MemberCreateDto;
-import com.ssang.gtd.user.dto.member.MemberUpdateDto;
-import com.ssang.gtd.utils.enums.Gender;
-import com.ssang.gtd.utils.enums.Role;
+import com.ssang.gtd.domain.user.domain.Member;
+import com.ssang.gtd.domain.user.dto.member.MemberCreateDto;
+import com.ssang.gtd.domain.user.dto.member.MemberUpdateDto;
+import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.global.utils.enums.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
+import static com.ssang.gtd.global.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
-import static com.ssang.gtd.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
+import static com.ssang.gtd.global.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.attributes;
