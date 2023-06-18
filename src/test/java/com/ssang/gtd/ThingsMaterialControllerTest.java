@@ -2,6 +2,7 @@ package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
 import com.ssang.gtd.domain.things.domain.Collect;
+import com.ssang.gtd.domain.things.domain.MatCol;
 import com.ssang.gtd.domain.things.dto.collect.CollectCreateDto;
 import com.ssang.gtd.domain.things.dto.matcol.MatColCreateDto;
 import com.ssang.gtd.domain.user.domain.MemberSocial;
@@ -22,6 +23,7 @@ import static com.ssang.gtd.global.jwt.JwtConstants.TOKEN_HEADER_PREFIX;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
@@ -171,17 +173,23 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
                 )
             ;
     }
-//    @DisplayName("MAT_COLLECTION (구체화 게시글 단건 조회)")
-//    //@Rollback(false)
-//    @Test
-//    public void material_get() throws Exception {
-//        // given
-//
-//            mockMvc.perform(
-//                        multipart("/api/material")
-//                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
-//                    )
-//                .andExpect(status().isOk())
+    @DisplayName("MAT_COLLECTION (구체화 게시글 단건 조회)")
+    //@Rollback(false)
+    @Test
+    public void material_get() throws Exception {
+        // given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
+        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member,null);
+        MatCol matCol = saveMatCol(createRequestreq.toServiceDto()); // 저장
+
+            mockMvc.perform(
+                        get("/api/material/{id}",matCol.getId())
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken())
+                    )
+                .andExpect(status().isOk())
 //                .andDo(
 //                        restDocs.document(
 //                                requestParts(
@@ -190,6 +198,6 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
 //                                )
 //                        )
 //                )
-//            ;
-//    }
+            ;
+    }
 }

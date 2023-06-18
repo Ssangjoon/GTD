@@ -10,6 +10,7 @@ import com.ssang.gtd.domain.things.dto.collect.CollectionUpdateDto.CollectUpdate
 import com.ssang.gtd.domain.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
 import com.ssang.gtd.domain.things.dto.collect.CollectionUpdateDto.CollectUpdateResponse;
 import com.ssang.gtd.domain.things.dto.matcol.MatColCreateDto.MatColCreateRequest;
+import com.ssang.gtd.domain.things.dto.matcol.MatColFileDto;
 import com.ssang.gtd.domain.things.service.CollectService;
 import com.ssang.gtd.domain.things.service.MatCollectService;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,10 @@ public class CollectController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    @GetMapping("/material/{id}")
+    public MatColFileDto getMatCol(@PathVariable("id") Long id){
+        return matCollectService.get(id);
     }
 //    @PostMapping("/material/type")
 //    public int modifiedType(@RequestBody MatColUpdateDto.MatColUpdateRequest dto) throws JsonProcessingException {
