@@ -4,4 +4,5 @@ import com.ssang.gtd.domain.things.dto.matcol.MatColFileDto;
 
 public interface MatColRepositoryCustom {
     public MatColFileDto search(Long id);
+    public Object searchList();
 }

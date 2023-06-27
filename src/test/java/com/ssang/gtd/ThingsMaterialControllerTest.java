@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
-        @DisplayName("MAT_COLLECTION 등록")
+    @DisplayName("MAT_COLLECTION 등록")
     //@Rollback(false)
     @Test
     public void material() throws Exception {
@@ -39,6 +39,39 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
 
 
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member,null);
+        String dtoJson = createJson(createRequestreq);
+
+        MockMultipartFile materialCollection = new MockMultipartFile("materialCollection", "materialCollection", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));
+
+        mockMvc.perform(
+                        multipart("/api/material")
+                                .file(materialCollection)
+                                .header(HttpHeaders.AUTHORIZATION,TOKEN_HEADER_PREFIX + getAccessToken()))
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestParts(
+                                        partWithName("materialCollection").description("목표, 절차, 날짜 등을 기재한다")
+                                )
+                        )
+                )
+        ;
+    }
+    @DisplayName("MAT_COLLECTION content없이 등록")
+    //@Rollback(false)
+    @Test
+    public void materialNoContent() throws Exception {
+        // given
+        MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
+        MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
+        CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
+        Collect savedCollect = saveCollect(dto.toServiceDto());
+        Collect collect = Collect.builder()
+                .id(savedCollect.getId()) // 테스트 게시글 생성
+                .content(savedCollect.getContent())
+                .build();
+
+        MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("목표만 있고 행동은 없음", "", null,collect,member,null);
         String dtoJson = createJson(createRequestreq);
 
         MockMultipartFile materialCollection = new MockMultipartFile("materialCollection", "materialCollection", "application/json", dtoJson.getBytes(StandardCharsets.UTF_8));

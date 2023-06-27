@@ -35,4 +35,9 @@ public class MatColRepositoryCustomImpl implements MatColRepositoryCustom{
                 .where(matCol.id.eq(id))
                 .fetchOne();
     }
+
+    @Override
+    public Object searchList() {
+        return null;
+    }
 }

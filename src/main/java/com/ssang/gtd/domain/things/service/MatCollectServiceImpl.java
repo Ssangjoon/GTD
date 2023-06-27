@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static com.ssang.gtd.global.enums.BoardType.MAT_COLLECTION;
+import static com.ssang.gtd.global.enums.BoardType.MAYBE;
 
 @Service
 @RequiredArgsConstructor
@@ -38,13 +39,13 @@ public class MatCollectServiceImpl implements MatCollectService {
 
 
     @Override
-    public List<MatColDto> list() { return matCollectDao.list(); }
+    public Object list() { return matCollectRepository.searchList(); }
     @Override
     public MatColFileDto get(Long id) { return matCollectRepository.search(id); }
 
 
     @Transactional(noRollbackFor=Exception.class)
-    public int post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
+    public MatCol post(MatColServiceDto dto, List<MultipartFile> files) throws Exception {
 
         Collect collect = dto.getCollect();
         MemberSocial member = dto.getMember();
@@ -52,13 +53,13 @@ public class MatCollectServiceImpl implements MatCollectService {
 
         if(member.getId().equals(oldCollect.getMember().getId())){
 
-            if(!StringUtils.hasText(String.valueOf(collect.getType()))){
-                // type 미기재시 update 전에 디폴트 타입 'material'으로 새 객체 생성
+            if(StringUtils.hasText(String.valueOf(collect.getType()))){
+                // type 미기재시 update 전에 디폴트 타입 'MAT_COLLECTION'으로 새 객체 생성 (content 가 없다면 디폴트 타입 'MAYBE')
                 Collect newCollect = Collect.builder()
                         .id(collect.getId())
                         .content(collect.getContent())
                         .member(member)
-                        .type(MAT_COLLECTION)
+                        .type(StringUtils.hasText(dto.getContent()) ? MAT_COLLECTION : MAYBE)
                         .build();
 
                 dto = MatColServiceDto.initMatColCreateRequest(dto,newCollect);
@@ -78,7 +79,7 @@ public class MatCollectServiceImpl implements MatCollectService {
             List<FileEntity> params = fileService.fileUpload("material", files, savedMatCol.getId());
             fileRepository.saveAll(params);
         }
-        return 1;
+        return savedMatCol;
     }
     @Override
     public int put(MatColDto dto) {

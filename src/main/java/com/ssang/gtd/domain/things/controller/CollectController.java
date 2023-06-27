@@ -2,6 +2,7 @@ package com.ssang.gtd.domain.things.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssang.gtd.domain.things.domain.Collect;
+import com.ssang.gtd.domain.things.domain.MatCol;
 import com.ssang.gtd.domain.things.dto.collect.CollectCreateDto.CollectCreateData;
 import com.ssang.gtd.domain.things.dto.collect.CollectCreateDto.CollectCreateRequest;
 import com.ssang.gtd.domain.things.dto.collect.CollectCreateDto.CollectCreateResponse;
@@ -60,8 +61,8 @@ public class CollectController {
     }
 
     @PostMapping("/material")
-    public int post(@RequestPart(value = "materialCollection")  MatColCreateRequest dto,
-                    @RequestPart(value = "files", required = false) List<MultipartFile> files) throws JsonProcessingException {
+    public MatCol post(@RequestPart(value = "materialCollection")  MatColCreateRequest dto,
+                       @RequestPart(value = "files", required = false) List<MultipartFile> files) throws JsonProcessingException {
         try {
             return matCollectService.post(dto.toServiceDto(),files);
         } catch (Exception e) {
@@ -72,6 +73,8 @@ public class CollectController {
     public MatColFileDto getMatCol(@PathVariable("id") Long id){
         return matCollectService.get(id);
     }
+    @GetMapping("/material")
+    public Object getMatColList(){ return matCollectService.list();}
 //    @PostMapping("/material/type")
 //    public int modifiedType(@RequestBody MatColUpdateDto.MatColUpdateRequest dto) throws JsonProcessingException {
 //        return 1;
