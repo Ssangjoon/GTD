@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.ssang.gtd.global.utils.enums.BoardType.MAT_COLLECTION;
+import static com.ssang.gtd.global.enums.BoardType.MAT_COLLECTION;
 
 @Service
 @RequiredArgsConstructor

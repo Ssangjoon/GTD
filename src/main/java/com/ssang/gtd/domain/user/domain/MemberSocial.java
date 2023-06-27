@@ -1,9 +1,9 @@
 package com.ssang.gtd.domain.user.domain;
 
-import com.ssang.gtd.global.utils.enums.Role;
+import com.ssang.gtd.global.enums.Role;
 import com.ssang.gtd.global.oauth2.SocialType;
-import com.ssang.gtd.global.utils.enums.Gender;
-import com.ssang.gtd.global.utils.enums.MemberStatus;
+import com.ssang.gtd.global.enums.Gender;
+import com.ssang.gtd.global.enums.MemberStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package com.ssang.gtd.domain.user.domain;
 
 
 import com.ssang.gtd.domain.BaseEntity;
-import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.global.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

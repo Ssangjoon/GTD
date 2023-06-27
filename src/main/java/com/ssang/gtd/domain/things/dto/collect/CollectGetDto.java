@@ -2,7 +2,7 @@ package com.ssang.gtd.domain.things.dto.collect;
 
 import com.ssang.gtd.domain.things.domain.Collect;
 import com.ssang.gtd.domain.user.domain.MemberDetail;
-import com.ssang.gtd.global.utils.enums.BoardType;
+import com.ssang.gtd.global.enums.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

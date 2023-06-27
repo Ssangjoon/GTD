@@ -2,8 +2,8 @@ package com.ssang.gtd.domain.things.domain;
 
 import com.ssang.gtd.domain.BaseEntity;
 import com.ssang.gtd.domain.user.domain.MemberSocial;
-import com.ssang.gtd.global.utils.enums.BoardType;
-import com.ssang.gtd.global.utils.enums.BoardTypeConverter;
+import com.ssang.gtd.global.enums.BoardType;
+import com.ssang.gtd.global.enums.BoardTypeConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

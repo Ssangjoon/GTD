@@ -1,8 +1,8 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
-import com.ssang.gtd.global.utils.enums.Role;
-import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.global.enums.Role;
+import com.ssang.gtd.global.enums.Gender;
 import com.ssang.gtd.domain.user.dto.LoginReq;
 import com.ssang.gtd.domain.user.dto.member.MemberCreateDto;
 import org.junit.jupiter.api.DisplayName;

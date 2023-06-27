@@ -5,8 +5,8 @@ import com.ssang.gtd.global.oauth2.oauthUser.GoogleOAuth2UserInfo;
 import com.ssang.gtd.global.oauth2.oauthUser.KakaoOAuth2UserInfo;
 import com.ssang.gtd.global.oauth2.oauthUser.NaverOAuth2UserInfo;
 import com.ssang.gtd.global.oauth2.oauthUser.OAuth2UserInfo;
-import com.ssang.gtd.global.utils.enums.MemberStatus;
-import com.ssang.gtd.global.utils.enums.Role;
+import com.ssang.gtd.global.enums.MemberStatus;
+import com.ssang.gtd.global.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 
