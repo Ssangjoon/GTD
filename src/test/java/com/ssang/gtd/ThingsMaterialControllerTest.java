@@ -35,8 +35,11 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
         CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
-        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
-
+        Collect savedCollect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect collect = Collect.builder() // matcol 객체 생성시 함께 들어가는 collect 객체의 type이 null인 경우 테스트를 위한 새 객체 생성
+                .id(savedCollect.getId())
+                .content(savedCollect.getContent())
+                .build();
 
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member,null);
         String dtoJson = createJson(createRequestreq);
@@ -65,9 +68,9 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
         CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
-        Collect savedCollect = saveCollect(dto.toServiceDto());
-        Collect collect = Collect.builder()
-                .id(savedCollect.getId()) // 테스트 게시글 생성
+        Collect savedCollect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect collect = Collect.builder() // matcol 객체 생성시 함께 들어가는 collect 객체의 type이 null인 경우 테스트를 위한 새 객체 생성
+                .id(savedCollect.getId())
                 .content(savedCollect.getContent())
                 .build();
 
@@ -99,7 +102,11 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
         CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
-        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect savedCollect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect collect = Collect.builder() // matcol 객체 생성시 함께 들어가는 collect 객체의 type이 null인 경우 테스트를 위한 새 객체 생성
+                .id(savedCollect.getId())
+                .content(savedCollect.getContent())
+                .build();
 
 
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member,null);
@@ -139,7 +146,11 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
         CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
-        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect savedCollect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect collect = Collect.builder() // matcol 객체 생성시 함께 들어가는 collect 객체의 type이 null인 경우 테스트를 위한 새 객체 생성
+                .id(savedCollect.getId())
+                .content(savedCollect.getContent())
+                .build();
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", LocalDate.of(2023,7,1),collect,member,null);
         String dtoJson = createJson(createRequestreq);
 
@@ -176,7 +187,11 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
         CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
-        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect savedCollect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect collect = Collect.builder() // matcol 객체 생성시 함께 들어가는 collect 객체의 type이 null인 경우 테스트를 위한 새 객체 생성
+                .id(savedCollect.getId())
+                .content(savedCollect.getContent())
+                .build();
 
         List<String> testList = new ArrayList<>();
         String testdata = "테스트 데이터";
@@ -214,7 +229,11 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
         MemberSocial member = saveUser(req.toServiceDto()); // 테스트 유저 생성
         CollectCreateDto.CollectCreateRequest dto = new CollectCreateDto.CollectCreateRequest("디폴트 타입 테스트", new MemberSocial(member.getId()));
-        Collect collect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect savedCollect = saveCollect(dto.toServiceDto()); // 테스트 게시글 생성
+        Collect collect = Collect.builder() // matcol 객체 생성시 함께 들어가는 collect 객체의 type이 null인 경우 테스트를 위한 새 객체 생성
+                .id(savedCollect.getId())
+                .content(savedCollect.getContent())
+                .build();
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member,null);
         MatCol matCol = saveMatCol(createRequestreq.toServiceDto()); // 저장
 
