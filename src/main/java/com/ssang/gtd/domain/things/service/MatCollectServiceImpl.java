@@ -39,7 +39,7 @@ public class MatCollectServiceImpl implements MatCollectService {
 
 
     @Override
-    public Object list() { return matCollectRepository.searchList(); }
+    public List<MatColGetDto.MatColGetResponse> list() { return matCollectRepository.searchList(); }
     @Override
     public MatColGetDto.MatColGetResponse get(Long id) { return matCollectRepository.search(id); }
 

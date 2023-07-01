@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface MatCollectService {
-    public Object list();
+    public List<MatColGetDto.MatColGetResponse> list();
     public MatColGetDto.MatColGetResponse get(Long id);
     public MatCol post(MatColServiceDto dto, List<MultipartFile> files) throws Exception;
     public int put(MatColDto dto);

@@ -74,7 +74,7 @@ public class CollectController {
         return matCollectService.get(id);
     }
     @GetMapping("/material")
-    public Object getMatColList(){ return matCollectService.list();}
+    public List<MatColGetDto.MatColGetResponse> getMatColList(){ return matCollectService.list();}
 //    @PostMapping("/material/type")
 //    public int modifiedType(@RequestBody MatColUpdateDto.MatColUpdateRequest dto) throws JsonProcessingException {
 //        return 1;
