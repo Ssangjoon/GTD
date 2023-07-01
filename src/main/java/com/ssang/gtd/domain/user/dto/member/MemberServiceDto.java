@@ -1,9 +1,9 @@
 package com.ssang.gtd.domain.user.dto.member;
 
 import com.ssang.gtd.domain.user.domain.MemberSocial;
-import com.ssang.gtd.global.utils.enums.Role;
-import com.ssang.gtd.global.utils.enums.Gender;
-import com.ssang.gtd.global.utils.enums.MemberStatus;
+import com.ssang.gtd.global.enums.Role;
+import com.ssang.gtd.global.enums.Gender;
+import com.ssang.gtd.global.enums.MemberStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

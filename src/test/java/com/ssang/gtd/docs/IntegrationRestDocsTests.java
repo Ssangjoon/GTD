@@ -37,5 +37,6 @@ public class IntegrationRestDocsTests extends ControllerTest {
                 .apply(springSecurity())
                 .addFilters(new CharacterEncodingFilter("UTF-8", true)) // 한글 깨짐 방지
                 .build();
+        
     }
 }

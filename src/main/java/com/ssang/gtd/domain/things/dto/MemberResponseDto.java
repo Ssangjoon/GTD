@@ -1,7 +1,7 @@
-package com.ssang.gtd.domain.things.dto.collect;
+package com.ssang.gtd.domain.things.dto;
 
 import com.ssang.gtd.domain.user.domain.MemberDetail;
-import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.global.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

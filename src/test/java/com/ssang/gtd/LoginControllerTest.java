@@ -1,8 +1,8 @@
 package com.ssang.gtd;
 
 import com.ssang.gtd.docs.IntegrationRestDocsTests;
-import com.ssang.gtd.global.utils.enums.Role;
-import com.ssang.gtd.global.utils.enums.Gender;
+import com.ssang.gtd.global.enums.Role;
+import com.ssang.gtd.global.enums.Gender;
 import com.ssang.gtd.domain.user.dto.LoginReq;
 import com.ssang.gtd.domain.user.dto.member.MemberCreateDto;
 import org.junit.jupiter.api.DisplayName;
@@ -45,19 +45,6 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 )
                         )
                 )
-                //OAS 3.0 - Swagger
-//                .andDo(MockMvcRestDocumentationWrapper.document("put-v1-complete-order",
-//                        getDocumentRequest(),
-//                        getDocumentResponse(),
-//                        resource(ResourceSnippetParameters.builder()
-//                                .pathParameters(
-//                                        parameterDescriptor
-//                                )
-//                                .responseFields(
-//                                        responseFieldDescription
-//                                )
-//                                .build()))
-//                  )
         ;
     }
     @DisplayName("로그인 스웨거ui 테스트")
@@ -85,19 +72,6 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 )
                         )
                 )
-                //OAS 3.0 - Swagger
-//                .andDo(MockMvcRestDocumentationWrapper.document("put-v1-complete-order",
-//                        getDocumentRequest(),
-//                        getDocumentResponse(),
-//                        resource(ResourceSnippetParameters.builder()
-//                                .pathParameters(
-//                                        parameterDescriptor
-//                                )
-//                                .responseFields(
-//                                        responseFieldDescription
-//                                )
-//                                .build()))
-//                  )
         ;
     }
     @DisplayName("로그아웃")
