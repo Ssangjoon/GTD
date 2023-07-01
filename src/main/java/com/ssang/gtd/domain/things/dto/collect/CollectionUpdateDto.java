@@ -1,6 +1,7 @@
 package com.ssang.gtd.domain.things.dto.collect;
 
 import com.ssang.gtd.domain.things.domain.Collect;
+import com.ssang.gtd.domain.things.dto.MemberResponseDto;
 import com.ssang.gtd.domain.user.domain.MemberSocial;
 import com.ssang.gtd.global.enums.BoardType;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static com.ssang.gtd.domain.things.dto.collect.MemberResponseDto.convertToDto;
+import static com.ssang.gtd.domain.things.dto.MemberResponseDto.convertToDto;
 
 public class CollectionUpdateDto {
     @Getter

@@ -108,7 +108,6 @@ public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
                 .content(savedCollect.getContent())
                 .build();
 
-
         MatColCreateDto.MatColCreateRequest createRequestreq = new MatColCreateDto.MatColCreateRequest("파일 업로드", "차근 차근 하나씩", null,collect,member,null);
         String dtoJson = createJson(createRequestreq);
 

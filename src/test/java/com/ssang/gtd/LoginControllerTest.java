@@ -45,19 +45,6 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 )
                         )
                 )
-                //OAS 3.0 - Swagger
-//                .andDo(MockMvcRestDocumentationWrapper.document("put-v1-complete-order",
-//                        getDocumentRequest(),
-//                        getDocumentResponse(),
-//                        resource(ResourceSnippetParameters.builder()
-//                                .pathParameters(
-//                                        parameterDescriptor
-//                                )
-//                                .responseFields(
-//                                        responseFieldDescription
-//                                )
-//                                .build()))
-//                  )
         ;
     }
     @DisplayName("로그인 스웨거ui 테스트")
@@ -85,19 +72,6 @@ public class LoginControllerTest extends IntegrationRestDocsTests {
                                 )
                         )
                 )
-                //OAS 3.0 - Swagger
-//                .andDo(MockMvcRestDocumentationWrapper.document("put-v1-complete-order",
-//                        getDocumentRequest(),
-//                        getDocumentResponse(),
-//                        resource(ResourceSnippetParameters.builder()
-//                                .pathParameters(
-//                                        parameterDescriptor
-//                                )
-//                                .responseFields(
-//                                        responseFieldDescription
-//                                )
-//                                .build()))
-//                  )
         ;
     }
     @DisplayName("로그아웃")

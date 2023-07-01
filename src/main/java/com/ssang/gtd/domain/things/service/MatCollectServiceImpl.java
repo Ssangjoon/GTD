@@ -8,7 +8,7 @@ import com.ssang.gtd.domain.things.domain.FileEntity;
 import com.ssang.gtd.domain.things.domain.MatCol;
 import com.ssang.gtd.domain.things.dto.matcol.MatColCreateDto.MatColServiceDto;
 import com.ssang.gtd.domain.things.dto.matcol.MatColDto;
-import com.ssang.gtd.domain.things.dto.matcol.MatColFileDto;
+import com.ssang.gtd.domain.things.dto.matcol.MatColGetDto;
 import com.ssang.gtd.domain.user.domain.MemberSocial;
 import com.ssang.gtd.global.enums.BoardType;
 import com.ssang.gtd.global.exception.CustomException;
@@ -41,7 +41,7 @@ public class MatCollectServiceImpl implements MatCollectService {
     @Override
     public Object list() { return matCollectRepository.searchList(); }
     @Override
-    public MatColFileDto get(Long id) { return matCollectRepository.search(id); }
+    public MatColGetDto.MatColGetResponse get(Long id) { return matCollectRepository.search(id); }
 
 
     @Transactional(noRollbackFor=Exception.class)
@@ -94,7 +94,7 @@ public class MatCollectServiceImpl implements MatCollectService {
         return matCollectDao.delete(id);
     }
 
-    private BoardType getType(MatColServiceDto dto){
+    private static BoardType getType(MatColServiceDto dto){
 
         if(!StringUtils.hasText(dto.getContent())){
             return MAYBE;

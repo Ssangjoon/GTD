@@ -2,9 +2,11 @@ package com.ssang.gtd.domain.things.dao.search;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssang.gtd.domain.things.domain.QCollect;
 import com.ssang.gtd.domain.things.domain.QFileEntity;
 import com.ssang.gtd.domain.things.domain.QMatCol;
-import com.ssang.gtd.domain.things.dto.matcol.MatColFileDto;
+import com.ssang.gtd.domain.things.dto.matcol.MatColGetDto;
+import com.ssang.gtd.domain.user.domain.QMember;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,23 +18,32 @@ public class MatColRepositoryCustomImpl implements MatColRepositoryCustom{
         this.queryFactory = queryFactory;
     }
     @Override
-    public MatColFileDto search(Long id) {
-        QMatCol matCol = new QMatCol("m");
-        QFileEntity fileEntity = new QFileEntity("m");
-
+    public MatColGetDto.MatColGetResponse search(Long id) {
         return queryFactory
-                .select(Projections.bean(MatColFileDto.class,
-                        matCol.id
-                        ,matCol.goal
-                        ,matCol.content
-                        ,matCol.collect
-                        ,matCol.goal
-                        ,fileEntity
+                .select(Projections.bean(MatColGetDto.MatColGetResponse.class,
+                        QMatCol.matCol.id
+                        , QMatCol.matCol.goal
+                        , QMatCol.matCol.content
+                        , QMatCol.matCol.goalDt
+                        , QCollect.collect.id.as("collectId")
+                        , QCollect.collect.content.as("collectContent")
+                        , QCollect.collect.type.as("type")
+                        , QCollect.collect.modifiedDate.as("modifiedDate")
+                        , QCollect.collect.createDate.as("createdDate")
+                        , QMember.member.id.as("memberId")
+                        , QMember.member.userName.as("userName")
+                        , QMember.member.name.as("name")
+                        , QMember.member.gender.as("gender")
+                        , QFileEntity.fileEntity
                 ))
-                .from(matCol)
-                .leftJoin(fileEntity)
-                .on(matCol.id.eq(fileEntity.matcol.id))
-                .where(matCol.id.eq(id))
+                .from(QMatCol.matCol)
+                .leftJoin(QFileEntity.fileEntity)
+                .on(QMatCol.matCol.id.eq(QFileEntity.fileEntity.matcol.id))
+                .leftJoin(QCollect.collect)
+                .on(QCollect.collect.id.eq(QMatCol.matCol.collect.id))
+                .leftJoin(QMember.member)
+                .on(QCollect.collect.member.id.eq(QMember.member.id))
+                .where(QMatCol.matCol.id.eq(id))
                 .fetchOne();
     }
 

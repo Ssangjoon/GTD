@@ -11,7 +11,7 @@ import com.ssang.gtd.domain.things.dto.collect.CollectionUpdateDto.CollectUpdate
 import com.ssang.gtd.domain.things.dto.collect.CollectionUpdateDto.CollectUpdateRequest;
 import com.ssang.gtd.domain.things.dto.collect.CollectionUpdateDto.CollectUpdateResponse;
 import com.ssang.gtd.domain.things.dto.matcol.MatColCreateDto.MatColCreateRequest;
-import com.ssang.gtd.domain.things.dto.matcol.MatColFileDto;
+import com.ssang.gtd.domain.things.dto.matcol.MatColGetDto;
 import com.ssang.gtd.domain.things.service.CollectService;
 import com.ssang.gtd.domain.things.service.MatCollectService;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +70,7 @@ public class CollectController {
         }
     }
     @GetMapping("/material/{id}")
-    public MatColFileDto getMatCol(@PathVariable("id") Long id){
+    public MatColGetDto.MatColGetResponse getMatCol(@PathVariable("id") Long id){
         return matCollectService.get(id);
     }
     @GetMapping("/material")

@@ -1,4 +1,4 @@
-package com.ssang.gtd.domain.things.dto.collect;
+package com.ssang.gtd.domain.things.dto;
 
 import com.ssang.gtd.domain.user.domain.MemberDetail;
 import com.ssang.gtd.global.enums.Gender;
