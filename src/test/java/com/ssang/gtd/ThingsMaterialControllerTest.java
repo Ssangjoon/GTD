@@ -28,9 +28,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ThingsMaterialControllerTest extends IntegrationRestDocsTests {
-        MemberSocial member;
-        Collect savedCollect;
-        Collect collect;
+    private MemberSocial member;
+    private Collect savedCollect;
+    private Collect collect;
     @BeforeEach
     public void setUp(){
         MemberCreateDto.MemberCreateRequest req = new MemberCreateDto.MemberCreateRequest("테스트네임3", "손석구", pwd, email, Role.USER, Gender.MALE);
